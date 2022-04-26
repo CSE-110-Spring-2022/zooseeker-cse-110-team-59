@@ -20,5 +20,11 @@ public class MainActivity extends AppCompatActivity {
         AutoCompleteTextView searchBar = findViewById(R.id.search_bar);
         searchBarInput = searchBar.getText().toString();
         searchBar.setText("");
+
+        isValid(searchBarInput);
+    }
+
+    private boolean isValid(String searchBarInput) {
+        return true;
     }
 }

@@ -52,9 +52,9 @@ public class UnitTestsUserStory1 {
             AutoCompleteTextView searchBar = activity.findViewById(R.id.search_bar);
             Button searchSelectBtn = activity.findViewById(R.id.search_select_btn);
 
-            searchBar.setText("one 2 red BLUE");
+            searchBar.setText("One 2 red BLUE");
             searchSelectBtn.performClick();
-            assertEquals("one 2 red BLUE", activity.searchBarInput);
+            assertEquals("One 2 red BLUE", activity.searchBarInput);
         });
     }
 }
