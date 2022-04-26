@@ -6,8 +6,12 @@ import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
+import android.text.NoCopySpan;
+import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.test.core.app.ActivityScenario;
