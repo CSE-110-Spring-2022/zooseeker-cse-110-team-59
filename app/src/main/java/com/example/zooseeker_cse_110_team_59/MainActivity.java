@@ -8,7 +8,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
-    public String searchBarInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,14 +16,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onSearchSelectClick(View view) {
+        checkSearchBar();
+    }
+
+    public String checkSearchBar() {
         AutoCompleteTextView searchBar = findViewById(R.id.search_bar);
-        searchBarInput = searchBar.getText().toString();
+        String searchBarInput = searchBar.getText().toString();
         searchBar.setText("");
 
         isValid(searchBarInput);
+
+        return searchBarInput;
     }
 
-    private boolean isValid(String searchBarInput) {
+    public boolean isValid(String searchBarInput) {
         return true;
     }
 }

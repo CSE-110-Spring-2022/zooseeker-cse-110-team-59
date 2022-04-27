@@ -35,10 +35,8 @@ public class UnitTestsUserStory1 {
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
-            Button searchSelectBtn = activity.findViewById(R.id.search_select_btn);
-
-            searchSelectBtn.performClick();
-            assertEquals("", activity.searchBarInput);
+            String input = activity.checkSearchBar();
+            assertEquals("", input);
         });
     }
 
@@ -50,11 +48,10 @@ public class UnitTestsUserStory1 {
 
         scenario.onActivity(activity -> {
             AutoCompleteTextView searchBar = activity.findViewById(R.id.search_bar);
-            Button searchSelectBtn = activity.findViewById(R.id.search_select_btn);
 
             searchBar.setText("One 2 red BLUE");
-            searchSelectBtn.performClick();
-            assertEquals("One 2 red BLUE", activity.searchBarInput);
+            String input = activity.checkSearchBar();
+            assertEquals("One 2 red BLUE", input);
         });
     }
 }
