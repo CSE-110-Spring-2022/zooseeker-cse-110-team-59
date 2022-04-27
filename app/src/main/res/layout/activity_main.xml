@@ -8,13 +8,14 @@
 
     <AutoCompleteTextView
         android:id="@+id/search_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="218dp"
+        android:layout_height="45dp"
         android:hint="Type animals here..."
         android:inputType="textCapWords"
+        android:textSize="24dp"
         app:layout_constraintBottom_toTopOf="@+id/search_guideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.193"
+        app:layout_constraintHorizontal_bias="0.103"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.802" />
@@ -24,14 +25,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
-        android:text="Select"
         android:onClick="onSearchSelectClick"
+        android:text="Select"
         app:layout_constraintBottom_toTopOf="@+id/search_guideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.873"
+        app:layout_constraintHorizontal_bias="0.797"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.939" />
+
+    <TextView
+        android:id="@+id/list_count_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/search_guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.36"
+        app:layout_constraintStart_toEndOf="@+id/search_select_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.755" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/search_guideline"
@@ -39,4 +53,34 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="126dp" />
+
+    <ScrollView
+        android:id="@+id/animals_list_scrollview"
+        android:layout_width="369dp"
+        android:layout_height="524dp"
+        android:fadeScrollbars="false"
+        app:layout_constraintBottom_toTopOf="@+id/scrollview_guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/search_guideline"
+        app:layout_constraintVertical_bias="0.0">
+
+
+        <TextView
+            android:id="@+id/animals_list_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:lineSpacingExtra="5dp"
+            android:textSize="22dp" />
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/scrollview_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="650dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
