@@ -18,19 +18,23 @@ public class StringConverter {
         return input.stream().map(str -> normalToCamelCase(str)).collect(Collectors.toList());
     }
 
-    public static String dashedToCamelCase (String input) {
-        List<String> words = Arrays.stream(input.split("-")).collect(Collectors.toList());
-        String first = words.remove(0);
-        List<String> wordsUpper = words.stream().map(str -> str.substring(0, 1).toUpperCase() + str.substring(1)).collect(Collectors.toList());
-        wordsUpper.add(0, first);
-        return String.join("", wordsUpper);
+
+    public static String camelCaseToNormal (String input) {
+        if (input.equals("")) return "";
+
+        List<String> words = Arrays.stream(input.split("(?<=[a-z])(?=[A-Z])|(?<=[a-zA-z])(?=[0-9])|(?<=[0-9])(?=[a-zA-Z])")).collect(Collectors.toList());
+        List<String> wordsNormal = words.stream().map(str -> str.substring(0, 1).toUpperCase() + str.substring(1)).collect(Collectors.toList());
+        return String.join(" ", wordsNormal);
     }
 
-    public static List<String> dashedToCamelCaseList(List<String> input) {
-        return input.stream().map(str -> dashedToCamelCase(str)).collect(Collectors.toList());
+    public static List<String> camelCaseToNormalList (List<String> input) {
+        return input.stream().map(str -> camelCaseToNormal(str)).collect(Collectors.toList());
     }
+
 
     public static String dashedToNormal (String input) {
+        if (input.equals("")) return "";
+
         List<String> words = Arrays.stream(input.split("-")).collect(Collectors.toList());
         List<String> wordsUpper = words.stream().map(str -> str.substring(0, 1).toUpperCase() + str.substring(1)).collect(Collectors.toList());
         return String.join(" ", wordsUpper);
