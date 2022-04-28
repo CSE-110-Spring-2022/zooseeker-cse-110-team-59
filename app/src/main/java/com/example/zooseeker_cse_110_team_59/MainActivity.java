@@ -1,5 +1,6 @@
 package com.example.zooseeker_cse_110_team_59;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -10,34 +11,38 @@ import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<WaypointItem> waypointItems;
-    private List<String> exhibitNames;
-
-    private List<String> enteredAnimals;
+    private Map<String, ZooData.VertexInfo> vInfo;
+    private Map<String, String> userEntryToID;
+    private List<String> enteredExhibits;
+    private List<String> autocompleteSuggestions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        enteredAnimals = new ArrayList<>();
-        waypointItems = WaypointItem.loadJSON(this, "sample_exhibits.json");
+        vInfo = ZooData.loadVertexInfoJSON("sample_node_info.json");
 
-        // Link: https://stackoverflow.com/questions/122105/how-to-filter-a-java-collection-based-on-predicate
-        // Title: How to filter a Java Collection (based on predicate)?
-        // Date Captured: April 27th, 2022
-        // Used: Knowledge of how to format .filter() in java (specifically the .collect(Collectors.toList()) part). I already had some knowledge of filter/map from CSE 130, but in different languages.
-        List<WaypointItem> exhibitItems = waypointItems.stream().filter(item -> item.itemType.equals("exhibit")).collect(Collectors.toList());
-        exhibitNames = exhibitItems.stream().map(exhibit -> exhibit.id).collect(Collectors.toList());
-        exhibitNames = StringConverter.dashedToNormalList(exhibitNames);
+        userEntryToID = new HashMap<>();
+        vInfo.forEach((id, datum) -> {
+            if (datum.kind.equals(ZooData.VertexInfo.Kind.EXHIBIT)) userEntryToID.put(datum.name, id);
+        });
+
+        enteredExhibits = new ArrayList<>();
+
+        autocompleteSuggestions = new ArrayList<>();
+        userEntryToID.forEach((name, id) -> autocompleteSuggestions.add(name));
 
         AutoCompleteTextView searchBar = findViewById(R.id.search_bar);
-        ArrayAdapter<String> searchBarAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, exhibitNames);
+        ArrayAdapter<String> searchBarAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, autocompleteSuggestions);
         searchBar.setAdapter(searchBarAdapter);
     }
 
@@ -59,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean isValid(String searchBarInput) {
-        if (exhibitNames.contains(searchBarInput)) {
+        if (userEntryToID.containsKey(searchBarInput)){
             return true;
         } else {
             Utilities.showAlert(this, "Invalid Entry", searchBarInput + " is not an exhibit at the San Diego Zoo.");
@@ -68,11 +73,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public boolean isNew(String searchBarInput) {
-        return !enteredAnimals.contains(searchBarInput);
+        return !enteredExhibits.contains(userEntryToID.get(searchBarInput));
     }
 
     public void addToLists(String searchBarInput) {
-        enteredAnimals.add(searchBarInput);
+        enteredExhibits.add(userEntryToID.get(searchBarInput));
 
         TextView animalsListTextView = findViewById(R.id.animals_list_text_view);
         String animalsListText = animalsListTextView.getText().toString();
@@ -81,11 +86,16 @@ public class MainActivity extends AppCompatActivity {
 
     public void increaseListsCount() {
         TextView listCount = findViewById(R.id.list_count_text_view);
-        listCount.setText(enteredAnimals.size() + "");
+        listCount.setText(enteredExhibits.size() + "");
     }
 
-    public List<String> getEnteredAnimals() {
-        return enteredAnimals;
+    @VisibleForTesting
+    public List<String> getEnteredExhibits() {
+        return enteredExhibits;
     }
 
+    @VisibleForTesting
+    public List<String> getAutocompleteSuggestions() {
+        return autocompleteSuggestions;
+    }
 }

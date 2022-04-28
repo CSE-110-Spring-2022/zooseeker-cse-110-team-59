@@ -65,19 +65,19 @@ public class EnterBeginningOfWord {
                                         0),
                                 0),
                         isDisplayed()));
-        materialAutoCompleteTextView2.perform(replaceText("Gat"), closeSoftKeyboard());
+        materialAutoCompleteTextView2.perform(replaceText("All"), closeSoftKeyboard());
 
         // Link: https://stackoverflow.com/questions/38562341/espresso-autocompletetextview-click
         // Title: Espresso AutoCompleteTextView click
         // Date Captured: April 27th 2022
-        // Usage: For why recorded Expresso tests did not click the autocomplete option even if it was clicked while recording, and what to change it to so that it does.
-        ViewInteraction materialTextView = onView(withText("Gator Viewpoint 1"))
+        // Usage: For why recorded Espresso tests did not click the autocomplete option even if it was clicked while recording, and what to change it to so that it does.
+        ViewInteraction materialTextView = onView(withText("Alligators"))
                 .inRoot(RootMatchers.isPlatformPopup())
                 .perform(click());
 
         ViewInteraction materialAutoCompleteTextView3 = onView(
                 Matchers.allOf(ViewMatchers.withId(R.id.search_bar),
-                        isDisplayed())).check(matches(withText("Gator Viewpoint 1")));
+                        isDisplayed())).check(matches(withText("Alligators")));
     }
 
     private static Matcher<View> childAtPosition(

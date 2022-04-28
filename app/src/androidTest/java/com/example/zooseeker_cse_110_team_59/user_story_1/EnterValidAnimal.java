@@ -48,7 +48,7 @@ public class EnterValidAnimal {
                                         0),
                                 0),
                         isDisplayed()));
-        materialAutoCompleteTextView.perform(replaceText("Gator Viewpoint 1"), closeSoftKeyboard());
+        materialAutoCompleteTextView.perform(replaceText("Alligators"), closeSoftKeyboard());
 
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.search_select_btn), withText("Select"),

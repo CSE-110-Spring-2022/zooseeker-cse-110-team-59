@@ -39,7 +39,7 @@ public class UnitTestsUserStory2 {
 
         scenario.onActivity(activity -> {
             ArrayList<String> testAgainst = new ArrayList<>();
-            assertEquals(testAgainst, activity.getEnteredAnimals());
+            assertEquals(testAgainst, activity.getEnteredExhibits());
         });
     }
 
@@ -52,9 +52,9 @@ public class UnitTestsUserStory2 {
         scenario.onActivity(activity -> {
             activity.addToLists("Elephant Odyssey");
 
-            ArrayList<String> testAgainst = new ArrayList<>(Arrays.asList("Elephant Odyssey"));
+            ArrayList<String> testAgainst = new ArrayList<>(Arrays.asList("elephant_odyssey"));
 
-            assertEquals(testAgainst, activity.getEnteredAnimals());
+            assertEquals(testAgainst, activity.getEnteredExhibits());
         });
     }
 
@@ -65,12 +65,36 @@ public class UnitTestsUserStory2 {
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
-            activity.addToLists("Elephant Odyssey");
-            activity.addToLists("Arctic Fox Viewpoint");
+            activity.addToLists("Alligators");
+            activity.addToLists("Arctic Foxes");
 
-            ArrayList<String> testAgainst = new ArrayList<>(Arrays.asList("Elephant Odyssey", "Arctic Fox Viewpoint"));
+            ArrayList<String> testAgainst = new ArrayList<>(Arrays.asList("gators", "arctic_foxes"));
 
-            assertEquals(testAgainst, activity.getEnteredAnimals());
+            assertEquals(testAgainst, activity.getEnteredExhibits());
+        });
+    }
+
+    @Test
+    public void testIsNewOnEmptyList() {
+        ActivityScenario<MainActivity> scenario = scenarioRule.getScenario();
+
+        scenario.moveToState(Lifecycle.State.CREATED);
+
+        scenario.onActivity(activity -> {
+            assertTrue(activity.isNew("Gorillas"));
+        });
+    }
+
+    @Test
+    public void testIsNewOnNonEmptyList() {
+        ActivityScenario<MainActivity> scenario = scenarioRule.getScenario();
+
+        scenario.moveToState(Lifecycle.State.CREATED);
+
+        scenario.onActivity(activity -> {
+            activity.addToLists("Gorillas");
+
+            assertFalse(activity.isNew("Gorillas"));
         });
     }
 
@@ -84,7 +108,7 @@ public class UnitTestsUserStory2 {
             TextView listCountTextView = activity.findViewById(R.id.list_count_text_view);
             int listCountBefore = Integer.valueOf(listCountTextView.getText().toString());
 
-            activity.addToLists("Gorilla Viewpoint 1");
+            activity.addToLists("Gorillas");
             activity.increaseListsCount();
             int listCountAfter = Integer.valueOf(listCountTextView.getText().toString());
 

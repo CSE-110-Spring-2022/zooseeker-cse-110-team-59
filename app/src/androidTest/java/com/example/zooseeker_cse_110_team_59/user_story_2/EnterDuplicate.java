@@ -49,7 +49,7 @@ public class EnterDuplicate {
                                         0),
                                 0),
                         isDisplayed()));
-        materialAutoCompleteTextView.perform(replaceText("Gator Viewpoint 1"), closeSoftKeyboard());
+        materialAutoCompleteTextView.perform(replaceText("Alligators"), closeSoftKeyboard());
 
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.search_select_btn), withText("Select"),
@@ -62,7 +62,7 @@ public class EnterDuplicate {
         materialButton.perform(click());
 
         ViewInteraction appResultText1 = onView(
-                allOf(withId(R.id.animals_list_text_view), isDisplayed())).check(matches(withText("Gator Viewpoint 1" + "\n")));
+                allOf(withId(R.id.animals_list_text_view), isDisplayed())).check(matches(withText("Alligators" + "\n")));
 
         ViewInteraction appResultText2 = onView(
                 allOf(withId(R.id.list_count_text_view), isDisplayed())).check(matches(withText("1")));
@@ -75,7 +75,7 @@ public class EnterDuplicate {
                                         0),
                                 0),
                         isDisplayed()));
-        materialAutoCompleteTextView2.perform(replaceText("Gator Viewpoint 1"), closeSoftKeyboard());
+        materialAutoCompleteTextView2.perform(replaceText("Alligators"), closeSoftKeyboard());
 
         ViewInteraction materialButton2 = onView(
                 allOf(withId(R.id.search_select_btn), withText("Select"),
@@ -88,7 +88,7 @@ public class EnterDuplicate {
         materialButton2.perform(click());
 
         ViewInteraction appResultText3 = onView(
-                allOf(withId(R.id.animals_list_text_view), isDisplayed())).check(matches(withText("Gator Viewpoint 1" + "\n")));
+                allOf(withId(R.id.animals_list_text_view), isDisplayed())).check(matches(withText("Alligators" + "\n")));
 
         ViewInteraction appResultText4 = onView(
                 allOf(withId(R.id.list_count_text_view), isDisplayed())).check(matches(withText("1")));

@@ -29,7 +29,7 @@ public class UnitTestsUserStory1 {
     public ActivityScenarioRule<MainActivity> scenarioRule = new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
-    public void enterBlankCorrect() {
+    public void testEnterBlank() {
         ActivityScenario<MainActivity> scenario = scenarioRule.getScenario();
 
         scenario.moveToState(Lifecycle.State.CREATED);
@@ -41,7 +41,7 @@ public class UnitTestsUserStory1 {
     }
 
     @Test
-    public void enterWordCorrect() {
+    public void testEnterWord() {
         ActivityScenario<MainActivity> scenario = scenarioRule.getScenario();
 
         scenario.moveToState(Lifecycle.State.CREATED);

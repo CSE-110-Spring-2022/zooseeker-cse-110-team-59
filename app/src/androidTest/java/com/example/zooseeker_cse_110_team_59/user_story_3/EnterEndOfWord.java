@@ -67,13 +67,13 @@ public class EnterEndOfWord {
                         isDisplayed()));
         materialAutoCompleteTextView2.perform(replaceText("Fox"), closeSoftKeyboard());
 
-        ViewInteraction materialTextView = onView(withText("Arctic Fox Viewpoint"))
+        ViewInteraction materialTextView = onView(withText("Arctic Foxes"))
                 .inRoot(RootMatchers.isPlatformPopup())
                 .perform(click());
 
         ViewInteraction materialAutoCompleteTextView3 = onView(
                 Matchers.allOf(ViewMatchers.withId(R.id.search_bar),
-                        isDisplayed())).check(matches(withText("Arctic Fox Viewpoint")));
+                        isDisplayed())).check(matches(withText("Arctic Foxes")));
     }
 
     private static Matcher<View> childAtPosition(
