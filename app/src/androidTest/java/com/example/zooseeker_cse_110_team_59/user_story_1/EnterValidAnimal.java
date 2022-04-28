@@ -1,11 +1,10 @@
-package com.example.zooseeker_cse_110_team_59.user_story_2;
+package com.example.zooseeker_cse_110_team_59.user_story_1;
 
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -34,13 +33,13 @@ import org.junit.runner.RunWith;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class AddToEmptyList {
+public class EnterValidAnimal {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void addToEmptyList() {
+    public void enterValidAnimal() {
         ViewInteraction materialAutoCompleteTextView = onView(
                 Matchers.allOf(ViewMatchers.withId(R.id.search_bar),
                         childAtPosition(
@@ -49,7 +48,7 @@ public class AddToEmptyList {
                                         0),
                                 0),
                         isDisplayed()));
-        materialAutoCompleteTextView.perform(replaceText("Gorilla Viewpoint 1"), closeSoftKeyboard());
+        materialAutoCompleteTextView.perform(replaceText("Gator Viewpoint 1"), closeSoftKeyboard());
 
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.search_select_btn), withText("Select"),
@@ -60,12 +59,6 @@ public class AddToEmptyList {
                                 1),
                         isDisplayed()));
         materialButton.perform(click());
-
-        ViewInteraction appResultText1 = onView(
-                allOf(withId(R.id.animals_list_text_view), isDisplayed())).check(matches(withText("Gorilla Viewpoint 1" + "\n")));
-
-        ViewInteraction appResultText2 = onView(
-                allOf(withId(R.id.list_count_text_view), isDisplayed())).check(matches(withText("1")));
     }
 
     private static Matcher<View> childAtPosition(

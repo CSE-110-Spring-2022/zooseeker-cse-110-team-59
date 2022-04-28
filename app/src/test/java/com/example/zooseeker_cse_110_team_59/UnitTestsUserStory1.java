@@ -54,4 +54,26 @@ public class UnitTestsUserStory1 {
             assertEquals("One 2 red BLUE", input);
         });
     }
+
+    @Test
+    public void testIsValidOnValid() {
+        ActivityScenario<MainActivity> scenario = scenarioRule.getScenario();
+
+        scenario.moveToState(Lifecycle.State.CREATED);
+
+        scenario.onActivity(activity -> {
+            assertTrue(activity.isValid("Elephant Odyssey"));
+        });
+    }
+
+    @Test
+    public void testIsValidOnInvalid() {
+        ActivityScenario<MainActivity> scenario = scenarioRule.getScenario();
+
+        scenario.moveToState(Lifecycle.State.CREATED);
+
+        scenario.onActivity(activity -> {
+            assertFalse(activity.isValid("Table"));
+        });
+    }
 }
