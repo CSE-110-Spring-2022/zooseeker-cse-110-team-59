@@ -36,9 +36,9 @@ public class MainActivity extends AppCompatActivity {
         exhibitNames = exhibitItems.stream().map(exhibit -> exhibit.id).collect(Collectors.toList());
         exhibitNames = StringConverter.dashedToNormalList(exhibitNames);
 
-        // AutoCompleteTextView animalBoxTextview = findViewById(R.id.search_bar);
-        // ArrayAdapter<String> animalBoxAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, exhibitNames);
-        // animalBoxTextview.setAdapter(animalBoxAdapter);
+        AutoCompleteTextView searchBar = findViewById(R.id.search_bar);
+        ArrayAdapter<String> searchBarAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, exhibitNames);
+        searchBar.setAdapter(searchBarAdapter);
     }
 
     public void onSearchSelectClick(View view) {
