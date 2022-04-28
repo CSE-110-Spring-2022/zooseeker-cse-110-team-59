@@ -51,7 +51,7 @@ public class EnterInvalidAnimal {
                                         0),
                                 0),
                         isDisplayed()));
-        materialAutoCompleteTextView.perform(replaceText("Table"), closeSoftKeyboard());
+        materialAutoCompleteTextView.perform(replaceText("Entrance and Exit Gate"), closeSoftKeyboard());
 
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.search_select_btn), withText("Select"),

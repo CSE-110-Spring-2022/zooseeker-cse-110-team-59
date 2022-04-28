@@ -69,7 +69,7 @@ public class AddToNonEmptyList {
                                         0),
                                 0),
                         isDisplayed()));
-        materialAutoCompleteTextView2.perform(replaceText("Arctic Fox Viewpoint"), closeSoftKeyboard());
+        materialAutoCompleteTextView2.perform(replaceText("Arctic Foxes"), closeSoftKeyboard());
 
         ViewInteraction materialButton2 = onView(
                 allOf(withId(R.id.search_select_btn), withText("Select"),
@@ -82,7 +82,7 @@ public class AddToNonEmptyList {
         materialButton2.perform(click());
 
         ViewInteraction appResultText1 = onView(
-                allOf(withId(R.id.animals_list_text_view), isDisplayed())).check(matches(withText("Elephant Odyssey" + "\n" + "Arctic Fox Viewpoint" + "\n")));
+                allOf(withId(R.id.animals_list_text_view), isDisplayed())).check(matches(withText("Elephant Odyssey" + "\n" + "Arctic Foxes" + "\n")));
 
         ViewInteraction appResultText2 = onView(
                 allOf(withId(R.id.list_count_text_view), isDisplayed())).check(matches(withText("2")));
