@@ -3,6 +3,7 @@ package com.example.zooseeker_cse_110_team_59;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Map<String, ZooData.VertexInfo> vInfo;
     private Map<String, String> userEntryToID;
-    private List<String> enteredExhibits;
+    private ArrayList<String> enteredExhibits;
     private List<String> autocompleteSuggestions;
 
     @Override
@@ -97,5 +98,18 @@ public class MainActivity extends AppCompatActivity {
     @VisibleForTesting
     public List<String> getAutocompleteSuggestions() {
         return autocompleteSuggestions;
+    }
+
+    public void onGeneratePlanClick(View view) {
+        if (enteredExhibits.size() == 0) {
+            Utilities.showAlert(this, "Empty List", "No exhibits have been selected.");
+            return;
+        }
+
+        Intent intent = new Intent(this, PlanScreenActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putStringArrayList("enteredExhibits", enteredExhibits);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

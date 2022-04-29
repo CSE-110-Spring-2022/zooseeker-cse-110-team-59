@@ -8,45 +8,46 @@
 
     <AutoCompleteTextView
         android:id="@+id/search_bar"
-        android:layout_width="218dp"
-        android:layout_height="45dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="65dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="16dp"
+        android:completionThreshold="0"
         android:hint="Type animals here..."
         android:inputType="textCapWords"
         android:textSize="24dp"
-        android:completionThreshold="0"
-        app:layout_constraintBottom_toTopOf="@+id/search_guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.103"
+        app:layout_constraintBottom_toTopOf="@+id/animals_list_scrollview"
+        app:layout_constraintEnd_toStartOf="@+id/search_select_btn"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.802" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/search_select_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginBottom="16dp"
         android:onClick="onSearchSelectClick"
         android:text="Select"
-        app:layout_constraintBottom_toTopOf="@+id/search_guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.797"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.939" />
+        app:layout_constraintBottom_toTopOf="@+id/animals_list_scrollview"
+        app:layout_constraintEnd_toStartOf="@+id/list_count_text_view"
+        app:layout_constraintStart_toEndOf="@+id/search_bar" />
 
     <TextView
         android:id="@+id/list_count_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="63dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="20dp"
         android:text="0"
         android:textSize="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/search_guideline"
+        app:layout_constraintBottom_toTopOf="@+id/animals_list_scrollview"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.36"
         app:layout_constraintStart_toEndOf="@+id/search_select_btn"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.755" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/search_guideline"
@@ -57,23 +58,24 @@
 
     <ScrollView
         android:id="@+id/animals_list_scrollview"
-        android:layout_width="369dp"
-        android:layout_height="524dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="124dp"
         android:fadeScrollbars="false"
-        app:layout_constraintBottom_toTopOf="@+id/scrollview_guideline"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/search_guideline"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/list_count_text_view">
 
 
         <TextView
             android:id="@+id/animals_list_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
             android:lineSpacingExtra="5dp"
+            android:text=""
             android:textSize="22dp" />
     </ScrollView>
 
@@ -83,5 +85,17 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="650dp" />
+
+    <Button
+        android:id="@+id/generate_plan_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="48dp"
+        android:layout_marginBottom="30dp"
+        android:onClick="onGeneratePlanClick"
+        android:text="Generate Plan"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/animals_list_scrollview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
