@@ -1,4 +1,4 @@
-package com.example.zooseeker_cse_110_team_59.user_story_3;
+package com.example.zooseeker_cse_110_team_59;
 
 
 import static androidx.test.espresso.Espresso.onData;
@@ -17,6 +17,7 @@ import static org.hamcrest.Matchers.is;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -48,7 +49,12 @@ import org.junit.runner.RunWith;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class EnterEndOfWord {
+public class EspressoTestsUserStory3 {
+
+    // Link: https://stackoverflow.com/questions/34628700/mocking-intent-extras-in-espresso-tests
+    // Title: Mocking Intent Extras in Espresso Tests
+    // Date Captured: April 29th 2022
+    // Usage: For knowledge of how to override ActivityTestRule protected methods
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<MainActivity>(MainActivity.class) {
@@ -57,6 +63,41 @@ public class EnterEndOfWord {
             FilesToLoad.injectNewFiles(new String[]{"test_zoo_graph.json", "test_node_info.json", "test_edge_info.json"});
         }
     };
+
+    @Test
+    public void enterBeginningOfWord() {
+        ViewInteraction materialAutoCompleteTextView = onView(
+                Matchers.allOf(ViewMatchers.withId(R.id.search_bar),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialAutoCompleteTextView.perform(click());
+
+        ViewInteraction materialAutoCompleteTextView2 = onView(
+                allOf(withId(R.id.search_bar),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialAutoCompleteTextView2.perform(replaceText("All"), closeSoftKeyboard());
+
+        // Link: https://stackoverflow.com/questions/38562341/espresso-autocompletetextview-click
+        // Title: Espresso AutoCompleteTextView click
+        // Date Captured: April 27th 2022
+        // Usage: For why recorded Espresso tests did not click the autocomplete option even if it was clicked while recording, and what to change it to so that it does.
+        ViewInteraction materialTextView = onView(withText("Alligators"))
+                .inRoot(RootMatchers.isPlatformPopup())
+                .perform(click());
+
+        ViewInteraction materialAutoCompleteTextView3 = onView(
+                Matchers.allOf(ViewMatchers.withId(R.id.search_bar),
+                        isDisplayed())).check(matches(withText("Alligators")));
+    }
 
     @Test
     public void enterEndOfWord() {
@@ -87,6 +128,19 @@ public class EnterEndOfWord {
         ViewInteraction materialAutoCompleteTextView3 = onView(
                 Matchers.allOf(ViewMatchers.withId(R.id.search_bar),
                         isDisplayed())).check(matches(withText("Arctic Foxes")));
+    }
+
+    @Test
+    public void enterNoPartOfWord() {
+        ViewInteraction materialAutoCompleteTextView = onView(
+                Matchers.allOf(ViewMatchers.withId(R.id.search_bar),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialAutoCompleteTextView.perform(replaceText("Table"), closeSoftKeyboard());
     }
 
     private static Matcher<View> childAtPosition(

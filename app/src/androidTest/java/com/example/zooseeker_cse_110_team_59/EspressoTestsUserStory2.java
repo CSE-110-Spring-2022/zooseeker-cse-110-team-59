@@ -1,4 +1,4 @@
-package com.example.zooseeker_cse_110_team_59.user_story_2;
+package com.example.zooseeker_cse_110_team_59;
 
 
 import static androidx.test.espresso.Espresso.onView;
@@ -35,6 +35,7 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -42,7 +43,7 @@ import org.junit.runner.RunWith;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class AddToNonEmptyList {
+public class EspressoTestsUserStory2 {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<MainActivity>(MainActivity.class) {
@@ -51,6 +52,35 @@ public class AddToNonEmptyList {
             FilesToLoad.injectNewFiles(new String[]{"test_zoo_graph.json", "test_node_info.json", "test_edge_info.json"});
         }
     };
+
+    @Test
+    public void addToEmptyList() {
+        ViewInteraction materialAutoCompleteTextView = onView(
+                Matchers.allOf(ViewMatchers.withId(R.id.search_bar),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialAutoCompleteTextView.perform(replaceText("Gorillas"), closeSoftKeyboard());
+
+        ViewInteraction materialButton = onView(
+                allOf(withId(R.id.search_select_btn), withText("Select"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                1),
+                        isDisplayed()));
+        materialButton.perform(click());
+
+        ViewInteraction appResultText1 = onView(
+                allOf(withId(R.id.animals_list_text_view), isDisplayed())).check(matches(withText("Gorillas" + "\n")));
+
+        ViewInteraction appResultText2 = onView(
+                allOf(withId(R.id.list_count_text_view), isDisplayed())).check(matches(withText("1")));
+    }
 
     @Test
     public void addToNonEmptyList() {
@@ -99,6 +129,61 @@ public class AddToNonEmptyList {
 
         ViewInteraction appResultText2 = onView(
                 allOf(withId(R.id.list_count_text_view), isDisplayed())).check(matches(withText("2")));
+    }
+
+    @Test
+    public void enterDuplicate() {
+        ViewInteraction materialAutoCompleteTextView = onView(
+                Matchers.allOf(ViewMatchers.withId(R.id.search_bar),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialAutoCompleteTextView.perform(replaceText("Alligators"), closeSoftKeyboard());
+
+        ViewInteraction materialButton = onView(
+                allOf(withId(R.id.search_select_btn), withText("Select"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                1),
+                        isDisplayed()));
+        materialButton.perform(click());
+
+        ViewInteraction appResultText1 = onView(
+                allOf(withId(R.id.animals_list_text_view), isDisplayed())).check(matches(withText("Alligators" + "\n")));
+
+        ViewInteraction appResultText2 = onView(
+                allOf(withId(R.id.list_count_text_view), isDisplayed())).check(matches(withText("1")));
+
+        ViewInteraction materialAutoCompleteTextView2 = onView(
+                allOf(withId(R.id.search_bar),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialAutoCompleteTextView2.perform(replaceText("Alligators"), closeSoftKeyboard());
+
+        ViewInteraction materialButton2 = onView(
+                allOf(withId(R.id.search_select_btn), withText("Select"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                1),
+                        isDisplayed()));
+        materialButton2.perform(click());
+
+        ViewInteraction appResultText3 = onView(
+                allOf(withId(R.id.animals_list_text_view), isDisplayed())).check(matches(withText("Alligators" + "\n")));
+
+        ViewInteraction appResultText4 = onView(
+                allOf(withId(R.id.list_count_text_view), isDisplayed())).check(matches(withText("1")));
     }
 
     private static Matcher<View> childAtPosition(
