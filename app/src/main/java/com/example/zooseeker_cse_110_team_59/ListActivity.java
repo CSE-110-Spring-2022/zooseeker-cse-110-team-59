@@ -3,8 +3,8 @@ package com.example.zooseeker_cse_110_team_59;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -13,15 +13,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class ListActivity extends AppCompatActivity {
 
     private Map<String, ZooData.VertexInfo> vInfo;
     private Map<String, String> userEntryToID;
-    private List<String> enteredExhibits;
+    private ArrayList<String> enteredExhibits;
     private List<String> autocompleteSuggestions;
 
     @Override
@@ -97,5 +95,17 @@ public class ListActivity extends AppCompatActivity {
     @VisibleForTesting
     public List<String> getAutocompleteSuggestions() {
         return autocompleteSuggestions;
+    }
+
+    public void onGeneratePlanClick(View view) {
+        if (enteredExhibits.size() == 0) {
+            Utilities.showAlert(this, "Empty List", "No exhibits have been added to your list.");
+            return;
+        }
+
+        Intent loadingIntent = new Intent(this, LoadingActivity.class);
+        loadingIntent.putStringArrayListExtra("enteredExhibits", enteredExhibits);
+        finish();
+        startActivity(loadingIntent);
     }
 }

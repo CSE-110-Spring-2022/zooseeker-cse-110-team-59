@@ -84,4 +84,24 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="650dp" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/plan_button_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="712dp" />
+
+    <Button
+        android:id="@+id/generate_plan_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Generate Plan"
+        android:onClick="onGeneratePlanClick"
+        app:layout_constraintBottom_toTopOf="@+id/plan_button_guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/scrollview_guideline"
+        app:layout_constraintVertical_bias="0.571" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
