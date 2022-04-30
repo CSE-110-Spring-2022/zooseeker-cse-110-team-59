@@ -54,7 +54,7 @@ public class EspressoTestsUserStory2 {
     };
 
     @Test
-    public void addToEmptyList() {
+    public void testAddToEmptyList() {
         ViewInteraction materialAutoCompleteTextView = onView(
                 Matchers.allOf(ViewMatchers.withId(R.id.search_bar),
                         childAtPosition(
@@ -83,7 +83,7 @@ public class EspressoTestsUserStory2 {
     }
 
     @Test
-    public void addToNonEmptyList() {
+    public void testAddToNonEmptyList() {
         ViewInteraction materialAutoCompleteTextView = onView(
                 Matchers.allOf(ViewMatchers.withId(R.id.search_bar),
                         childAtPosition(
@@ -132,7 +132,7 @@ public class EspressoTestsUserStory2 {
     }
 
     @Test
-    public void enterDuplicate() {
+    public void testAddDuplicateToList() {
         ViewInteraction materialAutoCompleteTextView = onView(
                 Matchers.allOf(ViewMatchers.withId(R.id.search_bar),
                         childAtPosition(

@@ -99,14 +99,13 @@ public class ListActivity extends AppCompatActivity {
 
     public void onGeneratePlanClick(View view) {
         if (enteredExhibits.size() == 0) {
-            Utilities.showAlert(this, "Empty List", "No exhibits have been selected.");
+            Utilities.showAlert(this, "Empty List", "No exhibits have been added to your list.");
             return;
         }
 
-        Intent intent = new Intent(this, LoadingActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putStringArrayList("enteredExhibits", enteredExhibits);
-        intent.putExtras(bundle);
-        startActivity(intent);
+        Intent loadingIntent = new Intent(this, LoadingActivity.class);
+        loadingIntent.putStringArrayListExtra("enteredExhibits", enteredExhibits);
+        finish();
+        startActivity(loadingIntent);
     }
 }

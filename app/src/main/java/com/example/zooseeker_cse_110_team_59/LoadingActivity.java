@@ -2,6 +2,7 @@ package com.example.zooseeker_cse_110_team_59;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import org.jgrapht.Graph;
@@ -9,12 +10,12 @@ import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class LoadingActivity extends AppCompatActivity {
-
-    private ArrayList<String> enteredExhibits;
-    private RouteData route;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,28 +23,100 @@ public class LoadingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_loading);
 
         Bundle bundle = getIntent().getExtras();
-        enteredExhibits = bundle.getStringArrayList("enteredExhibits");
+        ArrayList<String> enteredExhibits = bundle.getStringArrayList("enteredExhibits");
 
-        enteredExhibits.add(0, "entrance_exit_gate");
-        enteredExhibits.add("entrance_exit_gate");
+        Intent planIntent = new Intent(this, PlanActivity.class);
 
-        Graph<String, IdentifiedWeightedEdge> g = ZooData.loadZooGraphJSON("sample_zoo_graph.json");
-        Map<String, ZooData.VertexInfo> vInfo = ZooData.loadVertexInfoJSON("sample_node_info.json");
-        Map<String, ZooData.EdgeInfo> eInfo = ZooData.loadEdgeInfoJSON("sample_edge_info.json");
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            planIntent.putParcelableArrayListExtra("RoutePoints in Order", generateRoute(enteredExhibits));
+            finish();
+            startActivity(planIntent);
+        });
+    }
 
-        route = new RouteData();
+    public ArrayList<RoutePoint> generateRoute (ArrayList<String> enteredExhibits) {
+        ArrayList<String> unvisited = enteredExhibits;
 
-        for (int i = 0; i < enteredExhibits.size() - 1; i++) {
-            GraphPath<String, IdentifiedWeightedEdge> path = DijkstraShortestPath.findPathBetween(g, enteredExhibits.get(i), enteredExhibits.get(i + 1));
+        Graph<String, IdentifiedWeightedEdge> g = ZooData.loadZooGraphJSON(FilesToLoad.getGraphFile());
+        Map<String, ZooData.VertexInfo> vInfo = ZooData.loadVertexInfoJSON(FilesToLoad.getVertexFile());
+        Map<String, ZooData.EdgeInfo> eInfo = ZooData.loadEdgeInfoJSON(FilesToLoad.getEdgeFile());
 
-            for (IdentifiedWeightedEdge e : path.getEdgeList()) {
-                route.addRoutePoint(vInfo.get(g.getEdgeSource(e).toString()).name, (float) g.getEdgeWeight(e),
-                        eInfo.get(e.getId()).street, vInfo.get(g.getEdgeTarget(e).toString()).name);
+        ArrayList<RoutePoint> route = new ArrayList<>();
+
+        String currentNode = "entrance_exit_gate";
+
+        while (unvisited.size() != 0) {
+            double shortestPathWeight = Float.MAX_VALUE;
+            GraphPath<String, IdentifiedWeightedEdge> shortestPath = null;
+            String closestExhibit = null;
+
+            for (String vertex : unvisited) {
+                GraphPath<String, IdentifiedWeightedEdge> path = DijkstraShortestPath.findPathBetween(g, currentNode, vertex);
+                if (path.getWeight() < shortestPathWeight) {
+                    shortestPathWeight = path.getWeight();
+                    shortestPath = path;
+                    closestExhibit = vertex;
+                }
             }
+
+
+            int i = 1;
+            List<IdentifiedWeightedEdge> edgesInPath = shortestPath.getEdgeList();
+            String currentStreet = eInfo.get(edgesInPath.get(0).getId()).street;
+            String directions = "";
+            double currentStreetDist = g.getEdgeWeight(edgesInPath.get(0));
+            edgesInPath.remove(0);
+            for (IdentifiedWeightedEdge e : edgesInPath) {
+                if (!currentStreet.equals(eInfo.get(e.getId()).street)) {
+                    directions += i + ". Proceed on "
+                            + currentStreet + " "
+                            + currentStreetDist + " ft towards "
+                            + eInfo.get(e.getId()).street + ".\n";
+                    i++;
+                    currentStreet = eInfo.get(e.getId()).street;
+                    currentStreetDist = 0.0;
+                }
+                currentStreetDist += g.getEdgeWeight(e);
+            }
+            directions += i + ". Proceed on "
+                    + currentStreet + " "
+                    + currentStreetDist + " ft towards "
+                    + vInfo.get(closestExhibit).name + ".\n";
+
+            route.add(new RoutePoint(vInfo.get(closestExhibit).name, directions, shortestPathWeight));
+
+            currentNode = closestExhibit;
+            unvisited.remove(closestExhibit);
         }
 
-        for (int i = 0; i < route.getRouteSize(); i++) {
-            System.out.println(route.printRoutePoint(i));
+        GraphPath<String, IdentifiedWeightedEdge> backToExit = DijkstraShortestPath.findPathBetween(g, currentNode, "entrance_exit_gate");
+
+        int i = 1;
+        List<IdentifiedWeightedEdge> edgesInPath = backToExit.getEdgeList();
+        String currentStreet = eInfo.get(edgesInPath.get(0).getId()).street;
+        String directions = "";
+        double currentStreetDist = g.getEdgeWeight(edgesInPath.get(0));
+        edgesInPath.remove(0);
+        for (IdentifiedWeightedEdge e : edgesInPath) {
+            if (!currentStreet.equals(eInfo.get(e.getId()).street)) {
+                directions += i + ". Proceed on "
+                        + currentStreet + " "
+                        + currentStreetDist + " ft towards "
+                        + eInfo.get(e.getId()).street + ".\n";
+                i++;
+                currentStreet = eInfo.get(e.getId()).street;
+                currentStreetDist = 0.0;
+            }
+            currentStreetDist += g.getEdgeWeight(e);
         }
+        directions += i + ". Proceed on "
+                + currentStreet + " "
+                + currentStreetDist + " ft towards "
+                + vInfo.get("entrance_exit_gate").name + ".\n";
+
+        route.add(new RoutePoint(vInfo.get("entrance_exit_gate").name, directions, backToExit.getWeight()));
+
+        return route;
     }
 }
