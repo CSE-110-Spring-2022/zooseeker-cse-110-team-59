@@ -1,11 +1,15 @@
 package com.example.zooseeker_cse_110_team_59;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static org.junit.Assert.*;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.text.NoCopySpan;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
@@ -15,8 +19,11 @@ import android.widget.TextView;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.test.core.app.ActivityScenario;
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+
+import java.util.List;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -25,12 +32,18 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
  */
 @RunWith(AndroidJUnit4.class)
 public class UnitTestsUserStory1 {
+
     @Rule
-    public ActivityScenarioRule<MainActivity> scenarioRule = new ActivityScenarioRule<>(MainActivity.class);
+    public ActivityScenarioRule<ListActivity> scenarioRule = new ActivityScenarioRule<>(ListActivity.class);
+
+    @Before
+    public void setTestData() {
+        FilesToLoad.injectNewFiles(new String[]{"test_zoo_graph.json", "test_node_info.json", "test_edge_info.json"});
+    }
 
     @Test
     public void testEnterBlank() {
-        ActivityScenario<MainActivity> scenario = scenarioRule.getScenario();
+        ActivityScenario<ListActivity> scenario = scenarioRule.getScenario();
 
         scenario.moveToState(Lifecycle.State.CREATED);
 
@@ -42,7 +55,7 @@ public class UnitTestsUserStory1 {
 
     @Test
     public void testEnterWord() {
-        ActivityScenario<MainActivity> scenario = scenarioRule.getScenario();
+        ActivityScenario<ListActivity> scenario = scenarioRule.getScenario();
 
         scenario.moveToState(Lifecycle.State.CREATED);
 
@@ -57,7 +70,7 @@ public class UnitTestsUserStory1 {
 
     @Test
     public void testIsValidOnValid() {
-        ActivityScenario<MainActivity> scenario = scenarioRule.getScenario();
+        ActivityScenario<ListActivity> scenario = scenarioRule.getScenario();
 
         scenario.moveToState(Lifecycle.State.CREATED);
 
@@ -68,7 +81,7 @@ public class UnitTestsUserStory1 {
 
     @Test
     public void testIsValidOnInvalid() {
-        ActivityScenario<MainActivity> scenario = scenarioRule.getScenario();
+        ActivityScenario<ListActivity> scenario = scenarioRule.getScenario();
 
         scenario.moveToState(Lifecycle.State.CREATED);
 
