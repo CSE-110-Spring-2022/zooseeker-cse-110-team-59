@@ -28,13 +28,13 @@ import java.util.List;
 @RunWith(AndroidJUnit4.class)
 public class UnitTestsUserStory3 {
 
-    private Context context = ApplicationProvider.getApplicationContext();
-
-    private Intent listIntent = new Intent(context, ListActivity.class)
-            .putExtra("Data Files", new String[]{"test_zoo_graph.json", "test_node_info.json", "test_edge_info.json"});
-
     @Rule
-    public ActivityScenarioRule<ListActivity> scenarioRule = new ActivityScenarioRule<>(listIntent);
+    public ActivityScenarioRule<ListActivity> scenarioRule = new ActivityScenarioRule<>(ListActivity.class);
+
+    @Before
+    public void setTestData() {
+        FilesToLoad.injectNewFiles(new String[]{"test_zoo_graph.json", "test_node_info.json", "test_edge_info.json"});
+    }
 
     @Test
     public void testSetAdapterCorrectly() {

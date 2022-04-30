@@ -19,8 +19,6 @@ import java.util.stream.Collectors;
 
 public class ListActivity extends AppCompatActivity {
 
-    private String[] filesToLoadFrom;
-
     private Map<String, ZooData.VertexInfo> vInfo;
     private Map<String, String> userEntryToID;
     private List<String> enteredExhibits;
@@ -31,10 +29,7 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        Bundle bundle = getIntent().getExtras();
-        filesToLoadFrom = bundle.getStringArray("Data Files"); // Graph, Vertex, Edge
-
-        vInfo = ZooData.loadVertexInfoJSON(filesToLoadFrom[1]);
+        vInfo = ZooData.loadVertexInfoJSON(FilesToLoad.getVertexFile());
 
         userEntryToID = new HashMap<>();
         vInfo.forEach((id, datum) -> {

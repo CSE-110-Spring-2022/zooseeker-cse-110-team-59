@@ -23,6 +23,8 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import java.util.List;
+
 /**
  * Example local unit test, which will execute on the development machine (host).
  *
@@ -31,13 +33,13 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 @RunWith(AndroidJUnit4.class)
 public class UnitTestsUserStory1 {
 
-    private Context context = ApplicationProvider.getApplicationContext();
-
-    private Intent listIntent = new Intent(context, ListActivity.class)
-            .putExtra("Data Files", new String[]{"test_zoo_graph.json", "test_node_info.json", "test_edge_info.json"});
-
     @Rule
-    public ActivityScenarioRule<ListActivity> scenarioRule = new ActivityScenarioRule<>(listIntent);
+    public ActivityScenarioRule<ListActivity> scenarioRule = new ActivityScenarioRule<>(ListActivity.class);
+
+    @Before
+    public void setTestData() {
+        FilesToLoad.injectNewFiles(new String[]{"test_zoo_graph.json", "test_node_info.json", "test_edge_info.json"});
+    }
 
     @Test
     public void testEnterBlank() {

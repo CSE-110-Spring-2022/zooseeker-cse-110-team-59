@@ -25,8 +25,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Intent listIntent = new Intent(this, ListActivity.class);
-        listIntent.putExtra("Data Files", FilesToLoad.getFilesToLoad());
-        // First is Graph File, Second is Vertex File, Third is Edge File
         startActivity(listIntent);
     }
 }
