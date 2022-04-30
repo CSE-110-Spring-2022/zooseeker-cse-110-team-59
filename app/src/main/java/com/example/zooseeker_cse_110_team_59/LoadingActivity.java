@@ -2,19 +2,16 @@ package com.example.zooseeker_cse_110_team_59;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import android.os.Bundle;
 
 import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
+import java.util.ArrayList;
+import java.util.Map;
 
-public class PlanScreenActivity extends AppCompatActivity {
+public class LoadingActivity extends AppCompatActivity {
 
     private ArrayList<String> enteredExhibits;
     private RouteData route;
@@ -22,7 +19,7 @@ public class PlanScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_plan_screen);
+        setContentView(R.layout.activity_loading);
 
         Bundle bundle = getIntent().getExtras();
         enteredExhibits = bundle.getStringArrayList("enteredExhibits");
