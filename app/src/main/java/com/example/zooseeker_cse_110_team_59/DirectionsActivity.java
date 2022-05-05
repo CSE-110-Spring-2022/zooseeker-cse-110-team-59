@@ -51,6 +51,7 @@ public class DirectionsActivity extends AppCompatActivity {
     private void updateDirections() {
         if (routePointNum == route.size()) {
             Intent intent = new Intent(this, EndRouteActivity.class);
+            finish();
             startActivity(intent);
         }
 
