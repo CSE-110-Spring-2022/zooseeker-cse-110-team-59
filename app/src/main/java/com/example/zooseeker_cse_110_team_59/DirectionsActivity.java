@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class DirectionsActivity extends AppCompatActivity {
     private int routePointNum;
     private TextView directions;
     private TextView currExhibit;
+    private Button nextButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class DirectionsActivity extends AppCompatActivity {
 
         directions = findViewById(R.id.directions_text);
         currExhibit = findViewById(R.id.current_exhibit);
+        nextButton = findViewById(R.id.next_btn);
 
         updateDirections();
         routePointNum++;
@@ -52,6 +55,17 @@ public class DirectionsActivity extends AppCompatActivity {
         }
 
         directions.setText(route.get(routePointNum).directions);
-        currExhibit.setText("Directions to " + route.get(routePointNum).exhibitName);
+
+        String currExhibitText = "Directions to " + route.get(routePointNum).exhibitName;
+        currExhibit.setText(currExhibitText);
+
+        String nextBtnText;
+        if (routePointNum + 1 >= route.size()) {
+            nextBtnText = "Finish";
+        }
+        else {
+            nextBtnText = "Next: " + route.get(routePointNum + 1).exhibitName + ", " + route.get(routePointNum + 1).distance + "ft";
+        }
+        nextButton.setText(nextBtnText);
     }
 }
