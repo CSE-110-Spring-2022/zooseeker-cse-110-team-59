@@ -17,6 +17,7 @@ public class DirectionsActivity extends AppCompatActivity {
     private TextView directions;
     private TextView currExhibit;
     private Button nextButton;
+    private Button finishButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,42 +32,44 @@ public class DirectionsActivity extends AppCompatActivity {
         directions = findViewById(R.id.directions_text);
         currExhibit = findViewById(R.id.current_exhibit);
         nextButton = findViewById(R.id.next_btn);
+        finishButton = findViewById(R.id.finish_btn);
 
         updateDirections();
-        routePointNum++;
     }
 
     public void onNextClicked(View view) {
-        updateDirections();
         routePointNum++;
+        updateDirections();
+    }
+
+    public void onFinishClicked(View view) {
+        Intent intent = new Intent(this, EndRouteActivity.class);
+        finish();
+        startActivity(intent);
     }
 
     /*
     public void onPreviousClicked(View view) {
-        updateDirections();
         routePointNum--;
+        updateDirections();
     }
      */
 
-    private void updateDirections() {
-        if (routePointNum == route.size()) {
-            Intent intent = new Intent(this, EndRouteActivity.class);
-            finish();
-            startActivity(intent);
-        }
-
+    public void updateDirections() {
         directions.setText(route.get(routePointNum).directions);
 
         String currExhibitText = "Directions to " + route.get(routePointNum).exhibitName;
         currExhibit.setText(currExhibitText);
 
-        String nextBtnText;
-        if (routePointNum + 1 >= route.size()) {
-            nextBtnText = "Finish";
+        if (routePointNum == route.size() - 1) {
+            finishButton.setVisibility(View.VISIBLE);
+            nextButton.setVisibility(View.INVISIBLE);
+        } else {
+            finishButton.setVisibility(View.INVISIBLE);
+            nextButton.setVisibility(View.VISIBLE);
+            String nextBtnText = "Next: " + route.get(routePointNum + 1).exhibitName + ", " + route.get(routePointNum + 1).distance + "ft";
+            nextButton.setText(nextBtnText);
         }
-        else {
-            nextBtnText = "Next: " + route.get(routePointNum + 1).exhibitName + ", " + route.get(routePointNum + 1).distance + "ft";
-        }
-        nextButton.setText(nextBtnText);
     }
+
 }

@@ -87,16 +87,6 @@ public class ListActivity extends AppCompatActivity {
         listCount.setText(enteredExhibits.size() + "");
     }
 
-    @VisibleForTesting
-    public List<String> getEnteredExhibits() {
-        return enteredExhibits;
-    }
-
-    @VisibleForTesting
-    public List<String> getAutocompleteSuggestions() {
-        return autocompleteSuggestions;
-    }
-
     public void onGeneratePlanClick(View view) {
         if (enteredExhibits.size() == 0) {
             Utilities.showAlert(this, "Empty List", "No exhibits have been added to your list.");
@@ -108,4 +98,15 @@ public class ListActivity extends AppCompatActivity {
         finish();
         startActivity(loadingIntent);
     }
+
+    @VisibleForTesting
+    public List<String> getEnteredExhibits() {
+        return enteredExhibits;
+    }
+
+    @VisibleForTesting
+    public List<String> getAutocompleteSuggestions() {
+        return autocompleteSuggestions;
+    }
+
 }
