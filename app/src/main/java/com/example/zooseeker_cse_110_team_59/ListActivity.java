@@ -74,17 +74,21 @@ public class ListActivity extends AppCompatActivity {
         return !enteredExhibits.contains(userEntryToID.get(searchBarInput));
     }
 
-    public void addToLists(String searchBarInput) {
+    public List<String> addToLists(String searchBarInput) {
         enteredExhibits.add(userEntryToID.get(searchBarInput));
 
         TextView animalsListTextView = findViewById(R.id.animals_list_text_view);
         String animalsListText = animalsListTextView.getText().toString();
         animalsListTextView.setText(animalsListText + searchBarInput + "\n");
+
+        return enteredExhibits;
     }
 
-    public void increaseListsCount() {
+    public int increaseListsCount() {
         TextView listCount = findViewById(R.id.list_count_text_view);
         listCount.setText(enteredExhibits.size() + "");
+
+        return enteredExhibits.size();
     }
 
     public void onGeneratePlanClick(View view) {

@@ -25,6 +25,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -61,11 +62,11 @@ public class UnitTestsUserStory2 {
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
-            activity.addToLists("Elephant Odyssey");
+            ArrayList<String> test = new ArrayList<>(Arrays.asList("elephant_odyssey"));
 
-            ArrayList<String> testAgainst = new ArrayList<>(Arrays.asList("elephant_odyssey"));
+            List<String> result = activity.addToLists("Elephant Odyssey");
 
-            assertEquals(testAgainst, activity.getEnteredExhibits());
+            assertEquals(test, result);
         });
     }
 
@@ -76,17 +77,17 @@ public class UnitTestsUserStory2 {
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
+            ArrayList<String> test = new ArrayList<>(Arrays.asList("gators", "arctic_foxes"));
+
             activity.addToLists("Alligators");
-            activity.addToLists("Arctic Foxes");
+            List<String> result = activity.addToLists("Arctic Foxes");
 
-            ArrayList<String> testAgainst = new ArrayList<>(Arrays.asList("gators", "arctic_foxes"));
-
-            assertEquals(testAgainst, activity.getEnteredExhibits());
+            assertEquals(test, result);
         });
     }
 
     @Test
-    public void testIsNewOnEmptyList() {
+    public void testNewOnEmptyList() {
         ActivityScenario<ListActivity> scenario = scenarioRule.getScenario();
 
         scenario.moveToState(Lifecycle.State.CREATED);
@@ -97,7 +98,20 @@ public class UnitTestsUserStory2 {
     }
 
     @Test
-    public void testIsNewOnNonEmptyList() {
+    public void testNewOnNonEmptyList() {
+        ActivityScenario<ListActivity> scenario = scenarioRule.getScenario();
+
+        scenario.moveToState(Lifecycle.State.CREATED);
+
+        scenario.onActivity(activity -> {
+            activity.addToLists("Gorillas");
+
+            assertTrue(activity.isNew("Elephant Odyssey"));
+        });
+    }
+
+    @Test
+    public void testNotNewOnNonEmptyList() {
         ActivityScenario<ListActivity> scenario = scenarioRule.getScenario();
 
         scenario.moveToState(Lifecycle.State.CREATED);
@@ -110,7 +124,7 @@ public class UnitTestsUserStory2 {
     }
 
     @Test
-    public void testIncreaseCount() {
+    public void testIncreaseCountFromZero() {
         ActivityScenario<ListActivity> scenario = scenarioRule.getScenario();
 
         scenario.moveToState(Lifecycle.State.CREATED);
@@ -118,8 +132,30 @@ public class UnitTestsUserStory2 {
         scenario.onActivity(activity -> {
             TextView listCountTextView = activity.findViewById(R.id.list_count_text_view);
             int listCountBefore = Integer.valueOf(listCountTextView.getText().toString());
+            assertEquals(0, listCountBefore);
 
             activity.addToLists("Gorillas");
+            activity.increaseListsCount();
+            int listCountAfter = Integer.valueOf(listCountTextView.getText().toString());
+
+            assertEquals(1, listCountAfter);
+        });
+    }
+
+    @Test
+    public void testIncreaseCountFromNonZero() {
+        ActivityScenario<ListActivity> scenario = scenarioRule.getScenario();
+
+        scenario.moveToState(Lifecycle.State.CREATED);
+
+        scenario.onActivity(activity -> {
+            activity.addToLists("Gorillas");
+            activity.increaseListsCount();
+
+            TextView listCountTextView = activity.findViewById(R.id.list_count_text_view);
+            int listCountBefore = Integer.valueOf(listCountTextView.getText().toString());
+
+            activity.addToLists("Alligators");
             activity.increaseListsCount();
             int listCountAfter = Integer.valueOf(listCountTextView.getText().toString());
 

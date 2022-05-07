@@ -6,6 +6,7 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -83,6 +84,8 @@ public class EspressoTestsUserStory1 {
                                         0),
                                 3)));
         materialButton2.perform(scrollTo(), click());
+
+        materialAutoCompleteTextView.check(matches(withText("")));
     }
 
     @Test
@@ -106,6 +109,8 @@ public class EspressoTestsUserStory1 {
                                 1),
                         isDisplayed()));
         materialButton.perform(click());
+
+        materialAutoCompleteTextView.check(matches(withText("")));
     }
 
     private static Matcher<View> childAtPosition(
