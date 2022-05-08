@@ -5,8 +5,18 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.nio.Attribute;
 
 /**
- * Exactly like a DefaultWeightedEdge, but has an id field we
- * can use to look up the information about the edge with.
+ * Class:           IdentifiedWeightedEdge
+ * Description:     A custom edge class that inherits the <code>DefaultWeightedEdge</code>
+ *                  class to use the existing methods provided by the <code>jGraph</code>
+ *                  library, but is added with custom fields about the edges
+ *                  in our zoo graph
+ *
+ * Public functions:
+ *
+ * toString         - overrides the default object toString method to
+ *                    customize the output
+ * attributeConsumer    - Given a edge and vertex tuple, assigns the id of the edge
+ *                        to the value of the attribute
  */
 public class IdentifiedWeightedEdge extends DefaultWeightedEdge {
     private String id = null;

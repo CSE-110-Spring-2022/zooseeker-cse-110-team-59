@@ -3,11 +3,17 @@ package com.example.zooseeker_cse_110_team_59;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+/**
+ * Class:           RoutePoint
+ * Description:     A custom route class that implements the <code>Parcelable</code> interface,
+ *                  which is similar to the Java Serializable class, which allows us to
+ *                  transfer objects between different components in android
+ */
 public class RoutePoint implements Parcelable {
+
     public String exhibitName;
     public String directions;
     public double distance;
-
 
     public RoutePoint(String exhibitName, String directions, double distance) {
         this.exhibitName = exhibitName;
