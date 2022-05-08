@@ -72,4 +72,9 @@ public class DirectionsActivity extends AppCompatActivity {
         }
     }
 
+    // This is for testing purposes
+    public int getRoutePointNum() {
+        return routePointNum;
+    }
+
 }
