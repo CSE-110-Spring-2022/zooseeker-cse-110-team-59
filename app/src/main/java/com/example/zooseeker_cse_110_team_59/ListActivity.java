@@ -15,6 +15,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class:           ListActivity
+ * Description:     The activity started when the user adds exhibits to the list
+ *
+ * Public functions:
+ *
+ * checkSearchBar   - called when the user presses the search button
+ * isValid    - checks if user input is valid by comparing it to a hashmap
+ *              of exhibits
+ * isNew    - checks if user input is a newly entered exhibit by comparing it a
+ *              arraylist of previously entered exhibits
+ * addToLists   - adds the user input to a arraylist of exhibits
+ * increaseListsCount   - increments the entered exhibits arraylist by 1
+ * isExhibitValidSize   - checks if the enteredexhibit arraylist has a valid size
+ * onGeneratePlanClick  - generates the plan by instantiating a new intent
+ */
 public class ListActivity extends AppCompatActivity {
 
     private Map<String, ZooData.VertexInfo> vInfo;
@@ -91,6 +107,26 @@ public class ListActivity extends AppCompatActivity {
         return enteredExhibits.size();
     }
 
+    public boolean isExhibitValidSize()
+    {
+        if (enteredExhibits.size() == 0) {
+            Utilities.showAlert(this, "Empty List", "No exhibits have been added to your list.");
+            return false;
+        }
+
+        return true;
+    }
+    public void onGeneratePlanClick(View view) {
+
+        isExhibitValidSize();
+
+        Intent loadingIntent = new Intent(this, LoadingActivity.class);
+        loadingIntent.putStringArrayListExtra("enteredExhibits", enteredExhibits);
+        finish();
+        startActivity(loadingIntent);
+    }
+
+    //getter methods to see values when testing
     @VisibleForTesting
     public List<String> getEnteredExhibits() {
         return enteredExhibits;
@@ -101,15 +137,5 @@ public class ListActivity extends AppCompatActivity {
         return autocompleteSuggestions;
     }
 
-    public void onGeneratePlanClick(View view) {
-        if (enteredExhibits.size() == 0) {
-            Utilities.showAlert(this, "Empty List", "No exhibits have been added to your list.");
-            return;
-        }
 
-        Intent loadingIntent = new Intent(this, LoadingActivity.class);
-        loadingIntent.putStringArrayListExtra("enteredExhibits", enteredExhibits);
-        finish();
-        startActivity(loadingIntent);
-    }
 }

@@ -16,6 +16,17 @@ import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultUndirectedWeightedGraph;
 import org.jgrapht.nio.json.JSONImporter;
 
+/**
+ * Class:           ZooData
+ * Description:     A prototype* (*this is a design pattern) and utility class for loading data from the
+ *                  json files and storing each file into  their appropriate data structure
+ *
+ * Public functions:
+ *
+ * loadVertexInfoJSON - loads the vertex json file into a hashmap of type string and vertexinfo
+ * loadEdgeInfoJSON - loads the edge json file into a hashmap of type string and edgeinfo
+ * loadZooGraphJSON - loads the graph json file into a graph  of type string and IdentifiedWeightedEdge
+ */
 public class ZooData {
     public static class VertexInfo {
         public static enum Kind {
