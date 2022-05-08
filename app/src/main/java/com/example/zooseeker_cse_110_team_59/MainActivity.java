@@ -17,8 +17,23 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
-
+/**
+ * Class:            MainActivity
+ * Description:      sets up the onCreate method and  is the entry point of the application
+ *
+ * Public functions: onCreate          - creates the application for the MainActivity
+ */
 public class MainActivity extends AppCompatActivity {
+
+    /**
+     * The onCreate method creates the MainActivity for the application
+     * super is used to call the parent class constructor
+     * setContentView is used to set the xml
+     * @param Bundle is used to save and recover state information in activity
+     *
+     * @return None
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

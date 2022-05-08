@@ -15,12 +15,30 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Class:           LoadingActivity
+ * Description:     The activity started when the clicks on the plan button to generate the route
+ *
+ * Public functions:
+ *
+ * onCreate   - responsible for creating a new intent and create a new execute object to
+ *              run and manage a new thread for this activity
+ * generateRoute - Performs Djikstra algorithm to compute the shortest path given a list of exhibits
+ *                 and their edge weights. Returns a list of type Routepoint that goes back to the
+ *                 entrance and exit gate
+ * createRoutePointFromPath - returns a Routepoint object that shows which path and direction to proceed
+ *                              and is called in the <code>generateRoute</code> method
+ * setGraphData  - loads the graph data from the json files into an empty graph, edge, and vertex respectively
+ */
 public class LoadingActivity extends AppCompatActivity {
 
     private Graph<String, IdentifiedWeightedEdge> g;
     private Map<String, ZooData.VertexInfo> vInfo;
     private Map<String, ZooData.EdgeInfo> eInfo;
 
+    /**
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
