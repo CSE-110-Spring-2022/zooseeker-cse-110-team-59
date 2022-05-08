@@ -1,7 +1,14 @@
 package com.example.zooseeker_cse_110_team_59;
 
 import androidx.annotation.VisibleForTesting;
-
+/**
+ * Class:            FilesToLoad
+ * Description:      This class calls methods that would read in a graph file, vertex file, and an edge file.
+ *
+ * Public functions: getGraphFile          - return the graph file of the Zoo
+ * Public functions: getVertexFile         - return the file with all the vertices
+ * Public functions: getEdgeFile           - return the file with all the edges
+ */
 public class FilesToLoad {
     private static String[] filesToLoad = new String[]{"sample_zoo_graph.json", "sample_node_info.json", "sample_edge_info.json"};
 
