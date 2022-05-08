@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
  * Public functions: onCreate          - creates the application for the MainActivity
  */
 public class MainActivity extends AppCompatActivity {
+
     /**
      * The onCreate method creates the MainActivity for the application
      * super is used to call the parent class constructor
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
      *
      * @return None
      */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

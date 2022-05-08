@@ -10,6 +10,7 @@ import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 
 import android.os.Bundle;
+
 /**
  * Class:            PlanActivity
  * Description:      sets up the onCreate method and is the entry point for the planning of the route
@@ -25,6 +26,7 @@ public class PlanActivity extends AppCompatActivity {
      *
      * @return None
      */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

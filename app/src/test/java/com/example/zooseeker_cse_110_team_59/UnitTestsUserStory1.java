@@ -50,6 +50,9 @@ public class UnitTestsUserStory1 {
         scenario.onActivity(activity -> {
             String input = activity.checkSearchBar();
             assertEquals("", input);
+
+            AutoCompleteTextView searchBar = activity.findViewById(R.id.search_bar);
+            assertEquals("", searchBar.getText().toString());
         });
     }
 
@@ -65,6 +68,8 @@ public class UnitTestsUserStory1 {
             searchBar.setText("One 2 red BLUE");
             String input = activity.checkSearchBar();
             assertEquals("One 2 red BLUE", input);
+
+            assertEquals("", searchBar.getText().toString());
         });
     }
 

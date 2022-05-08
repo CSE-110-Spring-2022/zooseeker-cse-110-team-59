@@ -13,6 +13,8 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import org.jgrapht.GraphPath;
+import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -38,10 +40,59 @@ public class UnitTestsUserStory5 {
     }
 
     @Test
+    public void testsRoutePointOneEdge() {
+        ActivityScenario<LoadingActivity> scenario = scenarioRule.getScenario();
+
+        scenario.onActivity(activity -> {
+            activity.setGraphData();
+
+            RoutePoint test = new RoutePoint("Gorillas",
+                    "1. Proceed on Africa Rocks Street 200.0 ft towards Gorillas.\n",
+                    200.0);
+
+            GraphPath<String, IdentifiedWeightedEdge> path = DijkstraShortestPath.findPathBetween(ZooData.loadZooGraphJSON(FilesToLoad.getGraphFile()),
+                                                                                            "entrance_plaza",
+                                                                                                "gorillas");
+
+            RoutePoint result = activity.createRoutePointFromPath(path);
+
+            assertEquals(test.exhibitName, result.exhibitName);
+            assertEquals(test.directions, result.directions);
+            assertEquals(test.distance, result.distance, 0.0);
+        });
+    }
+
+    @Test
+    public void testsRoutePointManyEdge() {
+        ActivityScenario<LoadingActivity> scenario = scenarioRule.getScenario();
+
+        scenario.onActivity(activity -> {
+            activity.setGraphData();
+
+            RoutePoint test = new RoutePoint("Gorillas",
+                    "1. Proceed on Entrance Way 10.0 ft towards Africa Rocks Street.\n"
+                            + "2. Proceed on Africa Rocks Street 200.0 ft towards Gorillas.\n",
+                    210.0);
+
+            GraphPath<String, IdentifiedWeightedEdge> path = DijkstraShortestPath.findPathBetween(ZooData.loadZooGraphJSON(FilesToLoad.getGraphFile()),
+                    "entrance_exit_gate",
+                    "gorillas");
+
+            RoutePoint result = activity.createRoutePointFromPath(path);
+
+            assertEquals(test.exhibitName, result.exhibitName);
+            assertEquals(test.directions, result.directions);
+            assertEquals(test.distance, result.distance, 0.0);
+        });
+    }
+
+    @Test
     public void testsNonCombinePath() {
         ActivityScenario<LoadingActivity> scenario = scenarioRule.getScenario();
 
         scenario.onActivity(activity -> {
+            activity.setGraphData();
+
             ArrayList<RoutePoint> test = new ArrayList<>();
             test.add(new RoutePoint("Gorillas",
                     "1. Proceed on Entrance Way 10.0 ft towards Africa Rocks Street.\n"
@@ -69,6 +120,8 @@ public class UnitTestsUserStory5 {
         ActivityScenario<LoadingActivity> scenario = scenarioRule.getScenario();
 
         scenario.onActivity(activity -> {
+            activity.setGraphData();
+
             ArrayList<RoutePoint> test = new ArrayList<>();
             test.add(new RoutePoint("Gorillas",
                     "1. Proceed on Entrance Way 10.0 ft towards Africa Rocks Street.\n"
