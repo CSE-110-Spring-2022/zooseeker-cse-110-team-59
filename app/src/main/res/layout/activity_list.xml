@@ -57,8 +57,8 @@
 
     <ScrollView
         android:id="@+id/animals_list_scrollview"
-        android:layout_width="369dp"
-        android:layout_height="524dp"
+        android:layout_width="367dp"
+        android:layout_height="484dp"
         android:fadeScrollbars="false"
         app:layout_constraintBottom_toTopOf="@+id/scrollview_guideline"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,8 +72,8 @@
             android:id="@+id/animals_list_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=""
             android:lineSpacingExtra="5dp"
+            android:text=""
             android:textSize="22dp" />
     </ScrollView>
 
@@ -82,14 +82,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="650dp" />
+        app:layout_constraintGuide_begin="610dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/plan_button_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="712dp" />
+        app:layout_constraintGuide_begin="669dp" />
 
     <Button
         android:id="@+id/generate_plan_btn"

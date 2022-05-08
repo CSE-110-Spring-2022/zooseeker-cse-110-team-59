@@ -118,12 +118,12 @@ public class ListActivity extends AppCompatActivity {
     }
     public void onGeneratePlanClick(View view) {
 
-        isExhibitValidSize();
-
-        Intent loadingIntent = new Intent(this, LoadingActivity.class);
-        loadingIntent.putStringArrayListExtra("enteredExhibits", enteredExhibits);
-        finish();
-        startActivity(loadingIntent);
+        if (isExhibitValidSize()) {
+            Intent loadingIntent = new Intent(this, LoadingActivity.class);
+            loadingIntent.putStringArrayListExtra("enteredExhibits", enteredExhibits);
+            finish();
+            startActivity(loadingIntent);
+        }
     }
 
     //getter methods to see values when testing
