@@ -136,6 +136,4 @@ public class ListActivity extends AppCompatActivity {
     public List<String> getAutocompleteSuggestions() {
         return autocompleteSuggestions;
     }
-
-
 }
