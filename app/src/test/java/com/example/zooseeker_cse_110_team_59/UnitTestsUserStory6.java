@@ -6,13 +6,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,6 +44,11 @@ public class UnitTestsUserStory6 {
 
     @Rule
     public ActivityScenarioRule<DirectionsActivity> scenarioRule = new ActivityScenarioRule<>(planIntent);
+
+    @Before
+    public void setTestData() {
+        FilesToLoad.injectNewFiles(new String[]{"test_zoo_graph_ms1.json", "test_node_info_ms1.json", "test_edge_info_ms1.json"});
+    }
 
     @Test
     public void testFirstInstanceOfDirections() {

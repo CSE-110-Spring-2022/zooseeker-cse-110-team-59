@@ -4,10 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import android.content.Context;
 import android.content.Intent;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 
-import androidx.lifecycle.Lifecycle;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
@@ -36,7 +33,7 @@ public class UnitTestsUserStory5 {
 
     @Before
     public void setTestData() {
-        FilesToLoad.injectNewFiles(new String[]{"test_zoo_graph.json", "test_node_info.json", "test_edge_info.json"});
+        FilesToLoad.injectNewFiles(new String[]{"test_zoo_graph_ms1.json", "test_node_info_ms1.json", "test_edge_info_ms1.json"});
     }
 
     @Test
@@ -50,7 +47,7 @@ public class UnitTestsUserStory5 {
                     "1. Proceed on Africa Rocks Street 200.0 ft towards Gorillas.\n",
                     200.0);
 
-            GraphPath<String, IdentifiedWeightedEdge> path = DijkstraShortestPath.findPathBetween(ZooData.loadZooGraphJSON(FilesToLoad.getGraphFile()),
+            GraphPath<String, ZooData.Graph.Edge> path = DijkstraShortestPath.findPathBetween(ZooData.loadZooGraphJSON(FilesToLoad.getGraphFile()),
                                                                                             "entrance_plaza",
                                                                                                 "gorillas");
 
@@ -74,7 +71,7 @@ public class UnitTestsUserStory5 {
                             + "2. Proceed on Africa Rocks Street 200.0 ft towards Gorillas.\n",
                     210.0);
 
-            GraphPath<String, IdentifiedWeightedEdge> path = DijkstraShortestPath.findPathBetween(ZooData.loadZooGraphJSON(FilesToLoad.getGraphFile()),
+            GraphPath<String, ZooData.Graph.Edge> path = DijkstraShortestPath.findPathBetween(ZooData.loadZooGraphJSON(FilesToLoad.getGraphFile()),
                     "entrance_exit_gate",
                     "gorillas");
 

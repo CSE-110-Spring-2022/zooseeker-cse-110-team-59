@@ -1,32 +1,24 @@
 package com.example.zooseeker_cse_110_team_59;
 
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
+import java.io.*;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
+import com.example.zooseeker_cse_110_team_59.MainActivity;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 
-import org.jgrapht.Graph;
+import org.jgrapht.alg.util.Pair;
 import org.jgrapht.graph.DefaultUndirectedWeightedGraph;
+import org.jgrapht.graph.DefaultWeightedEdge;
+import org.jgrapht.graph.GraphWalk;
+import org.jgrapht.nio.Attribute;
 import org.jgrapht.nio.json.JSONImporter;
 
-/**
- * Class:           ZooData
- * Description:     A prototype* (*this is a design pattern) and utility class for loading data from the
- *                  json files and storing each file into  their appropriate data structure
- *
- * Public functions:
- *
- * loadVertexInfoJSON - loads the vertex json file into a hashmap of type string and vertexinfo
- * loadEdgeInfoJSON - loads the edge json file into a hashmap of type string and edgeinfo
- * loadZooGraphJSON - loads the graph json file into a graph  of type string and IdentifiedWeightedEdge
- */
 public class ZooData {
     public static class VertexInfo {
         public static enum Kind {
@@ -48,21 +40,56 @@ public class ZooData {
         public String street;
     }
 
+    public static void storeVertexInfoJSON(List<ZooData.VertexInfo> vInfos, String path) throws IOException {
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<ZooData.VertexInfo>>(){}.getType();
+        FileWriter writer = new FileWriter(path);
+        gson.toJson(vInfos, type, writer);
+        writer.flush();
+        writer.close();
+    }
+
+    public static void storeEdgeInfoJSON(List<ZooData.EdgeInfo> eInfos, String path) throws IOException {
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<ZooData.EdgeInfo>>(){}.getType();
+        FileWriter writer = new FileWriter(path);
+        gson.toJson(eInfos, type, writer);
+        writer.flush();
+        writer.close();
+    }
+
+    public static ZooData.Graph loadZooGraphJSON(String path) {
+        InputStream inputStream = MainActivity.class.getClassLoader().getResourceAsStream(path);
+        Reader reader = new InputStreamReader(inputStream);
+
+        // Create an empty graph to populate.
+        ZooData.Graph g = new ZooData.Graph();
+
+        // Create an importer that can be used to populate our empty graph.
+        JSONImporter<String, ZooData.Graph.Edge> importer = new JSONImporter<>();
+
+        // We don't need to convert the vertices in the graph, so we return them as is.
+        importer.setVertexFactory(v -> v);
+
+        // We need to make sure we set the IDs on our edges from the 'id' attribute.
+        // While this is automatic for vertices, it isn't for edges. We keep the
+        // definition of this in the IdentifiedWeightedEdge class for convenience.
+        importer.addEdgeAttributeConsumer(ZooData.Graph.Edge::attributeConsumer);
+
+        // And now we just import it!
+        importer.importGraph(g, reader);
+
+        return g;
+    }
+
     public static Map<String, ZooData.VertexInfo> loadVertexInfoJSON(String path) {
         InputStream inputStream = MainActivity.class.getClassLoader().getResourceAsStream(path);
         Reader reader = new InputStreamReader(inputStream);
-        
+
         Gson gson = new Gson();
         Type type = new TypeToken<List<ZooData.VertexInfo>>(){}.getType();
         List<ZooData.VertexInfo> zooData = gson.fromJson(reader, type);
 
-        // This code is equivalent to:
-        //
-        // Map<String, ZooData.VertexInfo> indexedZooData = new HashMap();
-        // for (ZooData.VertexInfo datum : zooData) {
-        //   indexedZooData[datum.id] = datum;    
-        // }
-        //
         Map<String, ZooData.VertexInfo> indexedZooData = zooData
             .stream()
             .collect(Collectors.toMap(v -> v.id, datum -> datum));
@@ -85,28 +112,48 @@ public class ZooData {
         return indexedZooData;
     }
 
-    public static Graph<String, IdentifiedWeightedEdge> loadZooGraphJSON(String path) {
-        // Create an empty graph to populate.
-        Graph<String, IdentifiedWeightedEdge> g = new DefaultUndirectedWeightedGraph<>(IdentifiedWeightedEdge.class);
+    public static class Graph extends DefaultUndirectedWeightedGraph<String, ZooData.Graph.Edge> {
+        public Graph() {
+            // Omit the edge type in construction.
+            super(ZooData.Graph.Edge.class);
+        }
 
-        // Create an importer that can be used to populate our empty graph.
-        JSONImporter<String, IdentifiedWeightedEdge> importer = new JSONImporter<>();
+        public Graph(Class<? extends ZooData.Graph.Edge> edgeClass) {
+            // Use a subtype of IWE in construction. Needed to respect Liskov Substitution.
+            super(edgeClass);
+        }
 
-        // We don't need to convert the vertices in the graph, so we return them as is.
-        importer.setVertexFactory(v -> v);
+        public Graph(Supplier<String> vertexSupplier, Supplier<Edge> edgeSupplier) {
+            super(vertexSupplier, edgeSupplier);
+        }
 
-        // We need to make sure we set the IDs on our edges from the 'id' attribute.
-        // While this is automatic for vertices, it isn't for edges. We keep the
-        // definition of this in the IdentifiedWeightedEdge class for convenience.
-        importer.addEdgeAttributeConsumer(IdentifiedWeightedEdge::attributeConsumer);
+        public static class Edge extends DefaultWeightedEdge {
+            private String id = null;
 
-        // On Android, you would use context.getAssets().open(path) here like in Lab 5.
-        InputStream inputStream = MainActivity.class.getClassLoader().getResourceAsStream(path);
-        Reader reader = new InputStreamReader(inputStream);
+            @SuppressWarnings("unused")
+            public Edge() { /* required by SupplierUtil.createSupplier inside JGraphT */ }
 
-        // And now we just import it!
-        importer.importGraph(g, reader);
+            public Edge(String id) {
+                this.id = id;
+            }
 
-        return g;
+            public String getId() { return id; }
+            public void setId(String id) { this.id = id; }
+
+            @Override
+            public String toString() {
+                return "(" + getSource() + " :" + id + ": " + getTarget() + ")";
+            }
+
+            public static void attributeConsumer(Pair<Edge, String> pair, Attribute attr) {
+                Edge edge = pair.getFirst();
+                String attrName = pair.getSecond();
+                String attrValue = attr.getValue();
+
+                if (attrName.equals("id")) {
+                    edge.setId(attrValue);
+                }
+            }
+        }
     }
 }
