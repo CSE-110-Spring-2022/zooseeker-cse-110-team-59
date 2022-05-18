@@ -13,6 +13,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,9 +32,10 @@ public class UnitTestsUserStory5 {
     @Rule
     public ActivityScenarioRule<LoadingActivity> scenarioRule = new ActivityScenarioRule<>(loadingIntent);
 
-    @Before
-    public void setTestData() {
+    @BeforeClass
+    public static void setTestData() {
         FilesToLoad.injectNewFiles(new String[]{"test_zoo_graph_ms1.json", "test_node_info_ms1.json", "test_edge_info_ms1.json"});
+        ZooData.setZooData();
     }
 
     @Test
@@ -41,8 +43,6 @@ public class UnitTestsUserStory5 {
         ActivityScenario<LoadingActivity> scenario = scenarioRule.getScenario();
 
         scenario.onActivity(activity -> {
-            activity.setGraphData();
-
             RoutePoint test = new RoutePoint("Gorillas",
                     "1. Proceed on Africa Rocks Street 200.0 ft towards Gorillas.\n",
                     200.0);
@@ -64,8 +64,6 @@ public class UnitTestsUserStory5 {
         ActivityScenario<LoadingActivity> scenario = scenarioRule.getScenario();
 
         scenario.onActivity(activity -> {
-            activity.setGraphData();
-
             RoutePoint test = new RoutePoint("Gorillas",
                     "1. Proceed on Entrance Way 10.0 ft towards Africa Rocks Street.\n"
                             + "2. Proceed on Africa Rocks Street 200.0 ft towards Gorillas.\n",
@@ -88,8 +86,6 @@ public class UnitTestsUserStory5 {
         ActivityScenario<LoadingActivity> scenario = scenarioRule.getScenario();
 
         scenario.onActivity(activity -> {
-            activity.setGraphData();
-
             ArrayList<RoutePoint> test = new ArrayList<>();
             test.add(new RoutePoint("Gorillas",
                     "1. Proceed on Entrance Way 10.0 ft towards Africa Rocks Street.\n"
@@ -117,8 +113,6 @@ public class UnitTestsUserStory5 {
         ActivityScenario<LoadingActivity> scenario = scenarioRule.getScenario();
 
         scenario.onActivity(activity -> {
-            activity.setGraphData();
-
             ArrayList<RoutePoint> test = new ArrayList<>();
             test.add(new RoutePoint("Gorillas",
                     "1. Proceed on Entrance Way 10.0 ft towards Africa Rocks Street.\n"

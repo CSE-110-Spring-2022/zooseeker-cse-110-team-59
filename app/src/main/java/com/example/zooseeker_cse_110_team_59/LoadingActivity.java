@@ -32,10 +32,6 @@ import java.util.concurrent.Executors;
  */
 public class LoadingActivity extends AppCompatActivity {
 
-    private Graph<String, ZooData.Graph.Edge> g;
-    private Map<String, ZooData.VertexInfo> vInfo;
-    private Map<String, ZooData.EdgeInfo> eInfo;
-
     /**
      * @param savedInstanceState
      */
@@ -51,7 +47,6 @@ public class LoadingActivity extends AppCompatActivity {
 
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {
-            setGraphData();
             planIntent.putParcelableArrayListExtra("RoutePoints in Order", generateRoute(enteredExhibits));
             finish();
             startActivity(planIntent);
@@ -71,7 +66,7 @@ public class LoadingActivity extends AppCompatActivity {
             String closestExhibit = null;
 
             for (String vertex : unvisited) {
-                GraphPath<String, ZooData.Graph.Edge> path = DijkstraShortestPath.findPathBetween(g, currentNode, vertex);
+                GraphPath<String, ZooData.Graph.Edge> path = DijkstraShortestPath.findPathBetween(ZooData.graphData, currentNode, vertex);
                 if (path.getWeight() < shortestPathWeight) {
                     shortestPathWeight = path.getWeight();
                     shortestPath = path;
@@ -85,7 +80,7 @@ public class LoadingActivity extends AppCompatActivity {
             unvisited.remove(closestExhibit);
         }
 
-        GraphPath<String, ZooData.Graph.Edge> backToExit = DijkstraShortestPath.findPathBetween(g, currentNode, "entrance_exit_gate");
+        GraphPath<String, ZooData.Graph.Edge> backToExit = DijkstraShortestPath.findPathBetween(ZooData.graphData, currentNode, "entrance_exit_gate");
 
         route.add(createRoutePointFromPath(backToExit));
 
@@ -96,33 +91,27 @@ public class LoadingActivity extends AppCompatActivity {
 
         int i = 1;
         List<ZooData.Graph.Edge> edgesInPath = pathToUse.getEdgeList();
-        String currentStreet = eInfo.get(edgesInPath.get(0).getId()).street;
+        String currentStreet = ZooData.edgeData.get(edgesInPath.get(0).getId()).street;
         String directions = "";
-        double currentStreetDist = g.getEdgeWeight(edgesInPath.get(0));
+        double currentStreetDist = ZooData.graphData.getEdgeWeight(edgesInPath.get(0));
         edgesInPath.remove(0);
         for (ZooData.Graph.Edge e : edgesInPath) {
-            if (!currentStreet.equals(eInfo.get(e.getId()).street)) {
+            if (!currentStreet.equals(ZooData.edgeData.get(e.getId()).street)) {
                 directions += i + ". Proceed on "
                         + currentStreet + " "
                         + currentStreetDist + " ft towards "
-                        + eInfo.get(e.getId()).street + ".\n";
+                        + ZooData.edgeData.get(e.getId()).street + ".\n";
                 i++;
-                currentStreet = eInfo.get(e.getId()).street;
+                currentStreet = ZooData.edgeData.get(e.getId()).street;
                 currentStreetDist = 0.0;
             }
-            currentStreetDist += g.getEdgeWeight(e);
+            currentStreetDist += ZooData.graphData.getEdgeWeight(e);
         }
         directions += i + ". Proceed on "
                 + currentStreet + " "
                 + currentStreetDist + " ft towards "
-                + vInfo.get(pathToUse.getEndVertex()).name + ".\n";
+                + ZooData.vertexData.get(pathToUse.getEndVertex()).name + ".\n";
 
-        return new RoutePoint(vInfo.get(pathToUse.getEndVertex()).name, directions, pathToUse.getWeight());
-    }
-
-    public void setGraphData() {
-        g = ZooData.loadZooGraphJSON(FilesToLoad.getGraphFile());
-        vInfo = ZooData.loadVertexInfoJSON(FilesToLoad.getVertexFile());
-        eInfo = ZooData.loadEdgeInfoJSON(FilesToLoad.getEdgeFile());
+        return new RoutePoint(ZooData.vertexData.get(pathToUse.getEndVertex()).name, directions, pathToUse.getWeight());
     }
 }

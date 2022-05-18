@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 
+import org.jgrapht.Graph;
 import org.jgrapht.alg.util.Pair;
 import org.jgrapht.graph.DefaultUndirectedWeightedGraph;
 import org.jgrapht.graph.DefaultWeightedEdge;
@@ -20,6 +21,17 @@ import org.jgrapht.nio.Attribute;
 import org.jgrapht.nio.json.JSONImporter;
 
 public class ZooData {
+    public static org.jgrapht.Graph<String, Graph.Edge> graphData;
+    public static Map<String, ZooData.VertexInfo> vertexData;
+    public static Map<String, ZooData.EdgeInfo> edgeData;
+
+    public static void setZooData() {
+        graphData = ZooData.loadZooGraphJSON(FilesToLoad.getGraphFile());
+        vertexData = ZooData.loadVertexInfoJSON(FilesToLoad.getVertexFile());
+        edgeData = ZooData.loadEdgeInfoJSON(FilesToLoad.getEdgeFile());
+    }
+
+
     public static class VertexInfo {
         public static enum Kind {
             // The SerializedName annotation tells GSON how to convert
