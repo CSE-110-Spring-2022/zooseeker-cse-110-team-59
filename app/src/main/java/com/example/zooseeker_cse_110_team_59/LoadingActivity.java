@@ -32,7 +32,7 @@ import java.util.concurrent.Executors;
  */
 public class LoadingActivity extends AppCompatActivity {
 
-    private Graph<String, IdentifiedWeightedEdge> g;
+    private Graph<String, ZooData.Graph.Edge> g;
     private Map<String, ZooData.VertexInfo> vInfo;
     private Map<String, ZooData.EdgeInfo> eInfo;
 
@@ -67,11 +67,11 @@ public class LoadingActivity extends AppCompatActivity {
 
         while (unvisited.size() != 0) {
             double shortestPathWeight = Float.MAX_VALUE;
-            GraphPath<String, IdentifiedWeightedEdge> shortestPath = null;
+            GraphPath<String, ZooData.Graph.Edge> shortestPath = null;
             String closestExhibit = null;
 
             for (String vertex : unvisited) {
-                GraphPath<String, IdentifiedWeightedEdge> path = DijkstraShortestPath.findPathBetween(g, currentNode, vertex);
+                GraphPath<String, ZooData.Graph.Edge> path = DijkstraShortestPath.findPathBetween(g, currentNode, vertex);
                 if (path.getWeight() < shortestPathWeight) {
                     shortestPathWeight = path.getWeight();
                     shortestPath = path;
@@ -85,22 +85,22 @@ public class LoadingActivity extends AppCompatActivity {
             unvisited.remove(closestExhibit);
         }
 
-        GraphPath<String, IdentifiedWeightedEdge> backToExit = DijkstraShortestPath.findPathBetween(g, currentNode, "entrance_exit_gate");
+        GraphPath<String, ZooData.Graph.Edge> backToExit = DijkstraShortestPath.findPathBetween(g, currentNode, "entrance_exit_gate");
 
         route.add(createRoutePointFromPath(backToExit));
 
         return route;
     }
 
-    public RoutePoint createRoutePointFromPath(GraphPath<String, IdentifiedWeightedEdge> pathToUse) {
+    public RoutePoint createRoutePointFromPath(GraphPath<String, ZooData.Graph.Edge> pathToUse) {
 
         int i = 1;
-        List<IdentifiedWeightedEdge> edgesInPath = pathToUse.getEdgeList();
+        List<ZooData.Graph.Edge> edgesInPath = pathToUse.getEdgeList();
         String currentStreet = eInfo.get(edgesInPath.get(0).getId()).street;
         String directions = "";
         double currentStreetDist = g.getEdgeWeight(edgesInPath.get(0));
         edgesInPath.remove(0);
-        for (IdentifiedWeightedEdge e : edgesInPath) {
+        for (ZooData.Graph.Edge e : edgesInPath) {
             if (!currentStreet.equals(eInfo.get(e.getId()).street)) {
                 directions += i + ". Proceed on "
                         + currentStreet + " "
