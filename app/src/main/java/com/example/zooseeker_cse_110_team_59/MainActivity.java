@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ZooData.setZooData();
+
         Intent listIntent = new Intent(this, ListActivity.class);
         startActivity(listIntent);
     }

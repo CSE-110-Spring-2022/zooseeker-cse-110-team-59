@@ -33,7 +33,6 @@ import java.util.Map;
  */
 public class ListActivity extends AppCompatActivity {
 
-    private Map<String, ZooData.VertexInfo> vInfo;
     private Map<String, String> userEntryToID;
     private ArrayList<String> enteredExhibits;
     private List<String> autocompleteSuggestions;
@@ -43,10 +42,8 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        vInfo = ZooData.loadVertexInfoJSON(FilesToLoad.getVertexFile());
-
         userEntryToID = new HashMap<>();
-        vInfo.forEach((id, datum) -> {
+        ZooData.vertexData.forEach((id, datum) -> {
             if (datum.kind.equals(ZooData.VertexInfo.Kind.EXHIBIT)) userEntryToID.put(datum.name, id);
         });
 
