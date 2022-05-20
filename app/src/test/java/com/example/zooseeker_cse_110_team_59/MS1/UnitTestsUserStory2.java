@@ -61,6 +61,7 @@ public class UnitTestsUserStory2 {
         scenario.onActivity(activity -> {
             ArrayList<String> test = new ArrayList<>(Arrays.asList("elephant_odyssey"));
 
+
             activity.addToList("Elephant Odyssey");
 
             assertEquals(test, activity.getExhibitList().getEnteredExhibits());

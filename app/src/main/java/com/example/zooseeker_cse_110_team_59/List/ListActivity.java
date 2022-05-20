@@ -65,6 +65,10 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
     }
 
     public void onSearchSelectClick(View view) {
+        checkSearchBar();
+    }
+
+    public void checkSearchBar() {
         exhibitList.checkInput(getSearchBar());
     }
 

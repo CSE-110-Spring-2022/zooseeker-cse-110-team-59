@@ -22,7 +22,7 @@ public class ExhibitList implements ExhibitSubject
         });
 
 
-        listActivity =activity;
+        listActivity = activity;
         enteredExhibits = new ArrayList<>();
     }
 
