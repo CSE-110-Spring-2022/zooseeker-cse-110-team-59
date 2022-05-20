@@ -65,10 +65,14 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
     }
 
     public void onSearchSelectClick(View view) {
+        exhibitList.checkInput(getSearchBar());
+    }
+
+    public String getSearchBar () {
         String searchBarInput = searchBar.getText().toString();
         searchBar.setText("");
 
-        exhibitList.checkSearchBar(searchBarInput);
+        return searchBarInput;
     }
 
     public void update(String input, int count) {
@@ -76,17 +80,13 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
         increaseListCount(count);
     }
 
-    public String addToList(String searchBarInput) {
+    public void addToList(String searchBarInput) {
         String enteredExhibitsText = enteredExhibitsTextView.getText().toString();
         enteredExhibitsTextView.setText(enteredExhibitsText + searchBarInput + "\n");
-
-        return searchBarInput;
     }
 
-    public int increaseListCount(int count) {
+    public void increaseListCount(int count) {
         listCount.setText(count + "");
-
-        return count;
     }
 
     public boolean isExhibitValidSize()

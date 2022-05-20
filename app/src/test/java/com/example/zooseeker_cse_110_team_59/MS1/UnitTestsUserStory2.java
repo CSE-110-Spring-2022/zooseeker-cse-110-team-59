@@ -48,7 +48,7 @@ public class UnitTestsUserStory2 {
 
         scenario.onActivity(activity -> {
             ArrayList<String> testAgainst = new ArrayList<>();
-            assertEquals(testAgainst, activity.getEnteredExhibits());
+            assertEquals(testAgainst, activity.getExhibitList().getEnteredExhibits());
         });
     }
 
@@ -61,9 +61,9 @@ public class UnitTestsUserStory2 {
         scenario.onActivity(activity -> {
             ArrayList<String> test = new ArrayList<>(Arrays.asList("elephant_odyssey"));
 
-            List<String> result = activity.addToLists("Elephant Odyssey");
+            activity.addToList("Elephant Odyssey");
 
-            assertEquals(test, result);
+            assertEquals(test, activity.getExhibitList().getEnteredExhibits());
         });
     }
 
@@ -76,10 +76,10 @@ public class UnitTestsUserStory2 {
         scenario.onActivity(activity -> {
             ArrayList<String> test = new ArrayList<>(Arrays.asList("gators", "arctic_foxes"));
 
-            activity.addToLists("Alligators");
-            List<String> result = activity.addToLists("Arctic Foxes");
+            activity.addToList("Alligators");
+            activity.addToList("Arctic Foxes");
 
-            assertEquals(test, result);
+            assertEquals(test, activity.getExhibitList().getEnteredExhibits());
         });
     }
 
@@ -90,7 +90,7 @@ public class UnitTestsUserStory2 {
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
-            assertTrue(activity.isNew("Gorillas"));
+            assertTrue(activity.getExhibitList().isNew("Gorillas"));
         });
     }
 
@@ -101,9 +101,9 @@ public class UnitTestsUserStory2 {
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
-            activity.addToLists("Gorillas");
+            activity.addToList("Gorillas");
 
-            assertTrue(activity.isNew("Elephant Odyssey"));
+            assertTrue(activity.getExhibitList().isNew("Elephant Odyssey"));
         });
     }
 
@@ -114,9 +114,9 @@ public class UnitTestsUserStory2 {
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
-            activity.addToLists("Gorillas");
+            activity.addToList("Gorillas");
 
-            assertFalse(activity.isNew("Gorillas"));
+            assertFalse(activity.getExhibitList().isNew("Gorillas"));
         });
     }
 
@@ -131,8 +131,8 @@ public class UnitTestsUserStory2 {
             int listCountBefore = Integer.valueOf(listCountTextView.getText().toString());
             assertEquals(0, listCountBefore);
 
-            activity.addToLists("Gorillas");
-            activity.increaseListsCount();
+            activity.addToList("Gorillas");
+            activity.increaseListCount(activity.getExhibitList().getEnteredExhibits().size());
             int listCountAfter = Integer.valueOf(listCountTextView.getText().toString());
 
             assertEquals(1, listCountAfter);

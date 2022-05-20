@@ -26,7 +26,7 @@ public class ExhibitList implements ExhibitSubject
         enteredExhibits = new ArrayList<>();
     }
 
-    public String checkSearchBar (String input)
+    public String checkInput(String input)
     {
         if (isValid(input) && isNew(input))
         {
