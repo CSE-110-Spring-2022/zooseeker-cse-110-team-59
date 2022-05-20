@@ -15,6 +15,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.example.zooseeker_cse_110_team_59.FilesToLoad;
+import com.example.zooseeker_cse_110_team_59.List.ExhibitList;
 import com.example.zooseeker_cse_110_team_59.List.ListActivity;
 import com.example.zooseeker_cse_110_team_59.R;
 import com.example.zooseeker_cse_110_team_59.ZooData;
@@ -60,7 +61,9 @@ public class UnitTestsUserStory2 {
 
         scenario.onActivity(activity -> {
             ArrayList<String> test = new ArrayList<>(Arrays.asList("elephant_odyssey"));
+            ExhibitList el = activity.getExhibitList();
 
+            activity.getSearchBar()
 
             activity.addToList("Elephant Odyssey");
 
