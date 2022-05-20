@@ -31,7 +31,7 @@ public class ExhibitList implements ExhibitSubject
     {
         if (isValid(input) && isNew(input))
         {
-            enteredExhibits.add(input);
+            enteredExhibits.add(userEntryToID.get(input));
             notifyEOS(input, enteredExhibits.size());
         }
 
