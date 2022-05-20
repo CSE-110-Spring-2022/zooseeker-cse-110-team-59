@@ -1,5 +1,7 @@
 package com.example.zooseeker_cse_110_team_59.List;
 
+import android.app.Activity;
+
 import androidx.annotation.VisibleForTesting;
 
 import com.example.zooseeker_cse_110_team_59.Utilities;
@@ -15,19 +17,25 @@ public class ExhibitList implements ExhibitSubject
     ArrayList<ExhibitObserver> observers = new ArrayList<ExhibitObserver>();
     private Map<String, String> userEntryToID;
     private ArrayList<String> enteredExhibits;
+    Activity listActivity;
 
-    public ExhibitList() {
+    public ExhibitList(Activity activity) {
         userEntryToID = new HashMap<>();
         ZooData.vertexData.forEach((id, datum) -> {
             if (datum.kind.equals(ZooData.VertexInfo.Kind.EXHIBIT)) userEntryToID.put(datum.name, id);
         });
 
+
+        listActivity =activity;
         enteredExhibits = new ArrayList<>();
     }
 
-    public String checkSearchBar(String input) {
-        if (isValid(input) && isNew(input)) {
-
+    public String checkSearchBar (String input)
+    {
+        if (isValid(input) && isNew(input))
+        {
+            enteredExhibits.add(input);
+            notifyEOS(input, enteredExhibits.size());
         }
 
         return input;
@@ -37,7 +45,7 @@ public class ExhibitList implements ExhibitSubject
         if (userEntryToID.containsKey(searchBarInput)) {
             return true;
         } else {
-            Utilities.showAlert(null, "Invalid Entry", searchBarInput + " is not an exhibit at the San Diego Zoo.");
+            Utilities.showAlert(listActivity , "Invalid Entry", searchBarInput + " is not an exhibit at the San Diego Zoo.");
             return false;
         }
     }
@@ -58,11 +66,11 @@ public class ExhibitList implements ExhibitSubject
     }
 
     @Override
-    public void notifyEOS ()
+    public void notifyEOS (String name, int count)
     {
         for (ExhibitObserver observer: observers)
         {
-            observer.update();
+            observer.update(name, count);
         }
     }
 }
