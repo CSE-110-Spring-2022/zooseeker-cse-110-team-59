@@ -112,7 +112,7 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
         }
     }
 
-    //getter methods to see values when testing
+    //<editor-fold desc="Getters for Testing">
     @VisibleForTesting
     public ExhibitList getExhibitList() {
         return exhibitList;
@@ -122,4 +122,20 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
     public List<String> getAutocompleteSuggestions() {
         return autocompleteSuggestions;
     }
+
+    @VisibleForTesting
+    public TextView getListCount() {
+        return listCount;
+    }
+
+    @VisibleForTesting
+    public TextView getEnteredExhibitsTextView() {
+        return enteredExhibitsTextView;
+    }
+
+    @VisibleForTesting
+    public AutoCompleteTextView getSearchbar() {
+        return searchBar;
+    }
+    //</editor-fold>
 }

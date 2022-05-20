@@ -48,14 +48,8 @@ public class ExhibitList implements ExhibitSubject
 
     public boolean isNew(String searchBarInput) {
         return !enteredExhibits.contains(userEntryToID.get(searchBarInput));
-    }//getter methods to see values when testing
-
-    @VisibleForTesting
-    public List<String> getEnteredExhibits() {
-        return enteredExhibits;
     }
 
-    //implement ExhibitSubject methods to add observers and update
     @Override
     public void registerEO (ExhibitObserver eo)
     {
@@ -70,4 +64,11 @@ public class ExhibitList implements ExhibitSubject
             observer.update(name, count);
         }
     }
+
+    //<editor-fold desc="Getters For Testing">
+    @VisibleForTesting
+    public List<String> getEnteredExhibits() {
+        return enteredExhibits;
+    }
+    //</editor-fold>
 }
