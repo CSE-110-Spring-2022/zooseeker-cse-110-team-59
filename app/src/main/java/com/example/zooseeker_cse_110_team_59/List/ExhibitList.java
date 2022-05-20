@@ -10,7 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ExhibitList {
+public class ExhibitList implements ExhibitSubject
+{
+    ArrayList<ExhibitObserver> observers = new ArrayList<ExhibitObserver>();
     private Map<String, String> userEntryToID;
     private ArrayList<String> enteredExhibits;
 
@@ -47,5 +49,20 @@ public class ExhibitList {
     @VisibleForTesting
     public List<String> getEnteredExhibits() {
         return enteredExhibits;
+    }
+
+    @Override
+    public void registerEO (ExhibitObserver eo)
+    {
+        observers.add(eo);
+    }
+
+    @Override
+    public void notifyEOS ()
+    {
+        for (ExhibitObserver observer: observers)
+        {
+            observer.update();
+        }
     }
 }
