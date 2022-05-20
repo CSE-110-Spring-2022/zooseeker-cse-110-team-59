@@ -14,6 +14,8 @@ import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.example.zooseeker_cse_110_team_59.List.ListActivity;
+
 /**
  * Example local unit test, which will execute on the development machine (host).
  *

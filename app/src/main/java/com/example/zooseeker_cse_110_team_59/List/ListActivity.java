@@ -1,4 +1,4 @@
-package com.example.zooseeker_cse_110_team_59;
+package com.example.zooseeker_cse_110_team_59.List;
 
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +9,11 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
+
+import com.example.zooseeker_cse_110_team_59.LoadingActivity;
+import com.example.zooseeker_cse_110_team_59.R;
+import com.example.zooseeker_cse_110_team_59.Utilities;
+import com.example.zooseeker_cse_110_team_59.ZooData;
 
 import java.util.ArrayList;
 import java.util.HashMap;

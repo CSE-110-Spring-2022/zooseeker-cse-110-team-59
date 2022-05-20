@@ -11,7 +11,8 @@ import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import org.junit.Before;
+import com.example.zooseeker_cse_110_team_59.List.ListActivity;
+
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
