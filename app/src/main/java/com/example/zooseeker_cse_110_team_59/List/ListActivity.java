@@ -48,6 +48,7 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+        searchBar = findViewById(R.id.search_bar);
         listCount = findViewById(R.id.list_count_text_view);
         enteredExhibitsTextView = findViewById(R.id.animals_list_text_view);
 
@@ -59,7 +60,6 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
             if (datum.kind.equals(ZooData.VertexInfo.Kind.EXHIBIT)) autocompleteSuggestions.add(datum.name);
         });
 
-        searchBar = findViewById(R.id.search_bar);
         ArrayAdapter<String> searchBarAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, autocompleteSuggestions);
         searchBar.setAdapter(searchBarAdapter);
     }
