@@ -35,56 +35,63 @@ import java.util.List;
  * isExhibitValidSize   - checks if the enteredexhibit arraylist has a valid size
  * onGeneratePlanClick  - generates the plan by instantiating a new intent
  */
-public class ListActivity extends AppCompatActivity {
+public class ListActivity extends AppCompatActivity implements ExhibitObserver {
 
     private ExhibitList exhibitList;
     private List<String> autocompleteSuggestions;
+    private TextView listCount;
+    private TextView enteredExhibitsTextView;
+    private AutoCompleteTextView searchBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        exhibitList = new ExhibitList();
+        listCount = findViewById(R.id.list_count_text_view);
+        enteredExhibitsTextView = findViewById(R.id.animals_list_text_view);
+
+        exhibitList = new ExhibitList(this);
+        exhibitList.registerEO(this);
 
         autocompleteSuggestions = new ArrayList<>();
         ZooData.vertexData.forEach((id, datum) -> {
             if (datum.kind.equals(ZooData.VertexInfo.Kind.EXHIBIT)) autocompleteSuggestions.add(datum.name);
         });
 
-        AutoCompleteTextView searchBar = findViewById(R.id.search_bar);
+        searchBar = findViewById(R.id.search_bar);
         ArrayAdapter<String> searchBarAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, autocompleteSuggestions);
         searchBar.setAdapter(searchBarAdapter);
     }
 
     public void onSearchSelectClick(View view) {
-        AutoCompleteTextView searchBar = findViewById(R.id.search_bar);
         String searchBarInput = searchBar.getText().toString();
         searchBar.setText("");
 
         exhibitList.checkSearchBar(searchBarInput);
     }
 
-    public List<String> addToLists(String searchBarInput) {
-        exhibitList.getEnteredExhibits().add(exhibitList.userEntryToID.get(searchBarInput));
-
-        TextView animalsListTextView = findViewById(R.id.animals_list_text_view);
-        String animalsListText = animalsListTextView.getText().toString();
-        animalsListTextView.setText(animalsListText + searchBarInput + "\n");
-
-        return exhibitList.getEnteredExhibits();
+    public void update(String input, int count) {
+        addToList(input);
+        increaseListCount(count);
     }
 
-    public int increaseListsCount() {
-        TextView listCount = findViewById(R.id.list_count_text_view);
-        listCount.setText(exhibitList.getEnteredExhibits().size() + "");
+    public String addToList(String searchBarInput) {
+        String enteredExhibitsText = enteredExhibitsTextView.getText().toString();
+        enteredExhibitsTextView.setText(enteredExhibitsText + searchBarInput + "\n");
 
-        return exhibitList.getEnteredExhibits().size();
+        return searchBarInput;
+    }
+
+    public int increaseListCount(int count) {
+        listCount.setText(count + "");
+
+        return count;
     }
 
     public boolean isExhibitValidSize()
     {
-        if (exhibitList.getEnteredExhibits().size() == 0) {
+        if (Integer.parseInt(listCount.getText().toString()) == 0) {
             Utilities.showAlert(this, "Empty List", "No exhibits have been added to your list.");
             return false;
         }
@@ -95,7 +102,7 @@ public class ListActivity extends AppCompatActivity {
 
         if (isExhibitValidSize()) {
             Intent loadingIntent = new Intent(this, LoadingActivity.class);
-            loadingIntent.putStringArrayListExtra("enteredExhibits", exhibitList.getEnteredExhibits());
+            loadingIntent.putStringArrayListExtra("enteredExhibits", (ArrayList<String>) exhibitList.getEnteredExhibits());
             finish();
             startActivity(loadingIntent);
         }
