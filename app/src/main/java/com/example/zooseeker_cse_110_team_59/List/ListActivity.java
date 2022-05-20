@@ -64,6 +64,7 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
         searchBar.setAdapter(searchBarAdapter);
     }
 
+    //region UI functionality methods:
     public void onSearchSelectClick(View view) {
         checkSearchBar();
     }
@@ -72,9 +73,14 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
         exhibitList.checkInput(getSearchBar());
     }
 
+    public void clearSearchBar()
+    {
+        searchBar.setText("");
+    }
+
     public String getSearchBar () {
         String searchBarInput = searchBar.getText().toString();
-        searchBar.setText("");
+        clearSearchBar();
 
         return searchBarInput;
     }
@@ -102,6 +108,7 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
 
         return true;
     }
+
     public void onGeneratePlanClick(View view) {
 
         if (isExhibitValidSize()) {
@@ -111,6 +118,7 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
             startActivity(loadingIntent);
         }
     }
+    //endregion
 
     //<editor-fold desc="Getters for Testing">
     @VisibleForTesting

@@ -26,6 +26,7 @@ public class ExhibitList implements ExhibitSubject
         enteredExhibits = new ArrayList<>();
     }
 
+    //region validity check methods
     public String checkInput(String input)
     {
         if (isValid(input) && isNew(input))
@@ -50,6 +51,9 @@ public class ExhibitList implements ExhibitSubject
         return !enteredExhibits.contains(userEntryToID.get(searchBarInput));
     }
 
+    //endregion
+
+    //region implemented subject interface methods
     @Override
     public void registerEO (ExhibitObserver eo)
     {
@@ -64,6 +68,8 @@ public class ExhibitList implements ExhibitSubject
             observer.update(name, count);
         }
     }
+
+    //endregion
 
     //<editor-fold desc="Getters For Testing">
     @VisibleForTesting
