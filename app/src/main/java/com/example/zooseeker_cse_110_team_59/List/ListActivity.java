@@ -110,8 +110,8 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
 
     //getter methods to see values when testing
     @VisibleForTesting
-    public List<String> getEnteredExhibits() {
-        return exhibitList.getEnteredExhibits();
+    public ExhibitList getExhibitList() {
+        return exhibitList;
     }
 
     @VisibleForTesting
