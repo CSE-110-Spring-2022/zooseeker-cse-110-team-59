@@ -41,14 +41,14 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
     private List<String> autocompleteSuggestions;
     private TextView listCount;
     private TextView enteredExhibitsTextView;
-    private AutoCompleteTextView searchBar;
+    private AutoCompleteTextView searchBarTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        searchBar = findViewById(R.id.search_bar);
+        searchBarTextView = findViewById(R.id.search_bar);
         listCount = findViewById(R.id.list_count_text_view);
         enteredExhibitsTextView = findViewById(R.id.animals_list_text_view);
 
@@ -61,7 +61,7 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
         });
 
         ArrayAdapter<String> searchBarAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, autocompleteSuggestions);
-        searchBar.setAdapter(searchBarAdapter);
+        searchBarTextView.setAdapter(searchBarAdapter);
     }
 
     public void onSearchSelectClick(View view) {
@@ -73,8 +73,8 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
     }
 
     public String getSearchBar () {
-        String searchBarInput = searchBar.getText().toString();
-        searchBar.setText("");
+        String searchBarInput = searchBarTextView.getText().toString();
+        searchBarTextView.setText("");
 
         return searchBarInput;
     }
@@ -134,8 +134,8 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
     }
 
     @VisibleForTesting
-    public AutoCompleteTextView getSearchbar() {
-        return searchBar;
+    public AutoCompleteTextView getSearchBarTextView() {
+        return searchBarTextView;
     }
     //</editor-fold>
 }
