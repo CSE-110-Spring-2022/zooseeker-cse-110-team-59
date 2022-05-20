@@ -1,12 +1,8 @@
 package com.example.zooseeker_cse_110_team_59.List;
-
 import android.app.Activity;
-
 import androidx.annotation.VisibleForTesting;
-
 import com.example.zooseeker_cse_110_team_59.Utilities;
 import com.example.zooseeker_cse_110_team_59.ZooData;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,6 +55,7 @@ public class ExhibitList implements ExhibitSubject
         return enteredExhibits;
     }
 
+    //implement ExhibitSubject methods to add observers and update
     @Override
     public void registerEO (ExhibitObserver eo)
     {
