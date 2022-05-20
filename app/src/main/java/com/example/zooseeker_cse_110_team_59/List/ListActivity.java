@@ -18,7 +18,6 @@ import com.example.zooseeker_cse_110_team_59.ZooData;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Class:           ListActivity
@@ -38,8 +37,7 @@ import java.util.Map;
  */
 public class ListActivity extends AppCompatActivity {
 
-    private Map<String, String> userEntryToID;
-    private ArrayList<String> enteredExhibits;
+    private ExhibitList exhibitList;
     private List<String> autocompleteSuggestions;
 
     @Override
@@ -47,15 +45,12 @@ public class ListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        userEntryToID = new HashMap<>();
-        ZooData.vertexData.forEach((id, datum) -> {
-            if (datum.kind.equals(ZooData.VertexInfo.Kind.EXHIBIT)) userEntryToID.put(datum.name, id);
-        });
-
-        enteredExhibits = new ArrayList<>();
+        exhibitList = new ExhibitList();
 
         autocompleteSuggestions = new ArrayList<>();
-        userEntryToID.forEach((name, id) -> autocompleteSuggestions.add(name));
+        ZooData.vertexData.forEach((id, datum) -> {
+            if (datum.kind.equals(ZooData.VertexInfo.Kind.EXHIBIT)) autocompleteSuggestions.add(datum.name);
+        });
 
         AutoCompleteTextView searchBar = findViewById(R.id.search_bar);
         ArrayAdapter<String> searchBarAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, autocompleteSuggestions);
@@ -63,55 +58,33 @@ public class ListActivity extends AppCompatActivity {
     }
 
     public void onSearchSelectClick(View view) {
-        checkSearchBar();
-    }
-
-    public String checkSearchBar() {
         AutoCompleteTextView searchBar = findViewById(R.id.search_bar);
         String searchBarInput = searchBar.getText().toString();
         searchBar.setText("");
 
-        if (isValid(searchBarInput) && isNew(searchBarInput)) {
-            addToLists(searchBarInput);
-            increaseListsCount();
-        }
-
-        return searchBarInput;
-    }
-
-    public boolean isValid(String searchBarInput) {
-        if (userEntryToID.containsKey(searchBarInput)){
-            return true;
-        } else {
-            Utilities.showAlert(this, "Invalid Entry", searchBarInput + " is not an exhibit at the San Diego Zoo.");
-            return false;
-        }
-    }
-
-    public boolean isNew(String searchBarInput) {
-        return !enteredExhibits.contains(userEntryToID.get(searchBarInput));
+        exhibitList.checkSearchBar(searchBarInput);
     }
 
     public List<String> addToLists(String searchBarInput) {
-        enteredExhibits.add(userEntryToID.get(searchBarInput));
+        exhibitList.getEnteredExhibits().add(exhibitList.userEntryToID.get(searchBarInput));
 
         TextView animalsListTextView = findViewById(R.id.animals_list_text_view);
         String animalsListText = animalsListTextView.getText().toString();
         animalsListTextView.setText(animalsListText + searchBarInput + "\n");
 
-        return enteredExhibits;
+        return exhibitList.getEnteredExhibits();
     }
 
     public int increaseListsCount() {
         TextView listCount = findViewById(R.id.list_count_text_view);
-        listCount.setText(enteredExhibits.size() + "");
+        listCount.setText(exhibitList.getEnteredExhibits().size() + "");
 
-        return enteredExhibits.size();
+        return exhibitList.getEnteredExhibits().size();
     }
 
     public boolean isExhibitValidSize()
     {
-        if (enteredExhibits.size() == 0) {
+        if (exhibitList.getEnteredExhibits().size() == 0) {
             Utilities.showAlert(this, "Empty List", "No exhibits have been added to your list.");
             return false;
         }
@@ -122,7 +95,7 @@ public class ListActivity extends AppCompatActivity {
 
         if (isExhibitValidSize()) {
             Intent loadingIntent = new Intent(this, LoadingActivity.class);
-            loadingIntent.putStringArrayListExtra("enteredExhibits", enteredExhibits);
+            loadingIntent.putStringArrayListExtra("enteredExhibits", exhibitList.getEnteredExhibits());
             finish();
             startActivity(loadingIntent);
         }
@@ -131,7 +104,7 @@ public class ListActivity extends AppCompatActivity {
     //getter methods to see values when testing
     @VisibleForTesting
     public List<String> getEnteredExhibits() {
-        return enteredExhibits;
+        return exhibitList.getEnteredExhibits();
     }
 
     @VisibleForTesting
