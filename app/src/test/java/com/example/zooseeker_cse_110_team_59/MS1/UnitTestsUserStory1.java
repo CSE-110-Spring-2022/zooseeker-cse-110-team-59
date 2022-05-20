@@ -33,7 +33,7 @@ public class UnitTestsUserStory1 {
 
     @BeforeClass
     public static void setTestData() {
-        FilesToLoad.injectNewFiles(new String[]{"test_zoo_graph_ms2.json", "test_node_info_ms2.json", "test_edge_info_ms2.json"});
+        FilesToLoad.injectNewFiles(new String[]{"test_zoo_graph_ms1.json", "test_node_info_ms1.json", "test_edge_info_ms1.json"});
         ZooData.setZooData();
     }
 
