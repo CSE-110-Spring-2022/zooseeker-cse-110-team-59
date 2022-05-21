@@ -16,6 +16,7 @@ import com.example.zooseeker_cse_110_team_59.Utilities;
 import com.example.zooseeker_cse_110_team_59.ZooData;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -54,6 +55,19 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
 
         exhibitList = new ExhibitList(this);
         exhibitList.registerEO(this);
+
+/*
+        ArrayList<ArrayList<String>> exhibitTagList = new ArrayList<ArrayList<String>>();
+        ZooData.vertexData.forEach((id, datum) -> {
+            if (datum.kind.equals(ZooData.VertexInfo.Kind.EXHIBIT)) {
+                ArrayList<String> row = new ArrayList<String>(Arrays.asList(datum.name));
+                row.addAll(datum.tags);
+                exhibitTagList.add(row);
+            }
+        });
+
+        searchBarTextView.setAdapter(new AutoCompleteAdapter(this, android.R.layout.preference_category, exhibitTagList));
+*/
 
         autocompleteSuggestions = new ArrayList<>();
         ZooData.vertexData.forEach((id, datum) -> {
