@@ -76,7 +76,6 @@ public class UnitTestsUserStory1 {
     public void testIsValidOnValid() {
         ActivityScenario<ListActivity> scenario = scenarioRule.getScenario();
 
-
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
@@ -92,7 +91,6 @@ public class UnitTestsUserStory1 {
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
-
             assertFalse(activity.getExhibitList().isValid("Table"));
         });
     }

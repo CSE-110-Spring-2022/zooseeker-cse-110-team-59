@@ -15,7 +15,6 @@ import com.example.zooseeker_cse_110_team_59.FilesToLoad;
 import com.example.zooseeker_cse_110_team_59.List.ListActivity;
 import com.example.zooseeker_cse_110_team_59.R;
 import com.example.zooseeker_cse_110_team_59.ZooData;
-
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
