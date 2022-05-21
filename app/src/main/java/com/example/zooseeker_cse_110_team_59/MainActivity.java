@@ -1,22 +1,12 @@
 package com.example.zooseeker_cse_110_team_59;
 
-import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.stream.Collectors;
+import com.example.zooseeker_cse_110_team_59.List.ListActivity;
+
 /**
  * Class:            MainActivity
  * Description:      sets up the onCreate method and  is the entry point of the application

@@ -15,7 +15,8 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.example.zooseeker_cse_110_team_59.FilesToLoad;
-import com.example.zooseeker_cse_110_team_59.ListActivity;
+import com.example.zooseeker_cse_110_team_59.List.ExhibitList;
+import com.example.zooseeker_cse_110_team_59.List.ListActivity;
 import com.example.zooseeker_cse_110_team_59.R;
 import com.example.zooseeker_cse_110_team_59.ZooData;
 
@@ -48,7 +49,7 @@ public class UnitTestsUserStory2 {
 
         scenario.onActivity(activity -> {
             ArrayList<String> testAgainst = new ArrayList<>();
-            assertEquals(testAgainst, activity.getEnteredExhibits());
+            assertEquals(testAgainst, activity.getExhibitList().getEnteredExhibits());
         });
     }
 
@@ -61,9 +62,10 @@ public class UnitTestsUserStory2 {
         scenario.onActivity(activity -> {
             ArrayList<String> test = new ArrayList<>(Arrays.asList("elephant_odyssey"));
 
-            List<String> result = activity.addToLists("Elephant Odyssey");
+            activity.getSearchBarTextView().setText("Elephant Odyssey");
+            activity.checkSearchBar();
 
-            assertEquals(test, result);
+            assertEquals(test, activity.getExhibitList().getEnteredExhibits());
         });
     }
 
@@ -76,10 +78,12 @@ public class UnitTestsUserStory2 {
         scenario.onActivity(activity -> {
             ArrayList<String> test = new ArrayList<>(Arrays.asList("gators", "arctic_foxes"));
 
-            activity.addToLists("Alligators");
-            List<String> result = activity.addToLists("Arctic Foxes");
+            activity.getSearchBarTextView().setText("Alligators");
+            activity.checkSearchBar();
+            activity.getSearchBarTextView().setText("Arctic Foxes");
+            activity.checkSearchBar();
 
-            assertEquals(test, result);
+            assertEquals(test, activity.getExhibitList().getEnteredExhibits());
         });
     }
 
@@ -90,7 +94,7 @@ public class UnitTestsUserStory2 {
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
-            assertTrue(activity.isNew("Gorillas"));
+            assertTrue(activity.getExhibitList().isNew("Gorillas"));
         });
     }
 
@@ -101,9 +105,10 @@ public class UnitTestsUserStory2 {
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
-            activity.addToLists("Gorillas");
+            activity.getSearchBarTextView().setText("Gorillas");
+            activity.checkSearchBar();
 
-            assertTrue(activity.isNew("Elephant Odyssey"));
+            assertTrue(activity.getExhibitList().isNew("Elephant Odyssey"));
         });
     }
 
@@ -114,9 +119,10 @@ public class UnitTestsUserStory2 {
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
-            activity.addToLists("Gorillas");
+            activity.getSearchBarTextView().setText("Gorillas");
+            activity.checkSearchBar();
 
-            assertFalse(activity.isNew("Gorillas"));
+            assertFalse(activity.getExhibitList().isNew("Gorillas"));
         });
     }
 
@@ -127,13 +133,12 @@ public class UnitTestsUserStory2 {
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
-            TextView listCountTextView = activity.findViewById(R.id.list_count_text_view);
-            int listCountBefore = Integer.valueOf(listCountTextView.getText().toString());
+            int listCountBefore = Integer.valueOf(activity.getListCount().getText().toString());
             assertEquals(0, listCountBefore);
 
-            activity.addToLists("Gorillas");
-            activity.increaseListsCount();
-            int listCountAfter = Integer.valueOf(listCountTextView.getText().toString());
+            activity.getSearchBarTextView().setText("Gorillas");
+            activity.checkSearchBar();
+            int listCountAfter = Integer.valueOf(activity.getListCount().getText().toString());
 
             assertEquals(1, listCountAfter);
         });
@@ -146,15 +151,14 @@ public class UnitTestsUserStory2 {
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
-            activity.addToLists("Gorillas");
-            activity.increaseListsCount();
+            activity.getSearchBarTextView().setText("Gorillas");
+            activity.checkSearchBar();
 
-            TextView listCountTextView = activity.findViewById(R.id.list_count_text_view);
-            int listCountBefore = Integer.valueOf(listCountTextView.getText().toString());
+            int listCountBefore = Integer.valueOf(activity.getListCount().getText().toString());
 
-            activity.addToLists("Alligators");
-            activity.increaseListsCount();
-            int listCountAfter = Integer.valueOf(listCountTextView.getText().toString());
+            activity.getSearchBarTextView().setText("Alligators");
+            activity.checkSearchBar();
+            int listCountAfter = Integer.valueOf(activity.getListCount().getText().toString());
 
             assertEquals(listCountBefore + 1, listCountAfter);
         });

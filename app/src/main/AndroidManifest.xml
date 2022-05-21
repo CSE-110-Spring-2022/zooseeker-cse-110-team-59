@@ -22,7 +22,7 @@
             android:name=".PlanActivity"
             android:exported="false" />
         <activity
-            android:name=".ListActivity"
+            android:name=".List.ListActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
