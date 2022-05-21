@@ -1,4 +1,4 @@
-package com.example.zooseeker_cse_110_team_59;
+package com.example.zooseeker_cse_110_team_59.MS1;
 
 import static org.junit.Assert.assertEquals;
 
@@ -9,6 +9,12 @@ import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+
+import com.example.zooseeker_cse_110_team_59.FilesToLoad;
+import com.example.zooseeker_cse_110_team_59.LoadingActivity;
+import com.example.zooseeker_cse_110_team_59.RouteGenerator;
+import com.example.zooseeker_cse_110_team_59.RoutePoint;
+import com.example.zooseeker_cse_110_team_59.ZooData;
 
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
@@ -39,75 +45,64 @@ public class UnitTestsUserStory5 {
 
     @Test
     public void testsRoutePointOneEdge() {
+        RoutePoint test = new RoutePoint("Gorillas",
+                "1. Proceed on Africa Rocks Street 200.0 ft towards Gorillas.\n",
+                200.0);
 
-            RoutePoint test = new RoutePoint("Gorillas",
-                    "1. Proceed on Africa Rocks Street 200.0 ft towards Gorillas.\n",
-                    200.0);
+        GraphPath<String, ZooData.Graph.Edge> path = DijkstraShortestPath.findPathBetween(ZooData.loadZooGraphJSON(FilesToLoad.getGraphFile()),
+                "entrance_plaza",
+                "gorillas");
 
-            GraphPath<String, ZooData.Graph.Edge> path = DijkstraShortestPath.findPathBetween(ZooData.loadZooGraphJSON(FilesToLoad.getGraphFile()),
-                                                                                            "entrance_plaza",
-                                                                                                "gorillas");
+        RoutePoint result = RouteGenerator.createRoutePointFromPath(path);
 
-            RoutePoint result = RouteGenerator.createRoutePointFromPath(path);
-
-            assertEquals(test.exhibitName, result.exhibitName);
-            assertEquals(test.directions, result.directions);
-            assertEquals(test.distance, result.distance, 0.0);
-
+        assertEquals(test.exhibitName, result.exhibitName);
+        assertEquals(test.directions, result.directions);
+        assertEquals(test.distance, result.distance, 0.0);
     }
 
     @Test
     public void testsRoutePointManyEdge() {
+        RoutePoint test = new RoutePoint("Gorillas",
+                "1. Proceed on Entrance Way 10.0 ft towards Africa Rocks Street.\n"
+                        + "2. Proceed on Africa Rocks Street 200.0 ft towards Gorillas.\n",
+                210.0);
 
+        GraphPath<String, ZooData.Graph.Edge> path = DijkstraShortestPath.findPathBetween(ZooData.loadZooGraphJSON(FilesToLoad.getGraphFile()),
+                "entrance_exit_gate",
+                "gorillas");
 
+        RoutePoint result = RouteGenerator.createRoutePointFromPath(path);
 
-            RoutePoint test = new RoutePoint("Gorillas",
-                    "1. Proceed on Entrance Way 10.0 ft towards Africa Rocks Street.\n"
-                            + "2. Proceed on Africa Rocks Street 200.0 ft towards Gorillas.\n",
-                    210.0);
-
-            GraphPath<String, ZooData.Graph.Edge> path = DijkstraShortestPath.findPathBetween(ZooData.loadZooGraphJSON(FilesToLoad.getGraphFile()),
-                    "entrance_exit_gate",
-                    "gorillas");
-
-            RoutePoint result = RouteGenerator.createRoutePointFromPath(path);
-
-            assertEquals(test.exhibitName, result.exhibitName);
-            assertEquals(test.directions, result.directions);
-            assertEquals(test.distance, result.distance, 0.0);
-
+        assertEquals(test.exhibitName, result.exhibitName);
+        assertEquals(test.directions, result.directions);
+        assertEquals(test.distance, result.distance, 0.0);
     }
 
     @Test
     public void testsNonCombinePath() {
+        ArrayList<RoutePoint> test = new ArrayList<>();
+        test.add(new RoutePoint("Gorillas",
+                "1. Proceed on Entrance Way 10.0 ft towards Africa Rocks Street.\n"
+                        + "2. Proceed on Africa Rocks Street 200.0 ft towards Gorillas.\n",
+                210.0));
+        test.add(new RoutePoint("Entrance and Exit Gate",
+                "1. Proceed on Africa Rocks Street 200.0 ft towards Entrance Way.\n"
+                        + "2. Proceed on Entrance Way 10.0 ft towards Entrance and Exit Gate.\n",
+                210.0));
 
+        ArrayList<RoutePoint> result = RouteGenerator.generateRoute(new ArrayList<String>(Arrays.asList("gorillas")));
 
+        assertEquals(test.get(0).exhibitName, result.get(0).exhibitName);
+        assertEquals(test.get(0).directions, result.get(0).directions);
+        assertEquals(test.get(0).distance, result.get(0).distance, 0.0);
 
-            ArrayList<RoutePoint> test = new ArrayList<>();
-            test.add(new RoutePoint("Gorillas",
-                    "1. Proceed on Entrance Way 10.0 ft towards Africa Rocks Street.\n"
-                            + "2. Proceed on Africa Rocks Street 200.0 ft towards Gorillas.\n",
-                    210.0));
-            test.add(new RoutePoint("Entrance and Exit Gate",
-                    "1. Proceed on Africa Rocks Street 200.0 ft towards Entrance Way.\n"
-                            + "2. Proceed on Entrance Way 10.0 ft towards Entrance and Exit Gate.\n",
-                    210.0));
-
-            ArrayList<RoutePoint> result = RouteGenerator.generateRoute(new ArrayList<String>(Arrays.asList("gorillas")));
-
-            assertEquals(test.get(0).exhibitName, result.get(0).exhibitName);
-            assertEquals(test.get(0).directions, result.get(0).directions);
-            assertEquals(test.get(0).distance, result.get(0).distance, 0.0);
-
-            assertEquals(test.get(1).exhibitName, result.get(1).exhibitName);
-            assertEquals(test.get(1).directions, result.get(1).directions);
-            assertEquals(test.get(1).distance, result.get(1).distance, 0.0);
-
+        assertEquals(test.get(1).exhibitName, result.get(1).exhibitName);
+        assertEquals(test.get(1).directions, result.get(1).directions);
+        assertEquals(test.get(1).distance, result.get(1).distance, 0.0);
     }
 
     @Test
     public void testsCombinePath() {
-
         ArrayList<RoutePoint> test = new ArrayList<>();
         test.add(new RoutePoint("Gorillas",
                 "1. Proceed on Entrance Way 10.0 ft towards Africa Rocks Street.\n"

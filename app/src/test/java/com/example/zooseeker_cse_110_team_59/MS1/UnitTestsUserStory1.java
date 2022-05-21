@@ -1,4 +1,4 @@
-package com.example.zooseeker_cse_110_team_59;
+package com.example.zooseeker_cse_110_team_59.MS1;
 
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -13,6 +13,11 @@ import androidx.lifecycle.Lifecycle;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+
+import com.example.zooseeker_cse_110_team_59.FilesToLoad;
+import com.example.zooseeker_cse_110_team_59.ListActivity;
+import com.example.zooseeker_cse_110_team_59.R;
+import com.example.zooseeker_cse_110_team_59.ZooData;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
