@@ -1,4 +1,4 @@
-package com.example.zooseeker_cse_110_team_59;
+package com.example.zooseeker_cse_110_team_59.MS1;
 
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -13,6 +13,12 @@ import androidx.lifecycle.Lifecycle;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
+
+import com.example.zooseeker_cse_110_team_59.FilesToLoad;
+import com.example.zooseeker_cse_110_team_59.List.ExhibitList;
+import com.example.zooseeker_cse_110_team_59.List.ListActivity;
+import com.example.zooseeker_cse_110_team_59.R;
+import com.example.zooseeker_cse_110_team_59.ZooData;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -38,9 +44,11 @@ public class UnitTestsUserStory1 {
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
-            String input = activity.checkSearchBar();
+            //this checks the initial state of the searchBar
+            String input = activity.getSearchBar();
             assertEquals("", input);
 
+            //check if ends empty
             AutoCompleteTextView searchBar = activity.findViewById(R.id.search_bar);
             assertEquals("", searchBar.getText().toString());
         });
@@ -56,9 +64,10 @@ public class UnitTestsUserStory1 {
             AutoCompleteTextView searchBar = activity.findViewById(R.id.search_bar);
 
             searchBar.setText("One 2 red BLUE");
-            String input = activity.checkSearchBar();
+            String input = activity.getSearchBar();
             assertEquals("One 2 red BLUE", input);
 
+            //check if end empty
             assertEquals("", searchBar.getText().toString());
         });
     }
@@ -67,10 +76,12 @@ public class UnitTestsUserStory1 {
     public void testIsValidOnValid() {
         ActivityScenario<ListActivity> scenario = scenarioRule.getScenario();
 
+
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
-            assertTrue(activity.isValid("Elephant Odyssey"));
+
+            assertTrue(activity.getExhibitList().isValid("Elephant Odyssey"));
         });
     }
 
@@ -81,7 +92,8 @@ public class UnitTestsUserStory1 {
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
-            assertFalse(activity.isValid("Table"));
+
+            assertFalse(activity.getExhibitList().isValid("Table"));
         });
     }
 }
