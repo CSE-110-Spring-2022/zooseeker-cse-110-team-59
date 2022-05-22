@@ -39,7 +39,6 @@ import java.util.List;
 public class ListActivity extends AppCompatActivity implements ExhibitObserver {
 
     private ExhibitList exhibitList;
-    private List<String> autocompleteSuggestions;
     private TextView listCount;
     private TextView enteredExhibitsTextView;
     private AutoCompleteTextView searchBarTextView;
@@ -65,7 +64,7 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
             }
         });
 
-        searchBarTextView.setAdapter(new AutoCompleteAdapter(this, android.R.layout.preference_category, exhibitTagList));
+        searchBarTextView.setAdapter(new AutoCompleteAdapter(this, android.R.layout.simple_list_item_1, exhibitTagList));
     }
 
     //region UI functionality methods:
@@ -124,15 +123,10 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
     }
     //endregion
 
-    //<editor-fold desc="Getters for Testing">
+    //region Getters for Testing
     @VisibleForTesting
     public ExhibitList getExhibitList() {
         return exhibitList;
-    }
-
-    @VisibleForTesting
-    public List<String> getAutocompleteSuggestions() {
-        return autocompleteSuggestions;
     }
 
     @VisibleForTesting
@@ -149,5 +143,5 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
     public AutoCompleteTextView getSearchBarTextView() {
         return searchBarTextView;
     }
-    //</editor-fold>
+    //endregion
 }
