@@ -56,7 +56,6 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
         exhibitList = new ExhibitList(this);
         exhibitList.registerEO(this);
 
-/*
         ArrayList<ArrayList<String>> exhibitTagList = new ArrayList<ArrayList<String>>();
         ZooData.vertexData.forEach((id, datum) -> {
             if (datum.kind.equals(ZooData.VertexInfo.Kind.EXHIBIT)) {
@@ -67,15 +66,6 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
         });
 
         searchBarTextView.setAdapter(new AutoCompleteAdapter(this, android.R.layout.preference_category, exhibitTagList));
-*/
-
-        autocompleteSuggestions = new ArrayList<>();
-        ZooData.vertexData.forEach((id, datum) -> {
-            if (datum.kind.equals(ZooData.VertexInfo.Kind.EXHIBIT)) autocompleteSuggestions.add(datum.name);
-        });
-
-        ArrayAdapter<String> searchBarAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, autocompleteSuggestions);
-        searchBarTextView.setAdapter(searchBarAdapter);
     }
 
     //region UI functionality methods:

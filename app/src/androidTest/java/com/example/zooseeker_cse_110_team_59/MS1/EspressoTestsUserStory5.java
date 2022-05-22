@@ -1,16 +1,16 @@
-package com.example.zooseeker_cse_110_team_59;
+package com.example.zooseeker_cse_110_team_59.MS1;
 
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
 
 import android.view.View;
@@ -18,11 +18,14 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import androidx.test.espresso.ViewInteraction;
-import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
+
+import com.example.zooseeker_cse_110_team_59.FilesToLoad;
+import com.example.zooseeker_cse_110_team_59.MainActivity;
+import com.example.zooseeker_cse_110_team_59.R;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -34,12 +37,7 @@ import org.junit.runner.RunWith;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class EspressoTestsUserStory3 {
-
-    // Link: https://stackoverflow.com/questions/34628700/mocking-intent-extras-in-espresso-tests
-    // Title: Mocking Intent Extras in Espresso Tests
-    // Date Captured: April 29th 2022
-    // Usage: For knowledge of how to override ActivityTestRule protected methods
+public class EspressoTestsUserStory5 {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<MainActivity>(MainActivity.class) {
@@ -50,7 +48,7 @@ public class EspressoTestsUserStory3 {
     };
 
     @Test
-    public void testEnterBeginningOfWord() {
+    public void testPlanWithEmptyList() {
         ViewInteraction materialAutoCompleteTextView = onView(
                 Matchers.allOf(ViewMatchers.withId(R.id.search_bar),
                         childAtPosition(
@@ -59,51 +57,69 @@ public class EspressoTestsUserStory3 {
                                         0),
                                 0),
                         isDisplayed()));
-        materialAutoCompleteTextView.perform(click());
+        materialAutoCompleteTextView.perform(closeSoftKeyboard());
 
-        materialAutoCompleteTextView.perform(replaceText("All"), closeSoftKeyboard());
+        ViewInteraction materialButton = onView(
+                allOf(withId(R.id.generate_plan_btn), withText("Generate Plan"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                7),
+                        isDisplayed()));
+        materialButton.perform(click());
 
-        // Link: https://stackoverflow.com/questions/38562341/espresso-autocompletetextview-click
-        // Title: Espresso AutoCompleteTextView click
-        // Date Captured: April 27th 2022
-        // Usage: For why recorded Espresso tests did not click the autocomplete option even if it was clicked while recording, and what to change it to so that it does.
-        ViewInteraction materialTextView = onView(withText("Alligators")).inRoot(RootMatchers.isPlatformPopup());
-        materialTextView.perform(click());
-
-        materialAutoCompleteTextView.check(matches(withText("Alligators")));
+        ViewInteraction materialButton2 = onView(
+                allOf(withId(android.R.id.button1), withText("Ok"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                3)));
+        materialButton2.perform(scrollTo(), click());
     }
 
     @Test
-    public void testEnterEndOfWord() {
+    public void testPlanWithNonEmptyList() {
         ViewInteraction materialAutoCompleteTextView = onView(
-                Matchers.allOf(ViewMatchers.withId(R.id.search_bar),
+                allOf(withId(R.id.search_bar),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
                                 0),
                         isDisplayed()));
-        materialAutoCompleteTextView.perform(click());
+        materialAutoCompleteTextView.perform(replaceText("Arctic Foxes"), closeSoftKeyboard());
 
-        materialAutoCompleteTextView.perform(replaceText("Fox"), closeSoftKeyboard());
-
-        ViewInteraction materialTextView = onView(withText("Arctic Foxes")).inRoot(RootMatchers.isPlatformPopup());
-        materialTextView.perform(click());
-
-        materialAutoCompleteTextView.check(matches(withText("Arctic Foxes")));
-    }
-
-    @Test
-    public void testEnterNoPartOfWord() {
-        ViewInteraction materialAutoCompleteTextView = onView(
-                Matchers.allOf(ViewMatchers.withId(R.id.search_bar),
+        ViewInteraction materialButton = onView(
+                allOf(withId(R.id.search_select_btn), withText("Select"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
-                                0),
+                                1),
                         isDisplayed()));
-        materialAutoCompleteTextView.perform(replaceText("Table"), closeSoftKeyboard());
+        materialButton.perform(click());
+
+        ViewInteraction materialButton2 = onView(
+                allOf(withId(R.id.generate_plan_btn), withText("Generate Plan"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                7),
+                        isDisplayed()));
+        materialButton2.perform(click());
+
+        ViewInteraction materialButton3 = onView(
+                allOf(withId(R.id.directions_btn), withText("Directions"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                1),
+                        isDisplayed()));
+        materialButton3.perform(click());
     }
 
     private static Matcher<View> childAtPosition(
