@@ -1,4 +1,4 @@
-package com.example.zooseeker_cse_110_team_59;
+package com.example.zooseeker_cse_110_team_59.MS1;
 
 import android.content.Context;
 

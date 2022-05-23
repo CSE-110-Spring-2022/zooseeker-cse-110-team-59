@@ -49,7 +49,7 @@ public class UnitTestsUserStory1 {
             assertEquals("", input);
 
             //check if ends empty
-            AutoCompleteTextView searchBar = activity.findViewById(R.id.search_bar);
+            AutoCompleteTextView searchBar = activity.getSearchBarTextView();
             assertEquals("", searchBar.getText().toString());
         });
     }
@@ -61,7 +61,7 @@ public class UnitTestsUserStory1 {
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
-            AutoCompleteTextView searchBar = activity.findViewById(R.id.search_bar);
+            AutoCompleteTextView searchBar = activity.getSearchBarTextView();
 
             searchBar.setText("One 2 red BLUE");
             String input = activity.getSearchBar();

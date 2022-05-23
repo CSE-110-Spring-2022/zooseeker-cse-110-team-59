@@ -8,10 +8,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.zooseeker_cse_110_team_59.List.DirectionsObserver;
+import com.example.zooseeker_cse_110_team_59.List.PlanDirections;
+
 import java.util.ArrayList;
 
-public class DirectionsActivity extends AppCompatActivity {
+public class DirectionsActivity extends AppCompatActivity implements DirectionsObserver {
 
+
+    private PlanDirections myDirections;
     private ArrayList<RoutePoint> route;
     private int routePointNum;
     private TextView directions;
@@ -27,19 +32,18 @@ public class DirectionsActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         route = bundle.getParcelableArrayList("RoutePoints in Order");
 
-        routePointNum = 0;
-
         directions = findViewById(R.id.directions_text);
         currExhibit = findViewById(R.id.current_exhibit);
         nextButton = findViewById(R.id.next_btn);
         finishButton = findViewById(R.id.finish_btn);
 
-        updateDirections();
+        myDirections = new PlanDirections(route);
+        myDirections.registerDO(this);
+        myDirections.startDirections();
     }
 
     public void onNextClicked(View view) {
-        routePointNum++;
-        updateDirections();
+        myDirections.nextClicked();
     }
 
     public void onFinishClicked(View view) {
@@ -48,33 +52,22 @@ public class DirectionsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /*
-    public void onPreviousClicked(View view) {
-        routePointNum--;
-        updateDirections();
-    }
-     */
-
-    public void updateDirections() {
-        directions.setText(route.get(routePointNum).directions);
-
-        String currExhibitText = "Directions to " + route.get(routePointNum).exhibitName;
-        currExhibit.setText(currExhibitText);
-
-        if (routePointNum == route.size() - 1) {
-            finishButton.setVisibility(View.VISIBLE);
-            nextButton.setVisibility(View.INVISIBLE);
-        } else {
-            finishButton.setVisibility(View.INVISIBLE);
-            nextButton.setVisibility(View.VISIBLE);
-            String nextBtnText = "Next: " + route.get(routePointNum + 1).exhibitName + ", " + route.get(routePointNum + 1).distance + "ft";
-            nextButton.setText(nextBtnText);
-        }
-    }
-
     // This is for testing purposes
     public int getRoutePointNum() {
         return routePointNum;
     }
 
+    @Override
+    public void update(ArrayList<String> currStrings, ArrayList<String> nextStrings) {
+        if (nextStrings.get(0).equals("finished")) {
+            finishButton.setVisibility(View.VISIBLE);
+            nextButton.setVisibility(View.INVISIBLE);
+        } else {
+            finishButton.setVisibility(View.INVISIBLE);
+            nextButton.setVisibility(View.VISIBLE);
+            nextButton.setText(nextStrings.get(1));
+        }
+        currExhibit.setText(currStrings.get(0));
+        directions.setText(currStrings.get(1));
+    }
 }
