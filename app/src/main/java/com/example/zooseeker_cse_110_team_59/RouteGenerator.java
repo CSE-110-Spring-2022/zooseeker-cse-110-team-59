@@ -58,7 +58,7 @@ public class RouteGenerator {
             }
             RoutePoint rp = createRoutePointFromPath(shortestPath);
 
-            rp.cumdistance += cumdistance;
+            rp.cumDistance += cumdistance;
             route.add(rp);
 
             currentNode = closestExhibit;
@@ -70,7 +70,7 @@ public class RouteGenerator {
 
         RoutePoint rp = createRoutePointFromPath(backToExit);
 
-        rp.cumdistance += cumdistance;
+        rp.cumDistance += cumdistance;
         route.add(rp);
         return route;
     }

@@ -125,7 +125,7 @@ public class EspressoTestsUserStory6 {
         materialButton5.perform(click());
 
         ViewInteraction textView = onView(
-                allOf(withId(R.id.current_exhibit), withText("Directions to Gorillas"),
+                allOf(withId(R.id.place_name), withText("Directions to Gorillas"),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
         textView.check(matches(withText("Directions to Gorillas")));

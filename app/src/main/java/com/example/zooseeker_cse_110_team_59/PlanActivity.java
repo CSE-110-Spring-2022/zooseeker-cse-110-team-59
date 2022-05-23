@@ -5,11 +5,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Map;
-
-import org.jgrapht.Graph;
-import org.jgrapht.GraphPath;
-import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,13 +37,13 @@ public class PlanActivity extends AppCompatActivity {
         RouteSummaryAdapter adapter = new RouteSummaryAdapter();
         adapter.setHasStableIds(true);
 
-        recyclerView = findViewById(R.id.summary);
+        recyclerView = findViewById(R.id.route_summary);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
         Bundle bundle = getIntent().getExtras();
         route = bundle.getParcelableArrayList("RoutePoints in Order");
-        adapter.setRoutePoint(route);
+        adapter.setRoutePoints(route);
     }
 
     public void onDirectionsClicked(View view) {

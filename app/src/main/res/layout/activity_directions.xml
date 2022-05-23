@@ -45,7 +45,7 @@
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <TextView
-        android:id="@+id/current_exhibit"
+        android:id="@+id/place_name"
         android:layout_width="354dp"
         android:layout_height="97dp"
         android:gravity="center"

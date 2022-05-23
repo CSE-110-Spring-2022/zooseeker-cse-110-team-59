@@ -13,16 +13,16 @@ public class RoutePoint implements Parcelable {
 
     public String exhibitName;
     public String directions;
-    public String streetname;
-    public double imdistance, cumdistance;
+    public String streetName;
+    public double imDistance, cumDistance;
 
 
     public RoutePoint(String exhibitName, String directions, double imdistance, String streetname) {
         this.exhibitName = exhibitName;
         this.directions = directions;
-        this.imdistance = imdistance;
-        this.cumdistance = imdistance;
-        this.streetname = streetname;
+        this.imDistance = imdistance;
+        this.cumDistance = imdistance;
+        this.streetName = streetname;
 
     }
 
@@ -35,9 +35,9 @@ public class RoutePoint implements Parcelable {
     protected RoutePoint(Parcel in) {
         exhibitName = in.readString();
         directions = in.readString();
-        imdistance = in.readDouble();
-        streetname = in.readString();
-        cumdistance = imdistance;
+        imDistance = in.readDouble();
+        streetName = in.readString();
+        cumDistance = in.readDouble();
     }
 
     public static final Creator<RoutePoint> CREATOR = new Creator<RoutePoint>() {
@@ -61,9 +61,9 @@ public class RoutePoint implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(exhibitName);
         parcel.writeString(directions);
-        parcel.writeDouble(imdistance);
-        parcel.writeString(streetname);
-        parcel.writeDouble(cumdistance);
+        parcel.writeDouble(imDistance);
+        parcel.writeString(streetName);
+        parcel.writeDouble(cumDistance);
     }
 
 

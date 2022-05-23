@@ -8,38 +8,25 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Collections;
 import java.util.List;
 
 public class RouteSummaryAdapter extends RecyclerView.Adapter<RouteSummaryAdapter.RoutePointHolder> {
-    List<RoutePoint> list;
-    class RoutePointHolder extends RecyclerView.ViewHolder{
-        private final TextView namestreet, cumdistance, animalname ;
-        private RoutePoint routepoint;
-        public RoutePointHolder(@NonNull View itemView) {
-            super(itemView);
-            namestreet = itemView.findViewById(R.id.current_streetname);
-            cumdistance = itemView.findViewById(R.id.current_distance);
-            animalname = itemView.findViewById(R.id.current_exhibit);
-        }
-        public RoutePoint getRoutePoint(){return routepoint;}
-        public void setRoutePoint(RoutePoint routepoint){
-            this.routepoint = routepoint;
-            namestreet.setText(routepoint.streetname);
-            cumdistance.setText(routepoint.cumdistance + "");
-            animalname.setText(routepoint.exhibitName);
-        }
-    }
-    public void setRoutePoint(List<RoutePoint> newRoutePoints){
+    private List<RoutePoint> list = Collections.emptyList();
+
+    public void setRoutePoints(List<RoutePoint> newRoutePoints){
         this.list.clear();
         this.list = newRoutePoints;
         notifyDataSetChanged();
     }
+
     @NonNull
     @Override
     public RoutePointHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.route_summary_items, parent, false);
+
         return new RoutePointHolder(view);
     }
 
@@ -51,5 +38,29 @@ public class RouteSummaryAdapter extends RecyclerView.Adapter<RouteSummaryAdapte
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    class RoutePointHolder extends RecyclerView.ViewHolder {
+        private final TextView nameStreet, cumDistance, placeName;
+
+        private RoutePoint routePoint;
+
+        public RoutePointHolder(@NonNull View itemView) {
+            super(itemView);
+            nameStreet = itemView.findViewById(R.id.street_name);
+            cumDistance = itemView.findViewById(R.id.cum_distance);
+            placeName = itemView.findViewById(R.id.place_name);
+        }
+
+        public RoutePoint getRoutePoint() {
+            return routePoint;
+        }
+
+        public void setRoutePoint(RoutePoint routepoint){
+            this.routePoint = routepoint;
+            nameStreet.setText(routepoint.streetName);
+            cumDistance.setText(routepoint.cumDistance + "");
+            placeName.setText(routepoint.exhibitName);
+        }
     }
 }

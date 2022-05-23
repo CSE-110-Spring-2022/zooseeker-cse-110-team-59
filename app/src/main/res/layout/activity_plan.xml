@@ -27,7 +27,7 @@
         app:layout_constraintGuide_begin="20dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/summary"
+        android:id="@+id/route_summary"
         android:layout_width="389dp"
         android:layout_height="337dp"
         android:nestedScrollingEnabled="true"

@@ -35,15 +35,15 @@ public class UnitTestsUserStory6 {
     // route with Gorillas, Lions, and Elephant Odyssey
     private ArrayList<RoutePoint> route = new ArrayList<>(Arrays.asList(
             new RoutePoint("Gorillas", "1. Proceed on Entrance Way 10.0 ft towards Africa Rocks Street.\n" +
-                    "2. Proceed on Africa Rocks Street 200.0 ft towards Gorillas.\n", 210.0),
-            new RoutePoint("Lions", "1. Proceed on Africa Rocks Street 200.0 ft towards Lions.\n", 200.0),
-            new RoutePoint("Elephant Odyssey", "1. Proceed on Africa Rocks Street 200.0 ft towards Elephant Odyssey.\n", 200.0),
+                    "2. Proceed on Africa Rocks Street 200.0 ft towards Gorillas.\n", 210.0, "Africa Rocks Street"),
+            new RoutePoint("Lions", "1. Proceed on Africa Rocks Street 200.0 ft towards Lions.\n", 200.0, "Africa Rocks Street"),
+            new RoutePoint("Elephant Odyssey", "1. Proceed on Africa Rocks Street 200.0 ft towards Elephant Odyssey.\n", 200.0, "Africa Rocks Street"),
             new RoutePoint("Entrance and Exit Gate",
                     "1. Proceed on Africa Rocks Street 200.0 ft towards Sharp Teeth Shortcut.\n"
                             + "2. Proceed on Sharp Teeth Shortcut 200.0 ft towards Reptile Road.\n"
                             + "3. Proceed on Reptile Road 100.0 ft towards Entrance Way.\n"
                             + "4. Proceed on Entrance Way 10.0 ft towards Entrance and Exit Gate.\n",
-                    510.0)
+                    510.0, "Entrance Way")
     ));
 
     // MIGHT NEED TO CHANGE THIS

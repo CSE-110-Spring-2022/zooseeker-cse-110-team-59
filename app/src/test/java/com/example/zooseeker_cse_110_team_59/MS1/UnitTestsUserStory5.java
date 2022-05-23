@@ -56,7 +56,9 @@ public class UnitTestsUserStory5 {
 
         assertEquals(test.exhibitName, result.exhibitName);
         assertEquals(test.directions, result.directions);
-        assertEquals(test.imdistance, result.imdistance, 0.0);
+        assertEquals(test.imDistance, result.imDistance, 0.0);
+        assertEquals(test.streetName, result.streetName);
+        assertEquals(200.0, result.cumDistance, 0.0);
     }
 
     @Test
@@ -74,7 +76,9 @@ public class UnitTestsUserStory5 {
 
         assertEquals(test.exhibitName, result.exhibitName);
         assertEquals(test.directions, result.directions);
-        assertEquals(test.imdistance, result.imdistance, 0.0);
+        assertEquals(test.imDistance, result.imDistance, 0.0);
+        assertEquals(test.streetName, result.streetName);
+        assertEquals(210.0, result.cumDistance, 0.0);
     }
 
     @Test
@@ -87,18 +91,22 @@ public class UnitTestsUserStory5 {
         test.add(new RoutePoint("Entrance and Exit Gate",
                 "1. Proceed on Africa Rocks Street 200.0 ft towards Entrance Way.\n"
                         + "2. Proceed on Entrance Way 10.0 ft towards Entrance and Exit Gate.\n",
-                210.0, "Africa Rocks Street"));
+                210.0, "Entrance Way"));
 
         ArrayList<RoutePoint> result = RouteGenerator.generateRoute(new ArrayList<String>(Arrays.asList("gorillas")));
 
         assertEquals(test.get(0).exhibitName, result.get(0).exhibitName);
         assertEquals(test.get(0).directions, result.get(0).directions);
-        assertEquals(test.get(0).imdistance, result.get(0).imdistance, 0.0);
-        ;
+        assertEquals(test.get(0).imDistance, result.get(0).imDistance, 0.0);
+        assertEquals(test.get(0).streetName, result.get(0).streetName);
+        assertEquals(210.0, result.get(0).cumDistance, 0.0);
+
 
         assertEquals(test.get(1).exhibitName, result.get(1).exhibitName);
         assertEquals(test.get(1).directions, result.get(1).directions);
-        assertEquals(test.get(1).imdistance, result.get(1).imdistance, 0.0);
+        assertEquals(test.get(1).imDistance, result.get(1).imDistance, 0.0);
+        assertEquals(test.get(1).streetName, result.get(1).streetName);
+        assertEquals(420.0, result.get(1).cumDistance, 0.0);
     }
 
     @Test
@@ -122,14 +130,20 @@ public class UnitTestsUserStory5 {
 
         assertEquals(test.get(0).exhibitName, result.get(0).exhibitName);
         assertEquals(test.get(0).directions, result.get(0).directions);
-        assertEquals(test.get(0).imdistance, result.get(0).imdistance, 0.0);
+        assertEquals(test.get(0).imDistance, result.get(0).imDistance, 0.0);
+        assertEquals(test.get(0).streetName, result.get(0).streetName);
+        assertEquals(210.0, result.get(0).cumDistance, 0.0);
 
         assertEquals(test.get(1).exhibitName, result.get(1).exhibitName);
         assertEquals(test.get(1).directions, result.get(1).directions);
-        assertEquals(test.get(1).imdistance, result.get(1).imdistance, 0.0);
+        assertEquals(test.get(1).imDistance, result.get(1).imDistance, 0.0);
+        assertEquals(test.get(1).streetName, result.get(1).streetName);
+        assertEquals(610.0, result.get(1).cumDistance, 0.0);
 
         assertEquals(test.get(2).exhibitName, result.get(2).exhibitName);
         assertEquals(test.get(2).directions, result.get(2).directions);
-        assertEquals(test.get(2).imdistance, result.get(2).imdistance, 0.0);
+        assertEquals(test.get(2).imDistance, result.get(2).imDistance, 0.0);
+        assertEquals(test.get(2).streetName, result.get(2).streetName);
+        assertEquals(1120.0, result.get(2).cumDistance, 0.0);
     }
 }

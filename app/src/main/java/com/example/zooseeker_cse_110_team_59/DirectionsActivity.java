@@ -30,7 +30,7 @@ public class DirectionsActivity extends AppCompatActivity {
         routePointNum = 0;
 
         directions = findViewById(R.id.directions_text);
-        currExhibit = findViewById(R.id.current_exhibit);
+        currExhibit = findViewById(R.id.place_name);
         nextButton = findViewById(R.id.next_btn);
         finishButton = findViewById(R.id.finish_btn);
 
@@ -67,7 +67,7 @@ public class DirectionsActivity extends AppCompatActivity {
         } else {
             finishButton.setVisibility(View.INVISIBLE);
             nextButton.setVisibility(View.VISIBLE);
-            String nextBtnText = "Next: " + route.get(routePointNum + 1).exhibitName + ", " + route.get(routePointNum + 1).imdistance + "ft";
+            String nextBtnText = "Next: " + route.get(routePointNum + 1).exhibitName + ", " + route.get(routePointNum + 1).imDistance + "ft";
             nextButton.setText(nextBtnText);
         }
     }
