@@ -48,7 +48,7 @@ public class UnitTestsUserStory5 {
                 "1. Proceed on Africa Rocks Street 200.0 ft towards Gorillas.\n",
                 "Africa Rocks Street", 200.0);
 
-        GraphPath<String, ZooData.Graph.Edge> path = DijkstraShortestPath.findPathBetween(ZooData.graphData, "entrance_plaza", "gorillas");
+        GraphPath<String, ZooData.Graph.Edge> path = RouteGenerator.getPathBetween("entrance_plaza", "gorillas");
 
         RoutePoint result = RouteGenerator.createRoutePointFromPath(path);
 
@@ -66,9 +66,7 @@ public class UnitTestsUserStory5 {
                         + "2. Proceed on Africa Rocks Street 200.0 ft towards Gorillas.\n",
                 "Africa Rocks Street", 210.0);
 
-        GraphPath<String, ZooData.Graph.Edge> path = DijkstraShortestPath.findPathBetween(ZooData.loadZooGraphJSON(FilesToLoad.getGraphFile()),
-                "entrance_exit_gate",
-                "gorillas");
+        GraphPath<String, ZooData.Graph.Edge> path = RouteGenerator.getPathBetween("entrance_exit_gate", "gorillas");
 
         RoutePoint result = RouteGenerator.createRoutePointFromPath(path);
 

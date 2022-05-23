@@ -62,10 +62,10 @@ public class UnitTestsUserStory6 {
         ActivityScenario<DirectionsActivity> scenario = scenarioRule.getScenario();
 
         scenario.onActivity(activity -> {
-            Button finishBttn = activity.findViewById(R.id.finish_btn);
+            Button finishBtn = activity.findViewById(R.id.finish_btn);
 
             assertEquals(0, activity.getRoutePointNum());
-            assertEquals(View.INVISIBLE, finishBttn.getVisibility());
+            assertEquals(View.INVISIBLE, finishBtn.getVisibility());
         });
     }
 
@@ -74,13 +74,13 @@ public class UnitTestsUserStory6 {
         ActivityScenario<DirectionsActivity> scenario = scenarioRule.getScenario();
 
         scenario.onActivity(activity -> {
-            Button finishBttn = activity.findViewById(R.id.finish_btn);
-            Button nextBttn = activity.findViewById(R.id.next_btn);
+            Button finishBtn = activity.findViewById(R.id.finish_btn);
+            Button nextBtn = activity.findViewById(R.id.next_btn);
 
-            nextBttn.performClick();
+            nextBtn.performClick();
 
             assertEquals(1, activity.getRoutePointNum());
-            assertEquals(View.INVISIBLE, finishBttn.getVisibility());
+            assertEquals(View.INVISIBLE, finishBtn.getVisibility());
         });
     }
 
@@ -89,15 +89,15 @@ public class UnitTestsUserStory6 {
         ActivityScenario<DirectionsActivity> scenario = scenarioRule.getScenario();
 
         scenario.onActivity(activity -> {
-            Button finishBttn = activity.findViewById(R.id.finish_btn);
-            Button nextBttn = activity.findViewById(R.id.next_btn);
+            Button finishBtn = activity.findViewById(R.id.finish_btn);
+            Button nextBtn = activity.findViewById(R.id.next_btn);
 
-            nextBttn.performClick();
-            nextBttn.performClick();
-            nextBttn.performClick();
+            nextBtn.performClick();
+            nextBtn.performClick();
+            nextBtn.performClick();
 
             assertEquals(3, activity.getRoutePointNum());
-            assertEquals(View.VISIBLE, finishBttn.getVisibility());
+            assertEquals(View.VISIBLE, finishBtn.getVisibility());
         });
     }
 }

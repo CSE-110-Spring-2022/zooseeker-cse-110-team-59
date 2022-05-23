@@ -23,7 +23,7 @@ public class RouteGenerator {
 
         while (unvisited.size() != 0) {
             String closestExhibit = findClosest(currentNode, unvisited);
-            GraphPath<String, ZooData.Graph.Edge> shortestPath = DijkstraShortestPath.findPathBetween(ZooData.graphData, currentNode, closestExhibit);
+            GraphPath<String, ZooData.Graph.Edge> shortestPath = getPathBetween(currentNode, closestExhibit);
 
             RoutePoint rp = createRoutePointFromPath(shortestPath);
             rp.cumDistance += cumDistance;
@@ -34,7 +34,7 @@ public class RouteGenerator {
             cumDistance += shortestPath.getWeight();
         }
 
-        GraphPath<String, ZooData.Graph.Edge> toEnd = DijkstraShortestPath.findPathBetween(ZooData.graphData, currentNode, end_id);
+        GraphPath<String, ZooData.Graph.Edge> toEnd = getPathBetween(currentNode, end_id);
 
         RoutePoint rp = createRoutePointFromPath(toEnd);
         rp.cumDistance += cumDistance;
@@ -48,7 +48,7 @@ public class RouteGenerator {
         String closestExhibit = null;
 
         for (String vertex : to) {
-            GraphPath<String, ZooData.Graph.Edge> path = DijkstraShortestPath.findPathBetween(ZooData.graphData, from, vertex);
+            GraphPath<String, ZooData.Graph.Edge> path = getPathBetween(from, vertex);
             if (path.getWeight() < shortestPathWeight) {
                 shortestPathWeight = path.getWeight();
                 closestExhibit = vertex;
@@ -68,6 +68,11 @@ public class RouteGenerator {
     //region "FromId" getters
     public static String getNameFromId(@NonNull String place_id){
         return ZooData.vertexData.get(place_id).name;
+    }
+
+    public static String getParentIdFromId(@NonNull String place_id) {
+        // Stub for converting a node ID to its parent ID if it has one, otherwise returning the input ID if it does not
+        return place_id;
     }
     //endregion
 
@@ -113,13 +118,17 @@ public class RouteGenerator {
     //endregion
 
     //region "Between" getters
+    public static GraphPath<String, ZooData.Graph.Edge> getPathBetween(@NonNull String start_id, @NonNull String end_id) {
+        return DijkstraShortestPath.findPathBetween(ZooData.graphData, getParentIdFromId(start_id), getParentIdFromId(end_id));
+    }
+
     public static double getDistanceBetween(@NonNull String start_id, @NonNull String end_id) {
-        GraphPath<String, ZooData.Graph.Edge> pathToUse = DijkstraShortestPath.findPathBetween(ZooData.graphData, start_id, end_id);
+        GraphPath<String, ZooData.Graph.Edge> pathToUse = getPathBetween(start_id, end_id);
         return getDistanceFromPath(pathToUse);
     }
 
     public static String getDirectionsBetween(@NonNull String start_id, @NonNull String end_id) {
-        GraphPath<String, ZooData.Graph.Edge> pathToUse = DijkstraShortestPath.findPathBetween(ZooData.graphData, start_id, end_id);
+        GraphPath<String, ZooData.Graph.Edge> pathToUse = getPathBetween(start_id, end_id);
         return getDirectionsFromPath(pathToUse);
     }
     //endregion
