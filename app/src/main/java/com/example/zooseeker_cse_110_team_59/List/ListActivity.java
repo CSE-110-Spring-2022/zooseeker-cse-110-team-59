@@ -16,6 +16,7 @@ import com.example.zooseeker_cse_110_team_59.Utilities;
 import com.example.zooseeker_cse_110_team_59.ZooData;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,7 +39,6 @@ import java.util.List;
 public class ListActivity extends AppCompatActivity implements ExhibitObserver {
 
     private ExhibitList exhibitList;
-    private List<String> autocompleteSuggestions;
     private TextView listCount;
     private TextView enteredExhibitsTextView;
     private AutoCompleteTextView searchBarTextView;
@@ -55,13 +55,16 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
         exhibitList = new ExhibitList(this);
         exhibitList.registerEO(this);
 
-        autocompleteSuggestions = new ArrayList<>();
+        ArrayList<ArrayList<String>> exhibitTagList = new ArrayList<ArrayList<String>>();
         ZooData.vertexData.forEach((id, datum) -> {
-            if (datum.kind.equals(ZooData.VertexInfo.Kind.EXHIBIT)) autocompleteSuggestions.add(datum.name);
+            if (datum.kind.equals(ZooData.VertexInfo.Kind.EXHIBIT)) {
+                ArrayList<String> row = new ArrayList<String>(Arrays.asList(datum.name));
+                row.addAll(datum.tags);
+                exhibitTagList.add(row);
+            }
         });
 
-        ArrayAdapter<String> searchBarAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, autocompleteSuggestions);
-        searchBarTextView.setAdapter(searchBarAdapter);
+        searchBarTextView.setAdapter(new AutoCompleteAdapter(this, android.R.layout.simple_list_item_1, exhibitTagList));
     }
 
     //region UI functionality methods:
@@ -120,15 +123,10 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
     }
     //endregion
 
-    //<editor-fold desc="Getters for Testing">
+    //region Getters for Testing
     @VisibleForTesting
     public ExhibitList getExhibitList() {
         return exhibitList;
-    }
-
-    @VisibleForTesting
-    public List<String> getAutocompleteSuggestions() {
-        return autocompleteSuggestions;
     }
 
     @VisibleForTesting
@@ -145,5 +143,5 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
     public AutoCompleteTextView getSearchBarTextView() {
         return searchBarTextView;
     }
-    //</editor-fold>
+    //endregion
 }
