@@ -46,11 +46,9 @@ public class UnitTestsUserStory5 {
     public void testsRoutePointOneEdge() {
         RoutePoint test = new RoutePoint("Gorillas",
                 "1. Proceed on Africa Rocks Street 200.0 ft towards Gorillas.\n",
-                200.0, "Africa Rocks Street");
+                "Africa Rocks Street", 200.0);
 
-        GraphPath<String, ZooData.Graph.Edge> path = DijkstraShortestPath.findPathBetween(ZooData.loadZooGraphJSON(FilesToLoad.getGraphFile()),
-                "entrance_plaza",
-                "gorillas");
+        GraphPath<String, ZooData.Graph.Edge> path = DijkstraShortestPath.findPathBetween(ZooData.graphData, "entrance_plaza", "gorillas");
 
         RoutePoint result = RouteGenerator.createRoutePointFromPath(path);
 
@@ -66,7 +64,7 @@ public class UnitTestsUserStory5 {
         RoutePoint test = new RoutePoint("Gorillas",
                 "1. Proceed on Entrance Way 10.0 ft towards Africa Rocks Street.\n"
                         + "2. Proceed on Africa Rocks Street 200.0 ft towards Gorillas.\n",
-                210.0, "Africa Rocks Street");
+                "Africa Rocks Street", 210.0);
 
         GraphPath<String, ZooData.Graph.Edge> path = DijkstraShortestPath.findPathBetween(ZooData.loadZooGraphJSON(FilesToLoad.getGraphFile()),
                 "entrance_exit_gate",
@@ -87,11 +85,11 @@ public class UnitTestsUserStory5 {
         test.add(new RoutePoint("Gorillas",
                 "1. Proceed on Entrance Way 10.0 ft towards Africa Rocks Street.\n"
                         + "2. Proceed on Africa Rocks Street 200.0 ft towards Gorillas.\n",
-                210.0, "Africa Rocks Street"));
+                "Africa Rocks Street", 210.0));
         test.add(new RoutePoint("Entrance and Exit Gate",
                 "1. Proceed on Africa Rocks Street 200.0 ft towards Entrance Way.\n"
                         + "2. Proceed on Entrance Way 10.0 ft towards Entrance and Exit Gate.\n",
-                210.0, "Entrance Way"));
+                "Entrance Way", 210.0));
 
         ArrayList<RoutePoint> result = RouteGenerator.generateRoute(new ArrayList<String>(Arrays.asList("gorillas")));
 
@@ -115,16 +113,16 @@ public class UnitTestsUserStory5 {
         test.add(new RoutePoint("Gorillas",
                 "1. Proceed on Entrance Way 10.0 ft towards Africa Rocks Street.\n"
                         + "2. Proceed on Africa Rocks Street 200.0 ft towards Gorillas.\n",
-                210.0, "Africa Rocks Street"));
+                "Africa Rocks Street", 210.0));
         test.add(new RoutePoint("Elephant Odyssey",
                 "1. Proceed on Africa Rocks Street 400.0 ft towards Elephant Odyssey.\n",
-                400.0, "Africa Rocks Street"));
+                "Africa Rocks Street", 400.0));
         test.add(new RoutePoint("Entrance and Exit Gate",
                 "1. Proceed on Africa Rocks Street 200.0 ft towards Sharp Teeth Shortcut.\n"
                         + "2. Proceed on Sharp Teeth Shortcut 200.0 ft towards Reptile Road.\n"
                         + "3. Proceed on Reptile Road 100.0 ft towards Entrance Way.\n"
                         + "4. Proceed on Entrance Way 10.0 ft towards Entrance and Exit Gate.\n",
-                510.0, "Entrance Way"));
+                "Entrance Way", 510.0));
 
         ArrayList<RoutePoint> result = RouteGenerator.generateRoute(new ArrayList<String>(Arrays.asList("gorillas", "elephant_odyssey")));
 

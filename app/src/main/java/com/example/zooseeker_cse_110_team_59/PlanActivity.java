@@ -35,7 +35,6 @@ public class PlanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_plan);
 
         RouteSummaryAdapter adapter = new RouteSummaryAdapter();
-        adapter.setHasStableIds(true);
 
         recyclerView = findViewById(R.id.route_summary);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

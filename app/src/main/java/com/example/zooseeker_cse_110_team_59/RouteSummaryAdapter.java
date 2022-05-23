@@ -25,7 +25,7 @@ public class RouteSummaryAdapter extends RecyclerView.Adapter<RouteSummaryAdapte
     public RoutePointHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.route_summary_items, parent, false);
+                .inflate(R.layout.route_summary_item, parent, false);
 
         return new RoutePointHolder(view);
     }
@@ -59,7 +59,7 @@ public class RouteSummaryAdapter extends RecyclerView.Adapter<RouteSummaryAdapte
         public void setRoutePoint(RoutePoint routepoint){
             this.routePoint = routepoint;
             nameStreet.setText(routepoint.streetName);
-            cumDistance.setText(routepoint.cumDistance + "");
+            cumDistance.setText(routepoint.cumDistance + " ft");
             placeName.setText(routepoint.exhibitName);
         }
     }

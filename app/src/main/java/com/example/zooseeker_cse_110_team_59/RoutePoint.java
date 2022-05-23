@@ -17,7 +17,7 @@ public class RoutePoint implements Parcelable {
     public double imDistance, cumDistance;
 
 
-    public RoutePoint(String exhibitName, String directions, double imdistance, String streetname) {
+    public RoutePoint(String exhibitName, String directions, String streetname, double imdistance) {
         this.exhibitName = exhibitName;
         this.directions = directions;
         this.imDistance = imdistance;

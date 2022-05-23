@@ -115,13 +115,7 @@ public class EspressoTestsUserStory6 {
         materialButton4.perform(click());
 
         ViewInteraction materialButton5 = onView(
-                allOf(withId(R.id.directions_btn), withText("Directions"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                1),
-                        isDisplayed()));
+                allOf(withId(R.id.directions_btn), withText("Directions"), isDisplayed()));
         materialButton5.perform(click());
 
         ViewInteraction textView = onView(
