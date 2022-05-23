@@ -7,12 +7,23 @@ import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RouteGenerator {
 
+    //region Overloaded generateRoute methods
     public static ArrayList<RoutePoint> generateRoute(ArrayList<String> enteredExhibits) {
         return generateRoute("entrance_exit_gate", enteredExhibits, "entrance_exit_gate");
     }
+
+    public static ArrayList<RoutePoint> generateRoute(@NonNull String start_id, ArrayList<String> enteredExhibits) {
+        return generateRoute(start_id, enteredExhibits, "entrance_exit_gate");
+    }
+
+    public static ArrayList<RoutePoint> generateRoute(ArrayList<String> enteredExhibits, @NonNull String end_id) {
+        return generateRoute("entrance_exit_gate", enteredExhibits, end_id);
+    }
+    //endregion
 
     public static ArrayList<RoutePoint> generateRoute(@NonNull String start_id, ArrayList<String> enteredExhibits, @NonNull String end_id) {
         ArrayList<String> unvisited = enteredExhibits;
@@ -114,6 +125,14 @@ public class RouteGenerator {
     public static String getStreetNameFromPath(GraphPath<String, ZooData.Graph.Edge> pathToUse) {
         List<ZooData.Graph.Edge> edgesInPath = pathToUse.getEdgeList();
         return ZooData.edgeData.get(edgesInPath.get(edgesInPath.size() - 1).getId()).street;
+    }
+    //endregion
+
+    //region "FromRoute" getters
+    public static ArrayList<String> getIdsFromRoute (ArrayList<RoutePoint> route) {
+        // Stub for getting the ids of the routepoints in a route in the same order. Once we
+        // modify RoutePoint to hold Ids, change exhibitName to id and delete this comment
+        return (ArrayList<String>) route.stream().map(item -> item.exhibitName).collect(Collectors.toList());
     }
     //endregion
 
