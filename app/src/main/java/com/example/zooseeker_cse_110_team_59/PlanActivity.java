@@ -1,6 +1,8 @@
 package com.example.zooseeker_cse_110_team_59;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -30,14 +32,23 @@ public class PlanActivity extends AppCompatActivity {
      */
 
     ArrayList<RoutePoint> route;
+    public RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plan);
 
+        RouteSummaryAdapter adapter = new RouteSummaryAdapter();
+        adapter.setHasStableIds(true);
+
+        recyclerView = findViewById(R.id.summary);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+
         Bundle bundle = getIntent().getExtras();
         route = bundle.getParcelableArrayList("RoutePoints in Order");
+        adapter.setRoutePoint(route);
     }
 
     public void onDirectionsClicked(View view) {
@@ -45,4 +56,5 @@ public class PlanActivity extends AppCompatActivity {
         intent.putParcelableArrayListExtra("RoutePoints in Order", route);
         startActivity(intent);
     }
+
 }

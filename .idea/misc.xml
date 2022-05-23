@@ -3,12 +3,21 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.18020833333333333" />
         <entry key="..\:/StudioProjects/zooseekercse110team59/app/src/main/res/layout/activity_directions.xml" value="0.38697916666666665" />
         <entry key="..\:/StudioProjects/zooseekercse110team59/app/src/main/res/layout/activity_end_route.xml" value="0.38697916666666665" />
         <entry key="..\:/StudioProjects/zooseekercse110team59/app/src/main/res/layout/activity_list.xml" value="0.25" />
         <entry key="..\:/StudioProjects/zooseekercse110team59/app/src/main/res/layout/activity_loading.xml" value="0.38697916666666665" />
         <entry key="..\:/StudioProjects/zooseekercse110team59/app/src/main/res/layout/activity_main.xml" value="0.38697916666666665" />
         <entry key="..\:/StudioProjects/zooseekercse110team59/app/src/main/res/layout/activity_plan.xml" value="0.34193840579710144" />
+        <entry key="app/src/main/res/layout/activity_directions.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/layout/activity_end_route.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/layout/activity_list.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/layout/activity_loading.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/layout/activity_plan.xml" value="0.18115942028985507" />
+        <entry key="app/src/main/res/layout/layout.xml" value="0.23645833333333333" />
+        <entry key="app/src/main/res/layout/route_summary_items.xml" value="0.25052083333333336" />
       </map>
     </option>
   </component>

@@ -33,14 +33,14 @@ public class RouteGenerator {
                 + currentStreetDist + " ft towards "
                 + ZooData.vertexData.get(pathToUse.getEndVertex()).name + ".\n";
 
-        return new RoutePoint(ZooData.vertexData.get(pathToUse.getEndVertex()).name, directions, pathToUse.getWeight());
+        return new RoutePoint(ZooData.vertexData.get(pathToUse.getEndVertex()).name, directions, pathToUse.getWeight(),currentStreet);
     }
 
     public static ArrayList<RoutePoint> generateRoute(ArrayList<String> enteredExhibits) {
         ArrayList<String> unvisited = enteredExhibits;
 
         ArrayList<RoutePoint> route = new ArrayList<>();
-
+        double cumdistance = 0.0;
         String currentNode = "entrance_exit_gate";
 
         while (unvisited.size() != 0) {
@@ -56,17 +56,22 @@ public class RouteGenerator {
                     closestExhibit = vertex;
                 }
             }
+            RoutePoint rp = createRoutePointFromPath(shortestPath);
 
-            route.add(createRoutePointFromPath(shortestPath));
+            rp.cumdistance += cumdistance;
+            route.add(rp);
 
             currentNode = closestExhibit;
             unvisited.remove(closestExhibit);
+            cumdistance += shortestPathWeight;
         }
 
         GraphPath<String, ZooData.Graph.Edge> backToExit = DijkstraShortestPath.findPathBetween(ZooData.graphData, currentNode, "entrance_exit_gate");
 
-        route.add(createRoutePointFromPath(backToExit));
+        RoutePoint rp = createRoutePointFromPath(backToExit);
 
+        rp.cumdistance += cumdistance;
+        route.add(rp);
         return route;
     }
 }

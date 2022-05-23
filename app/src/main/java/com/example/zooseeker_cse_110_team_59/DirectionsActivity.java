@@ -67,7 +67,7 @@ public class DirectionsActivity extends AppCompatActivity {
         } else {
             finishButton.setVisibility(View.INVISIBLE);
             nextButton.setVisibility(View.VISIBLE);
-            String nextBtnText = "Next: " + route.get(routePointNum + 1).exhibitName + ", " + route.get(routePointNum + 1).distance + "ft";
+            String nextBtnText = "Next: " + route.get(routePointNum + 1).exhibitName + ", " + route.get(routePointNum + 1).imdistance + "ft";
             nextButton.setText(nextBtnText);
         }
     }
