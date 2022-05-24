@@ -1,4 +1,4 @@
-package com.example.zooseeker_cse_110_team_59;
+package com.example.zooseeker_cse_110_team_59.MS1;
 
 
 import static androidx.test.espresso.Espresso.onView;
@@ -6,7 +6,6 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -24,6 +23,10 @@ import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
+import com.example.zooseeker_cse_110_team_59.FilesToLoad;
+import com.example.zooseeker_cse_110_team_59.MainActivity;
+import com.example.zooseeker_cse_110_team_59.R;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
@@ -34,7 +37,7 @@ import org.junit.runner.RunWith;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class EspressoTestsUserStory1 {
+public class EspressoTestsUserStory5 {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<MainActivity>(MainActivity.class) {
@@ -45,7 +48,7 @@ public class EspressoTestsUserStory1 {
     };
 
     @Test
-    public void testEnterInvalidAnimal() {
+    public void testPlanWithEmptyList() {
         ViewInteraction materialAutoCompleteTextView = onView(
                 Matchers.allOf(ViewMatchers.withId(R.id.search_bar),
                         childAtPosition(
@@ -54,7 +57,39 @@ public class EspressoTestsUserStory1 {
                                         0),
                                 0),
                         isDisplayed()));
-        materialAutoCompleteTextView.perform(replaceText("Entrance and Exit Gate"), closeSoftKeyboard());
+        materialAutoCompleteTextView.perform(closeSoftKeyboard());
+
+        ViewInteraction materialButton = onView(
+                allOf(withId(R.id.generate_plan_btn), withText("Generate Plan"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                7),
+                        isDisplayed()));
+        materialButton.perform(click());
+
+        ViewInteraction materialButton2 = onView(
+                allOf(withId(android.R.id.button1), withText("Ok"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                3)));
+        materialButton2.perform(scrollTo(), click());
+    }
+
+    @Test
+    public void testPlanWithNonEmptyList() {
+        ViewInteraction materialAutoCompleteTextView = onView(
+                allOf(withId(R.id.search_bar),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialAutoCompleteTextView.perform(replaceText("Arctic Foxes"), closeSoftKeyboard());
 
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.search_select_btn), withText("Select"),
@@ -67,40 +102,18 @@ public class EspressoTestsUserStory1 {
         materialButton.perform(click());
 
         ViewInteraction materialButton2 = onView(
-                allOf(withId(android.R.id.button1), withText("Ok"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.ScrollView")),
-                                        0),
-                                3)));
-        materialButton2.perform(scrollTo(), click());
-
-        materialAutoCompleteTextView.check(matches(withText("")));
-    }
-
-    @Test
-    public void testEnterValidAnimal() {
-        ViewInteraction materialAutoCompleteTextView = onView(
-                Matchers.allOf(ViewMatchers.withId(R.id.search_bar),
+                allOf(withId(R.id.generate_plan_btn), withText("Generate Plan"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
                                         0),
-                                0),
+                                7),
                         isDisplayed()));
-        materialAutoCompleteTextView.perform(replaceText("Alligators"), closeSoftKeyboard());
+        materialButton2.perform(click());
 
-        ViewInteraction materialButton = onView(
-                allOf(withId(R.id.search_select_btn), withText("Select"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                1),
-                        isDisplayed()));
-        materialButton.perform(click());
-
-        materialAutoCompleteTextView.check(matches(withText("")));
+        ViewInteraction materialButton3 = onView(
+                allOf(withId(R.id.directions_btn), withText("Directions"), isDisplayed()));
+        materialButton3.perform(click());
     }
 
     private static Matcher<View> childAtPosition(

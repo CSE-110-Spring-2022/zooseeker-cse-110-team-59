@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.zooseeker_cse_110_team_59.Directions.DirectionsActivity;
+
 /**
  * Class:            PlanActivity
  * Description:      sets up the onCreate method and is the entry point for the planning of the route

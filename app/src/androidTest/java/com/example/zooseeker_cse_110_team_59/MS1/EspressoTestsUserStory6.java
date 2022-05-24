@@ -1,4 +1,4 @@
-package com.example.zooseeker_cse_110_team_59;
+package com.example.zooseeker_cse_110_team_59.MS1;
 
 
 import static androidx.test.espresso.Espresso.onView;
@@ -19,12 +19,18 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 
+import com.example.zooseeker_cse_110_team_59.FilesToLoad;
+import com.example.zooseeker_cse_110_team_59.MainActivity;
+import com.example.zooseeker_cse_110_team_59.R;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Rule;
 import org.junit.Test;
@@ -45,7 +51,7 @@ public class EspressoTestsUserStory6 {
     @Test
     public void testDirectionsFirstOpened() {
         ViewInteraction materialAutoCompleteTextView = onView(
-                allOf(withId(R.id.search_bar),
+                Matchers.allOf(ViewMatchers.withId(R.id.search_bar),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
