@@ -18,7 +18,6 @@ public class DirectionsActivity extends AppCompatActivity implements DirectionsO
 
     private PlanDirections myDirections;
     private ArrayList<RoutePoint> route;
-    private int routePointNum;
     private TextView directions;
     private TextView currExhibit;
     private Button nextButton;
