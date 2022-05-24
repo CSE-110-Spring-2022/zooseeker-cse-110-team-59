@@ -1,10 +1,7 @@
-package com.example.zooseeker_cse_110_team_59.List;
+package com.example.zooseeker_cse_110_team_59.Directions;
 
-import android.app.Activity;
-import android.widget.TextView;
-
-import com.example.zooseeker_cse_110_team_59.DirectionsActivity;
-import com.example.zooseeker_cse_110_team_59.R;
+import com.example.zooseeker_cse_110_team_59.Directions.DirectionsObserver;
+import com.example.zooseeker_cse_110_team_59.Directions.DirectionsSubject;
 import com.example.zooseeker_cse_110_team_59.RoutePoint;
 
 import java.util.ArrayList;

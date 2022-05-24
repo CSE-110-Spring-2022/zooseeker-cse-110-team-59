@@ -3,15 +3,12 @@ package com.example.zooseeker_cse_110_team_59;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
-import java.util.Map;
-
-import org.jgrapht.Graph;
-import org.jgrapht.GraphPath;
-import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.zooseeker_cse_110_team_59.Directions.DirectionsActivity;
 
 /**
  * Class:            PlanActivity

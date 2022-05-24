@@ -1,4 +1,4 @@
-package com.example.zooseeker_cse_110_team_59;
+package com.example.zooseeker_cse_110_team_59.Directions;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,8 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.zooseeker_cse_110_team_59.List.DirectionsObserver;
-import com.example.zooseeker_cse_110_team_59.List.PlanDirections;
+import com.example.zooseeker_cse_110_team_59.EndRouteActivity;
+import com.example.zooseeker_cse_110_team_59.R;
+import com.example.zooseeker_cse_110_team_59.RoutePoint;
 
 import java.util.ArrayList;
 

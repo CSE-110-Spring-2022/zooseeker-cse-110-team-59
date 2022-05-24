@@ -13,7 +13,7 @@
             android:name=".EndRouteActivity"
             android:exported="false" />
         <activity
-            android:name=".DirectionsActivity"
+            android:name=".Directions.DirectionsActivity"
             android:exported="false" />
         <activity
             android:name=".LoadingActivity"

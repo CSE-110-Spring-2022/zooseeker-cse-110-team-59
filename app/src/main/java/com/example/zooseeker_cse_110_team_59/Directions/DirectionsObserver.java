@@ -1,4 +1,4 @@
-package com.example.zooseeker_cse_110_team_59.List;
+package com.example.zooseeker_cse_110_team_59.Directions;
 
 import java.util.ArrayList;
 
