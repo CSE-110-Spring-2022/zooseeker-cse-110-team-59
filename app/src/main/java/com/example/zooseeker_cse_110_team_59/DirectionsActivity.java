@@ -51,11 +51,6 @@ public class DirectionsActivity extends AppCompatActivity implements DirectionsO
         startActivity(intent);
     }
 
-    // This is for testing purposes
-    public int getRoutePointNum() {
-        return routePointNum;
-    }
-
     @Override
     public void update(ArrayList<String> currStrings, ArrayList<String> nextStrings) {
         if (nextStrings.get(0).equals("finished")) {
