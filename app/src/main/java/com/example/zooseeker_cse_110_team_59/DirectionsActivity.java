@@ -64,4 +64,8 @@ public class DirectionsActivity extends AppCompatActivity implements DirectionsO
         currExhibit.setText(currStrings.get(0));
         directions.setText(currStrings.get(1));
     }
+
+    public PlanDirections getPlanDirections() {
+        return myDirections;
+    }
 }

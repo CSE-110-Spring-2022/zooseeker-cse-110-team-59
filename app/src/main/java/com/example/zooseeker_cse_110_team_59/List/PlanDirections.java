@@ -55,4 +55,8 @@ public class PlanDirections implements DirectionsSubject {
         notifyDOS(currData, nextData);
     }
 
+    // FOR TESTING
+    public int getRoutePointNum() {
+        return routeIndex;
+    }
 }
