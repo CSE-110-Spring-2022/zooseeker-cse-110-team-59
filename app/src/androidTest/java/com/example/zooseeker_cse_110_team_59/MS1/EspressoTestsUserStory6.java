@@ -121,17 +121,11 @@ public class EspressoTestsUserStory6 {
         materialButton4.perform(click());
 
         ViewInteraction materialButton5 = onView(
-                allOf(withId(R.id.directions_btn), withText("Directions"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                1),
-                        isDisplayed()));
+                allOf(withId(R.id.directions_btn), withText("Directions"), isDisplayed()));
         materialButton5.perform(click());
 
         ViewInteraction textView = onView(
-                allOf(withId(R.id.current_exhibit), withText("Directions to Gorillas"),
+                allOf(withId(R.id.place_name), withText("Directions to Gorillas"),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
         textView.check(matches(withText("Directions to Gorillas")));

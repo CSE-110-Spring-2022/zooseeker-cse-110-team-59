@@ -33,7 +33,7 @@ public class DirectionsActivity extends AppCompatActivity implements DirectionsO
         route = bundle.getParcelableArrayList("RoutePoints in Order");
 
         directions = findViewById(R.id.directions_text);
-        currExhibit = findViewById(R.id.current_exhibit);
+        currExhibit = findViewById(R.id.place_name);
         nextButton = findViewById(R.id.next_btn);
         finishButton = findViewById(R.id.finish_btn);
 

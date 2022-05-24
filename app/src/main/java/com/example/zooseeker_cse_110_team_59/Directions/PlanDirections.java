@@ -47,7 +47,7 @@ public class PlanDirections implements DirectionsSubject {
         }
         nextData.add(finished);
         // next text
-        String nextExhibit = "Next: " + myRoute.get(routeIndex + 1).exhibitName + ", " + myRoute.get(routeIndex + 1).distance + "ft";
+        String nextExhibit = "Next: " + myRoute.get(routeIndex + 1).exhibitName + ", " + myRoute.get(routeIndex + 1).imDistance + "ft";
         nextData.add(nextExhibit);
         notifyDOS(currData, nextData);
     }

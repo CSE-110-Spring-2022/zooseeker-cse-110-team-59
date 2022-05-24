@@ -13,12 +13,17 @@ public class RoutePoint implements Parcelable {
 
     public String exhibitName;
     public String directions;
-    public double distance;
+    public String streetName;
+    public double imDistance, cumDistance;
 
-    public RoutePoint(String exhibitName, String directions, double distance) {
+
+    public RoutePoint(String exhibitName, String directions, String streetname, double imdistance) {
         this.exhibitName = exhibitName;
         this.directions = directions;
-        this.distance = distance;
+        this.imDistance = imdistance;
+        this.cumDistance = imdistance;
+        this.streetName = streetname;
+
     }
 
     // Link: https://stackoverflow.com/questions/7181526/how-can-i-make-my-custom-objects-parcelable
@@ -30,7 +35,9 @@ public class RoutePoint implements Parcelable {
     protected RoutePoint(Parcel in) {
         exhibitName = in.readString();
         directions = in.readString();
-        distance = in.readDouble();
+        imDistance = in.readDouble();
+        streetName = in.readString();
+        cumDistance = in.readDouble();
     }
 
     public static final Creator<RoutePoint> CREATOR = new Creator<RoutePoint>() {
@@ -54,7 +61,9 @@ public class RoutePoint implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(exhibitName);
         parcel.writeString(directions);
-        parcel.writeDouble(distance);
+        parcel.writeDouble(imDistance);
+        parcel.writeString(streetName);
+        parcel.writeDouble(cumDistance);
     }
 
 
