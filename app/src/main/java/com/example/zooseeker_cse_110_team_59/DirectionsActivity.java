@@ -39,7 +39,7 @@ public class DirectionsActivity extends AppCompatActivity implements DirectionsO
 
         myDirections = new PlanDirections(route);
         myDirections.registerDO(this);
-        myDirections.startDirections();
+        myDirections.nextClicked();
     }
 
     public void onNextClicked(View view) {

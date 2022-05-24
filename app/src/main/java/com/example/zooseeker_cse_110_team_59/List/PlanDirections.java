@@ -16,30 +16,7 @@ public class PlanDirections implements DirectionsSubject {
 
     public PlanDirections(ArrayList<RoutePoint> route) {
         myRoute = route;
-    }
-
-    public void startDirections() {
-        ArrayList<String> currData = new ArrayList<String>();
-        ArrayList<String> nextData = new ArrayList<String>();
-        // currexhibit text
-        String currentExhibit = "Directions to " + myRoute.get(routeIndex).exhibitName;
-        currData.add(currentExhibit);
-        // directions text
-        String directions = myRoute.get(routeIndex).directions;
-        currData.add(directions);
-        // are we on last exhibit
-        String finished = "unfinished";
-        if (routeIndex == (myRoute.size()-1)) {
-            finished = "finished";
-            nextData.add(finished);
-            notifyDOS(currData, nextData);
-            return;
-        }
-        nextData.add(finished);
-        // next text
-        String nextExhibit = "Next: " + myRoute.get(routeIndex + 1).exhibitName + ", " + myRoute.get(routeIndex + 1).distance + "ft";
-        nextData.add(nextExhibit);
-        notifyDOS(currData, nextData);
+        routeIndex = -1;
     }
 
     @Override
