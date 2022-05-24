@@ -12,13 +12,12 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.example.zooseeker_cse_110_team_59.DirectionsActivity;
+import com.example.zooseeker_cse_110_team_59.Directions.DirectionsActivity;
 import com.example.zooseeker_cse_110_team_59.FilesToLoad;
 import com.example.zooseeker_cse_110_team_59.R;
 import com.example.zooseeker_cse_110_team_59.RoutePoint;
 import com.example.zooseeker_cse_110_team_59.ZooData;
 
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -65,7 +64,7 @@ public class UnitTestsUserStory6 {
         scenario.onActivity(activity -> {
             Button finishBttn = activity.findViewById(R.id.finish_btn);
 
-            assertEquals(0, activity.getRoutePointNum());
+            assertEquals(0, activity.getPlanDirections().getRoutePointNum());
             assertEquals(View.INVISIBLE, finishBttn.getVisibility());
         });
     }
@@ -80,7 +79,7 @@ public class UnitTestsUserStory6 {
 
             nextBttn.performClick();
 
-            assertEquals(1, activity.getRoutePointNum());
+            assertEquals(1, activity.getPlanDirections().getRoutePointNum());
             assertEquals(View.INVISIBLE, finishBttn.getVisibility());
         });
     }
@@ -97,7 +96,7 @@ public class UnitTestsUserStory6 {
             nextBttn.performClick();
             nextBttn.performClick();
 
-            assertEquals(3, activity.getRoutePointNum());
+            assertEquals(3, activity.getPlanDirections().getRoutePointNum());
             assertEquals(View.VISIBLE, finishBttn.getVisibility());
         });
     }
