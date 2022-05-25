@@ -65,7 +65,6 @@ public class DirectionsActivity extends AppCompatActivity implements DirectionsO
         if (nextStrings.get(0).equals("finished")) {
             finishButton.setVisibility(View.VISIBLE);
             nextButton.setVisibility(View.INVISIBLE);
-            previousButton.setVisibility(View.INVISIBLE);
         } else {
             finishButton.setVisibility(View.INVISIBLE);
             nextButton.setVisibility(View.VISIBLE);
