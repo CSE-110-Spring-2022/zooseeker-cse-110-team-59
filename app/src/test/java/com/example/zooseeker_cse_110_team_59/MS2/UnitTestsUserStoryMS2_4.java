@@ -1,4 +1,4 @@
-package com.example.zooseeker_cse_110_team_59.MS1;
+package com.example.zooseeker_cse_110_team_59.MS2;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.test.core.app.ActivityScenario;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 @RunWith(AndroidJUnit4.class)
-public class UnitTestsUserStory6 {
+public class UnitTestsUserStoryMS2_4 {
 
     private Context context = ApplicationProvider.getApplicationContext();
 
@@ -47,52 +48,80 @@ public class UnitTestsUserStory6 {
     }
 
     @Test
-    public void testFirstInstanceOfDirections() {
+    public void testPreviousButtonIsClicked() {
         ActivityScenario<DirectionsActivity> scenario = scenarioRule.getScenario();
 
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
             Button finishBtn = activity.findViewById(R.id.finish_btn);
+            Button prevBtn = activity.findViewById(R.id.previous_button);
 
-            assertEquals(1, activity.getPlanDirections().getDestinationIndex());
+            prevBtn.performClick();
+
+            assertEquals(0, activity.getPlanDirections().getDestinationIndex());
             assertEquals(View.INVISIBLE, finishBtn.getVisibility());
         });
     }
 
     @Test
-    public void testNextButtonIsClicked() {
+    public void testPrevManyTimesAtBeginning() {
         ActivityScenario<DirectionsActivity> scenario = scenarioRule.getScenario();
 
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
-            Button finishBtn = activity.findViewById(R.id.finish_btn);
             Button nextBtn = activity.findViewById(R.id.next_btn);
+            Button prevBtn = activity.findViewById(R.id.previous_button);
 
             nextBtn.performClick();
+            nextBtn.performClick();
+            nextBtn.performClick();
+            prevBtn.performClick();
+            prevBtn.performClick();
+            prevBtn.performClick();
+            prevBtn.performClick();
 
-            assertEquals(2, activity.getPlanDirections().getDestinationIndex());
-            assertEquals(View.INVISIBLE, finishBtn.getVisibility());
+
+            assertEquals(0, activity.getPlanDirections().getDestinationIndex());
+            assertEquals(View.INVISIBLE, prevBtn.getVisibility());
         });
     }
 
     @Test
-    public void testEndOfRouteDirections() {
+    public void testPreviousButtonDirections() {
         ActivityScenario<DirectionsActivity> scenario = scenarioRule.getScenario();
 
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
-            Button finishBtn = activity.findViewById(R.id.finish_btn);
-            Button nextBtn = activity.findViewById(R.id.next_btn);
+            Button prevBtn = activity.findViewById(R.id.previous_button);
 
-            nextBtn.performClick();
-            nextBtn.performClick();
-            nextBtn.performClick();
-
-            assertEquals(4, activity.getPlanDirections().getDestinationIndex());
-            assertEquals(View.VISIBLE, finishBtn.getVisibility());
+            assertEquals("Previous: Entrance and Exit Gate, 0.0ft", prevBtn.getText());
         });
+    }
+
+    @Test
+    public void testPreviousButtonUpdatesDirections() {
+        ActivityScenario<DirectionsActivity> scenario = scenarioRule.getScenario();
+
+        scenario.moveToState(Lifecycle.State.CREATED);
+
+        scenario.onActivity(activity -> {
+            Button prevBtn = activity.findViewById(R.id.previous_button);
+            Button nextBtn = activity.findViewById(R.id.next_btn);
+            nextBtn.performClick();
+            nextBtn.performClick();
+            nextBtn.performClick();
+            prevBtn.performClick();
+            TextView directions = activity.findViewById(R.id.directions_text);
+            TextView currExhTitle = activity.findViewById(R.id.place_name);
+            assertEquals("1. Proceed on Entrance Way 10.0 ft towards Reptile Road.\n" +
+                    "2. Proceed on Reptile Road 100.0 ft towards Sharp Teeth Shortcut.\n" +
+                    "3. Proceed on Sharp Teeth Shortcut 200.0 ft towards Africa Rocks Street.\n" +
+                    "4. Proceed on Africa Rocks Street 200.0 ft towards Elephant Odyssey.\n", directions.getText());
+            assertEquals("Directions to Elephant Odyssey", currExhTitle.getText());
+        });
+
     }
 }
