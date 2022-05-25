@@ -19,6 +19,7 @@ public class DirectionsActivity extends AppCompatActivity implements DirectionsO
 
     private PlanDirections myDirections;
     private ArrayList<RoutePoint> route;
+    private ArrayList<String> IDs;
     private TextView directions;
     private TextView currExhibit;
     private Button nextButton;
@@ -31,13 +32,14 @@ public class DirectionsActivity extends AppCompatActivity implements DirectionsO
 
         Bundle bundle = getIntent().getExtras();
         route = bundle.getParcelableArrayList("RoutePoints in Order");
+        IDs = bundle.getStringArrayList("IDs in Order");
 
         directions = findViewById(R.id.directions_text);
         currExhibit = findViewById(R.id.place_name);
         nextButton = findViewById(R.id.next_btn);
         finishButton = findViewById(R.id.finish_btn);
 
-        myDirections = new PlanDirections(route);
+        myDirections = new PlanDirections(route, IDs);
         myDirections.registerDO(this);
         myDirections.nextClicked();
     }

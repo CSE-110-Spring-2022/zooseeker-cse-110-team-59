@@ -2,6 +2,7 @@ package com.example.zooseeker_cse_110_team_59.Directions;
 
 import com.example.zooseeker_cse_110_team_59.Directions.DirectionsObserver;
 import com.example.zooseeker_cse_110_team_59.Directions.DirectionsSubject;
+import com.example.zooseeker_cse_110_team_59.RouteGenerator;
 import com.example.zooseeker_cse_110_team_59.RoutePoint;
 
 import java.util.ArrayList;
@@ -14,8 +15,9 @@ public class PlanDirections implements DirectionsSubject {
     private String destination;
     private int destinationIndex;
 
-    public PlanDirections(ArrayList<RoutePoint> route) {
+    public PlanDirections(ArrayList<RoutePoint> route, ArrayList<String> IDs) {
         myRoute = route;
+        myIDs = IDs;
         destinationIndex = 0;
     }
 
@@ -29,34 +31,53 @@ public class PlanDirections implements DirectionsSubject {
             obs.update(currStrings, nextStrings);
         }
     }
-
+    //
     public void nextClicked() {
-        routeIndex++;
+        currentLoc = myIDs.get(destinationIndex);
+        destinationIndex++;
+        destination = myIDs.get(destinationIndex);
+        ArrayList<String> currData = getCurrData();
+        ArrayList<String> nextData = getNextData();
+        // next text
+        notifyDOS(currData, nextData);
+    }
+
+    public void previousClicked() {
+        currentLoc = myIDs.get(destinationIndex);
+        destinationIndex--;
+        if (destinationIndex < 0) { destinationIndex = 0; }
+        destination = myIDs.get(destinationIndex);
+        ArrayList<String> currData = getCurrData();
+    }
+
+    public ArrayList<String> getCurrData() {
         ArrayList<String> currData = new ArrayList<String>();
-        ArrayList<String> nextData = new ArrayList<String>();
-        // currexhibit text
-        String currentExhibit = "Directions to " + myRoute.get(routeIndex).exhibitName;
+        String currentExhibit = "Directions to " + RouteGenerator.getNameFromId(destination);
         currData.add(currentExhibit);
         // directions text
-        String directions = myRoute.get(routeIndex).directions;
+        String directions = RouteGenerator.getDirectionsBetween(currentLoc, destination);
         currData.add(directions);
-        // are we on last exhibit
+        return currData;
+    }
+
+    public ArrayList<String> getNextData() {
+        ArrayList<String> nextData = new ArrayList<String>();
         String finished = "unfinished";
-        if (routeIndex == (myRoute.size()-1)) {
+        if (destinationIndex == (myRoute.size())) {
             finished = "finished";
-            nextData.add(finished);
-            notifyDOS(currData, nextData);
-            return;
         }
         nextData.add(finished);
-        // next text
-        String nextExhibit = "Next: " + myRoute.get(routeIndex + 1).exhibitName + ", " + myRoute.get(routeIndex + 1).imDistance + "ft";
+        String nextExhibit = "";
+        if (destinationIndex < (myRoute.size())) {
+            nextExhibit = "Next: " + RouteGenerator.getNameFromId(myIDs.get(destinationIndex + 1)) + ", " +
+                    RouteGenerator.getDistanceBetween(currentLoc, destination) + "ft";
+        }
         nextData.add(nextExhibit);
-        notifyDOS(currData, nextData);
+        return nextData;
     }
 
     // FOR TESTING
     public int getRoutePointNum() {
-        return routeIndex;
+        return destinationIndex;
     }
 }
