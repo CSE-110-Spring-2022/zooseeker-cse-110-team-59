@@ -19,10 +19,12 @@ public class DirectionsActivity extends AppCompatActivity implements DirectionsO
 
     private PlanDirections myDirections;
     private ArrayList<RoutePoint> route;
+    private ArrayList<String> IDs;
     private TextView directions;
     private TextView currExhibit;
     private Button nextButton;
     private Button finishButton;
+    private Button previousButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,20 +32,25 @@ public class DirectionsActivity extends AppCompatActivity implements DirectionsO
         setContentView(R.layout.activity_directions);
 
         Bundle bundle = getIntent().getExtras();
-        route = bundle.getParcelableArrayList("RoutePoints in Order");
+        IDs = bundle.getStringArrayList("IDs in Order");
 
         directions = findViewById(R.id.directions_text);
         currExhibit = findViewById(R.id.place_name);
         nextButton = findViewById(R.id.next_btn);
+        previousButton = findViewById(R.id.previous_button);
         finishButton = findViewById(R.id.finish_btn);
 
-        myDirections = new PlanDirections(route);
+        myDirections = new PlanDirections(IDs);
         myDirections.registerDO(this);
         myDirections.nextClicked();
     }
 
     public void onNextClicked(View view) {
         myDirections.nextClicked();
+    }
+
+    public void onPreviousClicked(View view) {
+        myDirections.previousClicked();
     }
 
     public void onFinishClicked(View view) {
@@ -53,8 +60,29 @@ public class DirectionsActivity extends AppCompatActivity implements DirectionsO
     }
 
     @Override
-    public void update(ArrayList<String> currStrings, ArrayList<String> nextStrings) {
-        if (nextStrings.get(0).equals("finished")) {
+    public void update(ArrayList<String> prevStrings, ArrayList<String> currStrings, ArrayList<String> nextStrings) {
+        updatePrev(prevStrings);
+        updateCurr(currStrings);
+        updateNext(nextStrings);
+    }
+
+    private void updatePrev(ArrayList<String> prevStrings) {
+        if (prevStrings.get(0).equals("hide")) {
+            previousButton.setVisibility(View.INVISIBLE);
+        }
+        else {
+            previousButton.setVisibility(View.VISIBLE);
+            previousButton.setText(prevStrings.get(1));
+        }
+    }
+
+    private void updateCurr(ArrayList<String> currStrings) {
+        currExhibit.setText(currStrings.get(0));
+        directions.setText(currStrings.get(1));
+    }
+
+    private void updateNext(ArrayList<String> nextStrings) {
+        if (nextStrings.get(0).equals("hide")) {
             finishButton.setVisibility(View.VISIBLE);
             nextButton.setVisibility(View.INVISIBLE);
         } else {
@@ -62,8 +90,6 @@ public class DirectionsActivity extends AppCompatActivity implements DirectionsO
             nextButton.setVisibility(View.VISIBLE);
             nextButton.setText(nextStrings.get(1));
         }
-        currExhibit.setText(currStrings.get(0));
-        directions.setText(currStrings.get(1));
     }
 
     public PlanDirections getPlanDirections() {

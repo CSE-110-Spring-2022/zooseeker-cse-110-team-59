@@ -29,6 +29,7 @@ public class PlanActivity extends AppCompatActivity {
      */
 
     ArrayList<RoutePoint> route;
+
     public RecyclerView recyclerView;
 
     @Override
@@ -48,9 +49,14 @@ public class PlanActivity extends AppCompatActivity {
     }
 
     public void onDirectionsClicked(View view) {
+        ArrayList<String> IDs = new ArrayList<String>();
+        IDs.add("entrance_exit_gate");
+        for (RoutePoint rp : route) {
+            IDs.add(rp.ID);
+        }
+
         Intent intent = new Intent(this, DirectionsActivity.class);
-        intent.putParcelableArrayListExtra("RoutePoints in Order", route);
+        intent.putStringArrayListExtra("IDs in Order", IDs);
         startActivity(intent);
     }
-
 }
