@@ -24,6 +24,7 @@ public class DirectionsActivity extends AppCompatActivity implements DirectionsO
     private TextView currExhibit;
     private Button nextButton;
     private Button finishButton;
+    private Button previousButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class DirectionsActivity extends AppCompatActivity implements DirectionsO
         directions = findViewById(R.id.directions_text);
         currExhibit = findViewById(R.id.place_name);
         nextButton = findViewById(R.id.next_btn);
+        previousButton = findViewById(R.id.previous_button);
         finishButton = findViewById(R.id.finish_btn);
 
         myDirections = new PlanDirections(route, IDs);
@@ -46,6 +48,10 @@ public class DirectionsActivity extends AppCompatActivity implements DirectionsO
 
     public void onNextClicked(View view) {
         myDirections.nextClicked();
+    }
+
+    public void onPreviousClicked(View view) {
+        myDirections.previousClicked();
     }
 
     public void onFinishClicked(View view) {
@@ -59,6 +65,7 @@ public class DirectionsActivity extends AppCompatActivity implements DirectionsO
         if (nextStrings.get(0).equals("finished")) {
             finishButton.setVisibility(View.VISIBLE);
             nextButton.setVisibility(View.INVISIBLE);
+            previousButton.setVisibility(View.INVISIBLE);
         } else {
             finishButton.setVisibility(View.INVISIBLE);
             nextButton.setVisibility(View.VISIBLE);

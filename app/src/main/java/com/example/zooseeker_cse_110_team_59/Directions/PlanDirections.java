@@ -43,11 +43,15 @@ public class PlanDirections implements DirectionsSubject {
     }
 
     public void previousClicked() {
+        if (currentLoc.equals("entrance_exit_gate")) {
+            return;
+        }
         currentLoc = myIDs.get(destinationIndex);
         destinationIndex--;
-        if (destinationIndex < 0) { destinationIndex = 0; }
         destination = myIDs.get(destinationIndex);
         ArrayList<String> currData = getCurrData();
+        ArrayList<String> nextData = getNextData();
+        notifyDOS(currData, nextData);
     }
 
     public ArrayList<String> getCurrData() {
