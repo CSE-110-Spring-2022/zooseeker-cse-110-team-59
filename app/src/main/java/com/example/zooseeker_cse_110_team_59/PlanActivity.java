@@ -54,8 +54,8 @@ public class PlanActivity extends AppCompatActivity {
         for (RoutePoint rp : route) {
             IDs.add(rp.ID);
         }
+
         Intent intent = new Intent(this, DirectionsActivity.class);
-        intent.putParcelableArrayListExtra("RoutePoints in Order", route);
         intent.putStringArrayListExtra("IDs in Order", IDs);
         startActivity(intent);
     }

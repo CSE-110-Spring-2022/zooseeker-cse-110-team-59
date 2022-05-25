@@ -1,24 +1,23 @@
 package com.example.zooseeker_cse_110_team_59.Directions;
 
-import com.example.zooseeker_cse_110_team_59.Directions.DirectionsObserver;
-import com.example.zooseeker_cse_110_team_59.Directions.DirectionsSubject;
+import androidx.annotation.VisibleForTesting;
+
 import com.example.zooseeker_cse_110_team_59.RouteGenerator;
-import com.example.zooseeker_cse_110_team_59.RoutePoint;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PlanDirections implements DirectionsSubject {
     ArrayList<DirectionsObserver> Observers = new ArrayList<DirectionsObserver>();
-    private ArrayList<RoutePoint> myRoute;
     private ArrayList<String> myIDs;
     private String currentLoc;
     private String destination;
     private int destinationIndex;
 
-    public PlanDirections(ArrayList<RoutePoint> route, ArrayList<String> IDs) {
-        myRoute = route;
+    public PlanDirections(ArrayList<String> IDs) {
         myIDs = IDs;
         destinationIndex = 0;
+        destination = myIDs.get(destinationIndex);
     }
 
     @Override
@@ -26,34 +25,45 @@ public class PlanDirections implements DirectionsSubject {
         Observers.add(dObs);
     }
     @Override
-    public void notifyDOS(ArrayList<String> currStrings, ArrayList<String> nextStrings, ArrayList<String> prevStrings) {
+    public void notifyDOS(ArrayList<String> prevStrings, ArrayList<String> currStrings, ArrayList<String> nextStrings) {
         for (DirectionsObserver obs : Observers) {
-            obs.update(currStrings, nextStrings, prevStrings);
+            obs.update(prevStrings, currStrings, nextStrings);
         }
     }
     //
     public void nextClicked() {
-        currentLoc = myIDs.get(destinationIndex);
+        currentLoc = destination;
         destinationIndex++;
         destination = myIDs.get(destinationIndex);
         ArrayList<String> currData = getCurrData();
         ArrayList<String> nextData = getNextData();
         ArrayList<String> prevData = getPrevData();
         // next text
-        notifyDOS(currData, nextData, prevData);
+        notifyDOS(prevData, currData, nextData);
     }
 
     public void previousClicked() {
-        if (destinationIndex <= 1) {
-            return;
-        }
-        currentLoc = myIDs.get(destinationIndex);
+        currentLoc = destination;
         destinationIndex--;
         destination = myIDs.get(destinationIndex);
+        ArrayList<String> prevData = getPrevData();
         ArrayList<String> currData = getCurrData();
         ArrayList<String> nextData = getNextData();
-        ArrayList<String> prevData = getPrevData();
-        notifyDOS(currData, nextData, prevData);
+
+        notifyDOS(prevData, currData, nextData);
+    }
+
+    public ArrayList<String> getPrevData() {
+        if (destinationIndex == 0) return new ArrayList<String>(Arrays.asList("hide"));
+
+        ArrayList<String> prevData = new ArrayList<String>();
+        prevData.add("show");
+
+        String nextExhibit = "Previous: " + RouteGenerator.getNameFromId(myIDs.get(destinationIndex - 1)) + ", " +
+                RouteGenerator.getDistanceBetween(currentLoc, myIDs.get(destinationIndex - 1)) + "ft";
+        prevData.add(nextExhibit);
+
+        return prevData;
     }
 
     public ArrayList<String> getCurrData() {
@@ -67,39 +77,20 @@ public class PlanDirections implements DirectionsSubject {
     }
 
     public ArrayList<String> getNextData() {
+        if (destinationIndex == (myIDs.size() - 1)) return new ArrayList<String>(Arrays.asList("hide"));
+
         ArrayList<String> nextData = new ArrayList<String>();
-        String finished = "unfinished";
-        if (destinationIndex == (myRoute.size())) {
-            finished = "finished";
-        }
-        nextData.add(finished);
-        String nextExhibit = "";
-        if (destinationIndex < (myRoute.size())) {
-            nextExhibit = "Next: " + RouteGenerator.getNameFromId(myIDs.get(destinationIndex + 1)) + ", " +
-                    RouteGenerator.getDistanceBetween(currentLoc, destination) + "ft";
-        }
+        nextData.add("show");
+
+        String nextExhibit = "Next: " + RouteGenerator.getNameFromId(myIDs.get(destinationIndex + 1)) + ", " +
+                    RouteGenerator.getDistanceBetween(currentLoc, myIDs.get(destinationIndex + 1)) + "ft";
         nextData.add(nextExhibit);
+
         return nextData;
     }
 
-    public ArrayList<String> getPrevData() {
-        ArrayList<String> prevData = new ArrayList<String>();
-        String visible = "visible";
-        if (destinationIndex == 0) {
-            visible = "invisible";
-        }
-        prevData.add(visible);
-        String prevExhibit = "";
-        if (destinationIndex < (myRoute.size() + 1)) {
-            prevExhibit = "Previous: " + RouteGenerator.getNameFromId(myIDs.get(destinationIndex - 1)) + ", " +
-                    RouteGenerator.getDistanceBetween(currentLoc, destination) + "ft";
-        }
-        prevData.add(prevExhibit);
-        return prevData;
-    }
-
-    // FOR TESTING
-    public int getRoutePointNum() {
+    @VisibleForTesting
+    public int getDestinationIndex() {
         return destinationIndex;
     }
 }

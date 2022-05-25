@@ -64,7 +64,7 @@ public class UnitTestsUserStory6 {
         scenario.onActivity(activity -> {
             Button finishBtn = activity.findViewById(R.id.finish_btn);
 
-            assertEquals(0, activity.getPlanDirections().getRoutePointNum());
+            assertEquals(0, activity.getPlanDirections().getDestinationIndex());
             assertEquals(View.INVISIBLE, finishBtn.getVisibility());
         });
     }
@@ -79,7 +79,7 @@ public class UnitTestsUserStory6 {
 
             nextBtn.performClick();
 
-            assertEquals(1, activity.getPlanDirections().getRoutePointNum());
+            assertEquals(1, activity.getPlanDirections().getDestinationIndex());
             assertEquals(View.INVISIBLE, finishBtn.getVisibility());
         });
     }
@@ -96,7 +96,7 @@ public class UnitTestsUserStory6 {
             nextBtn.performClick();
             nextBtn.performClick();
 
-            assertEquals(3, activity.getPlanDirections().getRoutePointNum());
+            assertEquals(3, activity.getPlanDirections().getDestinationIndex());
             assertEquals(View.VISIBLE, finishBtn.getVisibility());
         });
     }

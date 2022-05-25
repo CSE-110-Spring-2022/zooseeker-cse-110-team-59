@@ -32,7 +32,6 @@ public class DirectionsActivity extends AppCompatActivity implements DirectionsO
         setContentView(R.layout.activity_directions);
 
         Bundle bundle = getIntent().getExtras();
-        route = bundle.getParcelableArrayList("RoutePoints in Order");
         IDs = bundle.getStringArrayList("IDs in Order");
 
         directions = findViewById(R.id.directions_text);
@@ -41,7 +40,7 @@ public class DirectionsActivity extends AppCompatActivity implements DirectionsO
         previousButton = findViewById(R.id.previous_button);
         finishButton = findViewById(R.id.finish_btn);
 
-        myDirections = new PlanDirections(route, IDs);
+        myDirections = new PlanDirections(IDs);
         myDirections.registerDO(this);
         myDirections.nextClicked();
     }
@@ -61,23 +60,35 @@ public class DirectionsActivity extends AppCompatActivity implements DirectionsO
     }
 
     @Override
-    public void update(ArrayList<String> currStrings, ArrayList<String> nextStrings, ArrayList<String> prevStrings) {
-        if (nextStrings.get(0).equals("finished")) {
+    public void update(ArrayList<String> prevStrings, ArrayList<String> currStrings, ArrayList<String> nextStrings) {
+        updatePrev(prevStrings);
+        updateCurr(currStrings);
+        updateNext(nextStrings);
+    }
+
+    private void updatePrev(ArrayList<String> prevStrings) {
+        if (prevStrings.get(0).equals("hide")) {
+            previousButton.setVisibility(View.INVISIBLE);
+        }
+        else {
+            previousButton.setVisibility(View.VISIBLE);
+            previousButton.setText(prevStrings.get(1));
+        }
+    }
+
+    private void updateCurr(ArrayList<String> currStrings) {
+        currExhibit.setText(currStrings.get(0));
+        directions.setText(currStrings.get(1));
+    }
+
+    private void updateNext(ArrayList<String> nextStrings) {
+        if (nextStrings.get(0).equals("hide")) {
             finishButton.setVisibility(View.VISIBLE);
             nextButton.setVisibility(View.INVISIBLE);
         } else {
             finishButton.setVisibility(View.INVISIBLE);
             nextButton.setVisibility(View.VISIBLE);
             nextButton.setText(nextStrings.get(1));
-        }
-        currExhibit.setText(currStrings.get(0));
-        directions.setText(currStrings.get(1));
-
-        if (prevStrings.get(0).equals("invisible")) {
-            previousButton.setVisibility(View.INVISIBLE);
-        }
-        else {
-            previousButton.setText(prevStrings.get(1));
         }
     }
 
