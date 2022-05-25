@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.lifecycle.Lifecycle;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
@@ -18,6 +19,7 @@ import com.example.zooseeker_cse_110_team_59.R;
 import com.example.zooseeker_cse_110_team_59.RoutePoint;
 import com.example.zooseeker_cse_110_team_59.ZooData;
 
+import org.bouncycastle.crypto.engines.CramerShoupCiphertext;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -31,22 +33,9 @@ public class UnitTestsUserStory6 {
 
     private Context context = ApplicationProvider.getApplicationContext();
 
-    // route with Gorillas, Lions, and Elephant Odyssey
-    private ArrayList<RoutePoint> route = new ArrayList<>(Arrays.asList(
-            new RoutePoint("Gorillas", "1. Proceed on Entrance Way 10.0 ft towards Africa Rocks Street.\n" +
-                    "2. Proceed on Africa Rocks Street 200.0 ft towards Gorillas.\n", "Africa Rocks Street", 210.0),
-            new RoutePoint("Lions", "1. Proceed on Africa Rocks Street 200.0 ft towards Lions.\n", "Africa Rocks Street", 200.0),
-            new RoutePoint("Elephant Odyssey", "1. Proceed on Africa Rocks Street 200.0 ft towards Elephant Odyssey.\n", "Africa Rocks Street", 200.0),
-            new RoutePoint("Entrance and Exit Gate",
-                    "1. Proceed on Africa Rocks Street 200.0 ft towards Sharp Teeth Shortcut.\n"
-                            + "2. Proceed on Sharp Teeth Shortcut 200.0 ft towards Reptile Road.\n"
-                            + "3. Proceed on Reptile Road 100.0 ft towards Entrance Way.\n"
-                            + "4. Proceed on Entrance Way 10.0 ft towards Entrance and Exit Gate.\n",
-                    "Entrance Way", 510.0)
-    ));
+    private ArrayList<String> route = new ArrayList<String>(Arrays.asList("entrance_exit_gate", "gorillas", "lions", "elephant_odyssey", "entrance_exit_gate"));
 
-    // MIGHT NEED TO CHANGE THIS
-    private Intent planIntent = new Intent(context, DirectionsActivity.class).putExtra("RoutePoints in Order", route);
+    private Intent planIntent = new Intent(context, DirectionsActivity.class).putExtra("IDs in Order", route);
 
     @Rule
     public ActivityScenarioRule<DirectionsActivity> scenarioRule = new ActivityScenarioRule<>(planIntent);
@@ -61,10 +50,12 @@ public class UnitTestsUserStory6 {
     public void testFirstInstanceOfDirections() {
         ActivityScenario<DirectionsActivity> scenario = scenarioRule.getScenario();
 
+        scenario.moveToState(Lifecycle.State.CREATED);
+
         scenario.onActivity(activity -> {
             Button finishBtn = activity.findViewById(R.id.finish_btn);
 
-            assertEquals(0, activity.getPlanDirections().getDestinationIndex());
+            assertEquals(1, activity.getPlanDirections().getDestinationIndex());
             assertEquals(View.INVISIBLE, finishBtn.getVisibility());
         });
     }
@@ -73,13 +64,15 @@ public class UnitTestsUserStory6 {
     public void testNextButtonIsClicked() {
         ActivityScenario<DirectionsActivity> scenario = scenarioRule.getScenario();
 
+        scenario.moveToState(Lifecycle.State.CREATED);
+
         scenario.onActivity(activity -> {
             Button finishBtn = activity.findViewById(R.id.finish_btn);
             Button nextBtn = activity.findViewById(R.id.next_btn);
 
             nextBtn.performClick();
 
-            assertEquals(1, activity.getPlanDirections().getDestinationIndex());
+            assertEquals(2, activity.getPlanDirections().getDestinationIndex());
             assertEquals(View.INVISIBLE, finishBtn.getVisibility());
         });
     }
@@ -88,6 +81,8 @@ public class UnitTestsUserStory6 {
     public void testEndOfRouteDirections() {
         ActivityScenario<DirectionsActivity> scenario = scenarioRule.getScenario();
 
+        scenario.moveToState(Lifecycle.State.CREATED);
+
         scenario.onActivity(activity -> {
             Button finishBtn = activity.findViewById(R.id.finish_btn);
             Button nextBtn = activity.findViewById(R.id.next_btn);
@@ -96,7 +91,7 @@ public class UnitTestsUserStory6 {
             nextBtn.performClick();
             nextBtn.performClick();
 
-            assertEquals(3, activity.getPlanDirections().getDestinationIndex());
+            assertEquals(4, activity.getPlanDirections().getDestinationIndex());
             assertEquals(View.VISIBLE, finishBtn.getVisibility());
         });
     }
