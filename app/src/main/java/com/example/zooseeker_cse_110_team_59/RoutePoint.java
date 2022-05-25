@@ -12,18 +12,16 @@ import android.os.Parcelable;
 public class RoutePoint implements Parcelable {
 
     public String exhibitName;
-    public String directions;
     public String streetName;
-    public double imDistance, cumDistance;
+    public String ID;
+    public double cumDistance;
 
 
-    public RoutePoint(String exhibitName, String directions, String streetname, double imdistance) {
+    public RoutePoint(String exhibitName, String streetname, String ID, double cumDistance) {
         this.exhibitName = exhibitName;
-        this.directions = directions;
-        this.imDistance = imdistance;
-        this.cumDistance = imdistance;
         this.streetName = streetname;
-
+        this.ID = ID;
+        this.cumDistance = cumDistance;
     }
 
     // Link: https://stackoverflow.com/questions/7181526/how-can-i-make-my-custom-objects-parcelable
@@ -34,9 +32,8 @@ public class RoutePoint implements Parcelable {
     // told us that it was a thing
     protected RoutePoint(Parcel in) {
         exhibitName = in.readString();
-        directions = in.readString();
-        imDistance = in.readDouble();
         streetName = in.readString();
+        ID = in.readString();
         cumDistance = in.readDouble();
     }
 
@@ -60,11 +57,8 @@ public class RoutePoint implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(exhibitName);
-        parcel.writeString(directions);
-        parcel.writeDouble(imDistance);
         parcel.writeString(streetName);
+        parcel.writeString(ID);
         parcel.writeDouble(cumDistance);
     }
-
-
 }

@@ -71,9 +71,13 @@ public class RouteGenerator {
 
     public static RoutePoint createRoutePointFromPath(GraphPath<String, ZooData.Graph.Edge> pathToUse) {
         return new RoutePoint(getDestNameFromPath(pathToUse),
-                getDirectionsFromPath(pathToUse),
                 getStreetNameFromPath(pathToUse),
+                getDestIdFromPath(pathToUse),
                 getDistanceFromPath(pathToUse));
+    }
+
+    public static String getDestIdFromPath(GraphPath<String, ZooData.Graph.Edge> pathToUse) {
+        return ZooData.vertexData.get(pathToUse.getEndVertex()).id;
     }
 
     //region "FromId" getters

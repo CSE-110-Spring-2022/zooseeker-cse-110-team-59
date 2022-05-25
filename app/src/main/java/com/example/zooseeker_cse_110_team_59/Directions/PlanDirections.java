@@ -9,11 +9,14 @@ import java.util.ArrayList;
 public class PlanDirections implements DirectionsSubject {
     ArrayList<DirectionsObserver> Observers = new ArrayList<DirectionsObserver>();
     private ArrayList<RoutePoint> myRoute;
-    private int routeIndex;
+    private ArrayList<String> myIDs;
+    private String currentLoc;
+    private String destination;
+    private int destinationIndex;
 
     public PlanDirections(ArrayList<RoutePoint> route) {
         myRoute = route;
-        routeIndex = -1;
+        destinationIndex = 0;
     }
 
     @Override
