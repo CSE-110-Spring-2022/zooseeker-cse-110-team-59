@@ -4,12 +4,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
+import android.content.Context;
+import android.content.Intent;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.test.core.app.ActivityScenario;
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -29,8 +32,15 @@ import java.util.Arrays;
 
 @RunWith(AndroidJUnit4.class)
 public class UnitTestsUserStoryMS1_2 {
+
+    private Context context = ApplicationProvider.getApplicationContext();
+
+    private ArrayList<String> enteredExhibits = new ArrayList<String>();
+
+    private Intent planIntent = new Intent(context, ListActivity.class).putExtra("Entered Exhibits", enteredExhibits);
+
     @Rule
-    public ActivityScenarioRule<ListActivity> scenarioRule = new ActivityScenarioRule<>(ListActivity.class);
+    public ActivityScenarioRule<ListActivity> scenarioRule = new ActivityScenarioRule<>(planIntent);
 
     @BeforeClass
     public static void setTestData() {

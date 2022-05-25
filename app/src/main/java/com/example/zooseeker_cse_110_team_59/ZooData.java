@@ -38,13 +38,33 @@ public class ZooData {
             // from the strings in our JSON to this Enum.
             @SerializedName("gate") GATE,
             @SerializedName("exhibit") EXHIBIT, 
-            @SerializedName("intersection") INTERSECTION
+            @SerializedName("intersection") INTERSECTION,
+            @SerializedName("exhibit_group") EXHIBIT_GROUP;
         }
 
         public String id;
+        public String group_id;
         public Kind kind;
         public String name;
         public List<String> tags;
+        public Double lat;
+        public Double lng;
+
+        public boolean isExhibit() {
+            return kind.equals(Kind.EXHIBIT);
+        }
+
+        public boolean isIntersection() {
+            return kind.equals(Kind.INTERSECTION);
+        }
+
+        public boolean isGroup() {
+            return kind.equals(Kind.EXHIBIT_GROUP);
+        }
+
+        public boolean hasGroup() {
+            return group_id != null;
+        }
     }
 
     public static class EdgeInfo {

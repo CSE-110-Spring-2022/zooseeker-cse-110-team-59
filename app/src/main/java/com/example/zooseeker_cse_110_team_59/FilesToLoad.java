@@ -10,7 +10,8 @@ import androidx.annotation.VisibleForTesting;
  * Public functions: getEdgeFile           - return the file with all the edges
  */
 public class FilesToLoad {
-    private static String[] filesToLoad = new String[]{"sample_zoo_graph.json", "sample_node_info.json", "sample_edge_info.json"};
+    private static String[] filesToLoad = new String[]{"zoo_graph.json", "exhibit_info.json", "trail_info.json"};
+    private static boolean runningTests = false;
 
     public static String getGraphFile() {
         return filesToLoad[0];
@@ -23,14 +24,20 @@ public class FilesToLoad {
     public static String getEdgeFile() {
         return filesToLoad[2];
     }
+
+    public static boolean isRunningTests() {
+        return runningTests;
+    }
+
     /**
      * The injectNewFiles is used to load up new file stream. Viable for testing.
-     * @param String[] of file from the command line
+     * @param newFiles of file from the command line
      *
      * @return None
      */
     @VisibleForTesting
     public static void injectNewFiles(String[] newFiles) {
         filesToLoad = newFiles;
+        runningTests = true;
     }
 }

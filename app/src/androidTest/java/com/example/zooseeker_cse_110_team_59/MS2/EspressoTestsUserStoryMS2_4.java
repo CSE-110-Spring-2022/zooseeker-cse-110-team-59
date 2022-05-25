@@ -7,11 +7,13 @@ import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -21,25 +23,36 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
+import androidx.test.rule.ActivityTestRule;
 
+import com.example.zooseeker_cse_110_team_59.FilesToLoad;
 import com.example.zooseeker_cse_110_team_59.MainActivity;
 import com.example.zooseeker_cse_110_team_59.R;
+import com.example.zooseeker_cse_110_team_59.ZooData;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class EspressoTestsUserStory2_4 {
+public class EspressoTestsUserStoryMS2_4 {
 
+    //region INCLUDE THIS IN EVERY ESPRESSO TEST. Change file names to desired test files.
     @Rule
-    public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
-            new ActivityScenarioRule<>(MainActivity.class);
+    public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<MainActivity>(MainActivity.class) {
+        @Override
+        protected void beforeActivityLaunched() {
+            FilesToLoad.injectNewFiles(new String[]{"test_zoo_graph_ms2.json", "test_node_info_ms2.json", "test_edge_info_ms2.json"});
+            ZooData.setZooData();
+        }
+    };
+    //endregion
 
     @Test
     public void testPrevInMiddle() {
@@ -83,13 +96,10 @@ public class EspressoTestsUserStory2_4 {
                         isDisplayed()));
         materialButton2.perform(click());
 
+        materialAutoCompleteTextView.perform(replaceText("Go Away Autocomplete"), closeSoftKeyboard());
+
         ViewInteraction materialButton3 = onView(
                 allOf(withId(R.id.generate_plan_btn), withText("Generate Plan"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                7),
                         isDisplayed()));
         materialButton3.perform(click());
 
@@ -104,7 +114,7 @@ public class EspressoTestsUserStory2_4 {
         materialButton4.perform(click());
 
         ViewInteraction materialButton5 = onView(
-                allOf(withId(R.id.next_btn), withText("Next: Gorillas, 310.0ft"),
+                allOf(withId(R.id.next_btn), withText("Next: Gorillas, 12400.0ft"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -130,7 +140,7 @@ public class EspressoTestsUserStory2_4 {
         textView.check(matches(withText("Directions to Spoonbill")));
 
         ViewInteraction button = onView(
-                allOf(withId(R.id.previous_button), withText("PREVIOUS: ENTRANCE AND EXIT GATE, 310.0FT"),
+                allOf(withId(R.id.previous_button), withText("PREVIOUS: ENTRANCE AND EXIT GATE, 12400.0FT"),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
         button.check(matches(isDisplayed()));
@@ -164,13 +174,10 @@ public class EspressoTestsUserStory2_4 {
                         isDisplayed()));
         materialButton.perform(click());
 
+        materialAutoCompleteTextView.perform(replaceText("Go Away Autocomplete"), closeSoftKeyboard());
+
         ViewInteraction materialButton2 = onView(
                 allOf(withId(R.id.generate_plan_btn), withText("Generate Plan"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                7),
                         isDisplayed()));
         materialButton2.perform(click());
 

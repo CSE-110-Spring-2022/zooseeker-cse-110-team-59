@@ -1,25 +1,25 @@
 package com.example.zooseeker_cse_110_team_59.Directions;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.VisibleForTesting;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.zooseeker_cse_110_team_59.ActivityOverflow;
 import com.example.zooseeker_cse_110_team_59.EndRouteActivity;
+import com.example.zooseeker_cse_110_team_59.MainActivity;
 import com.example.zooseeker_cse_110_team_59.R;
-import com.example.zooseeker_cse_110_team_59.RoutePoint;
 
 import java.util.ArrayList;
 
-public class DirectionsActivity extends AppCompatActivity implements DirectionsObserver {
+public class DirectionsActivity extends ActivityOverflow implements DirectionsObserver {
 
-
+    private ArrayList<String> startIDs;
     private PlanDirections myDirections;
-    private ArrayList<RoutePoint> route;
-    private ArrayList<String> IDs;
     private TextView directions;
     private TextView currExhibit;
     private Button nextButton;
@@ -32,7 +32,8 @@ public class DirectionsActivity extends AppCompatActivity implements DirectionsO
         setContentView(R.layout.activity_directions);
 
         Bundle bundle = getIntent().getExtras();
-        IDs = bundle.getStringArrayList("IDs in Order");
+        ArrayList<String> startIDs = bundle.getStringArrayList("IDs in Order");
+        int startIndex = bundle.getInt("Start Index");
 
         directions = findViewById(R.id.directions_text);
         currExhibit = findViewById(R.id.place_name);
@@ -40,11 +41,20 @@ public class DirectionsActivity extends AppCompatActivity implements DirectionsO
         previousButton = findViewById(R.id.previous_button);
         finishButton = findViewById(R.id.finish_btn);
 
-        myDirections = new PlanDirections(IDs);
+        myDirections = new PlanDirections(this, startIDs);
         myDirections.registerDO(this);
-        myDirections.nextClicked();
+
+        if (startIndex == 0) {
+            myDirections.nextClicked();
+            myDirections.previousClicked();
+        } else {
+            for (int i = 0; i < startIndex; i++) myDirections.nextClicked();
+        }
+
+        saveSharedPreferences();
     }
 
+    //region Button Listeners
     public void onNextClicked(View view) {
         myDirections.nextClicked();
     }
@@ -58,14 +68,18 @@ public class DirectionsActivity extends AppCompatActivity implements DirectionsO
         finish();
         startActivity(intent);
     }
+    //endregion
 
+    //region DirectionsObserver Interface Methods
     @Override
     public void update(ArrayList<String> prevStrings, ArrayList<String> currStrings, ArrayList<String> nextStrings) {
         updatePrev(prevStrings);
         updateCurr(currStrings);
         updateNext(nextStrings);
     }
+    //endregion
 
+    //region View Updaters
     private void updatePrev(ArrayList<String> prevStrings) {
         if (prevStrings.get(0).equals("hide")) {
             previousButton.setVisibility(View.INVISIBLE);
@@ -91,8 +105,32 @@ public class DirectionsActivity extends AppCompatActivity implements DirectionsO
             nextButton.setText(nextStrings.get(1));
         }
     }
+    //endregion
 
+    //region ActivityOverflow Abstract Methods
+    @Override
+    protected void startMainActivity() {
+        finish();
+        startActivity(new Intent(this, MainActivity.class));
+    }
+    //endregion
+
+    //region SharedPreferencesSaver Interface Methods
+    private void saveSharedPreferences() {
+        SharedPreferences preferences = getSharedPreferences("shared_preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        if (preferences.contains("storedActivity")) editor.remove("storedActivity");
+        editor.commit();
+        editor.putString("storedActivity", "DirectionsActivity");
+        editor.commit();
+    }
+    //endregion
+
+    //region Getters for Tests
+    @VisibleForTesting
     public PlanDirections getPlanDirections() {
         return myDirections;
     }
+    //endregion
 }

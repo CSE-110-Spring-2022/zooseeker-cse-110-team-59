@@ -31,16 +31,23 @@ public class RouteGenerator {
         ArrayList<RoutePoint> route = new ArrayList<>();
         double cumDistance = 0.0;
         String currentNode = start_id;
+        String currentStreetName = "Gate Path";
 
         while (unvisited.size() != 0) {
             String closestExhibit = findClosest(currentNode, unvisited);
             GraphPath<String, ZooData.Graph.Edge> shortestPath = getPathBetween(currentNode, closestExhibit);
 
-            RoutePoint rp = createRoutePointFromPath(shortestPath);
+            RoutePoint rp;
+            if (getDistanceBetween(currentNode, closestExhibit) == 0.0) {
+                rp = createRoutePointAtDest(closestExhibit, currentStreetName);
+            } else {
+                rp = createRoutePointFromPath(shortestPath, closestExhibit);
+            }
             rp.cumDistance += cumDistance;
             route.add(rp);
 
-            currentNode = closestExhibit;
+            currentNode = rp.ID;
+            currentStreetName = rp.streetName;
             unvisited.remove(closestExhibit);
             cumDistance += shortestPath.getWeight();
         }
@@ -69,16 +76,24 @@ public class RouteGenerator {
         return closestExhibit;
     }
 
+    //region RoutePoint Creators
     public static RoutePoint createRoutePointFromPath(GraphPath<String, ZooData.Graph.Edge> pathToUse) {
-        return new RoutePoint(getDestNameFromPath(pathToUse),
+        return createRoutePointFromPath(pathToUse, getDestIdFromPath(pathToUse));
+    }
+    public static RoutePoint createRoutePointFromPath(GraphPath<String, ZooData.Graph.Edge> pathToUse, String destID) {
+        return new RoutePoint(getNameFromId(destID),
                 getStreetNameFromPath(pathToUse),
-                getDestIdFromPath(pathToUse),
+                destID,
                 getDistanceFromPath(pathToUse));
     }
 
-    public static String getDestIdFromPath(GraphPath<String, ZooData.Graph.Edge> pathToUse) {
-        return ZooData.vertexData.get(pathToUse.getEndVertex()).id;
+    public static RoutePoint createRoutePointAtDest(String destID, String streetName) {
+        return new RoutePoint(getNameFromId(destID),
+                streetName,
+                destID,
+                0);
     }
+    //endregion
 
     //region "FromId" getters
     public static String getNameFromId(@NonNull String place_id){
@@ -86,8 +101,7 @@ public class RouteGenerator {
     }
 
     public static String getParentIdFromId(@NonNull String place_id) {
-        // Stub for converting a node ID to its parent ID if it has one, otherwise returning the input ID if it does not
-        return place_id;
+        return (ZooData.vertexData.get(place_id).hasGroup()) ? (ZooData.vertexData.get(place_id).group_id) : place_id;
     }
     //endregion
 
@@ -126,6 +140,10 @@ public class RouteGenerator {
         return getNameFromId(pathToUse.getEndVertex());
     }
 
+    public static String getDestIdFromPath(GraphPath<String, ZooData.Graph.Edge> pathToUse) {
+        return ZooData.vertexData.get(pathToUse.getEndVertex()).id;
+    }
+
     public static String getStreetNameFromPath(GraphPath<String, ZooData.Graph.Edge> pathToUse) {
         List<ZooData.Graph.Edge> edgesInPath = pathToUse.getEdgeList();
         return ZooData.edgeData.get(edgesInPath.get(edgesInPath.size() - 1).getId()).street;
@@ -134,9 +152,7 @@ public class RouteGenerator {
 
     //region "FromRoute" getters
     public static ArrayList<String> getIdsFromRoute (ArrayList<RoutePoint> route) {
-        // Stub for getting the ids of the routepoints in a route in the same order. Once we
-        // modify RoutePoint to hold Ids, change exhibitName to id and delete this comment
-        return (ArrayList<String>) route.stream().map(item -> item.exhibitName).collect(Collectors.toList());
+        return (ArrayList<String>) route.stream().map(item -> item.ID).collect(Collectors.toList());
     }
     //endregion
 

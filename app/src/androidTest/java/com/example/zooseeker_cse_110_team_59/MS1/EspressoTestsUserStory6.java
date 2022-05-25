@@ -7,6 +7,7 @@ import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -27,11 +28,13 @@ import androidx.test.runner.AndroidJUnit4;
 import com.example.zooseeker_cse_110_team_59.FilesToLoad;
 import com.example.zooseeker_cse_110_team_59.MainActivity;
 import com.example.zooseeker_cse_110_team_59.R;
+import com.example.zooseeker_cse_110_team_59.ZooData;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,13 +43,16 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class EspressoTestsUserStory6 {
 
+    //region INCLUDE THIS IN EVERY ESPRESSO TEST. Change file names to desired test files.
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<MainActivity>(MainActivity.class) {
         @Override
         protected void beforeActivityLaunched() {
             FilesToLoad.injectNewFiles(new String[]{"test_zoo_graph_ms1.json", "test_node_info_ms1.json", "test_edge_info_ms1.json"});
+            ZooData.setZooData();
         }
     };
+    //endregion
 
     @Test
     public void testDirectionsFirstOpened() {
@@ -137,7 +143,7 @@ public class EspressoTestsUserStory6 {
         textView2.check(matches(withText("1. Proceed on Entrance Way 10.0 ft towards Africa Rocks Street.\n2. Proceed on Africa Rocks Street 200.0 ft towards Gorillas.\n")));
 
         ViewInteraction button = onView(
-                allOf(withId(R.id.next_btn), withText("NEXT: LIONS, 200.0FT"),
+                allOf(withId(R.id.next_btn), withText("NEXT: LIONS, 310.0FT"),
                         withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
         button.check(matches(isDisplayed()));

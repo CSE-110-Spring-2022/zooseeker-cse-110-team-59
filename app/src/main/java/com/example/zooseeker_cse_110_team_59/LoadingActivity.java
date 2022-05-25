@@ -1,7 +1,5 @@
 package com.example.zooseeker_cse_110_team_59;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -24,7 +22,7 @@ import java.util.concurrent.Executors;
  *                              and is called in the <code>generateRoute</code> method
  * setGraphData  - loads the graph data from the json files into an empty graph, edge, and vertex respectively
  */
-public class LoadingActivity extends AppCompatActivity {
+public class LoadingActivity extends ActivityOverflow {
 
     /**
      * @param savedInstanceState
@@ -46,4 +44,12 @@ public class LoadingActivity extends AppCompatActivity {
             startActivity(planIntent);
         });
     }
+
+    //region ActivityOverflow Abstract Methods
+    @Override
+    protected void startMainActivity() {
+        finish();
+        startActivity(new Intent(this, MainActivity.class));
+    }
+    //endregion
 }
