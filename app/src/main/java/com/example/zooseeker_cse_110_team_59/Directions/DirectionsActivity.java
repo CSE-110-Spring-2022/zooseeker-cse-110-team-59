@@ -61,7 +61,7 @@ public class DirectionsActivity extends AppCompatActivity implements DirectionsO
     }
 
     @Override
-    public void update(ArrayList<String> currStrings, ArrayList<String> nextStrings) {
+    public void update(ArrayList<String> currStrings, ArrayList<String> nextStrings, ArrayList<String> prevStrings) {
         if (nextStrings.get(0).equals("finished")) {
             finishButton.setVisibility(View.VISIBLE);
             nextButton.setVisibility(View.INVISIBLE);
@@ -72,6 +72,13 @@ public class DirectionsActivity extends AppCompatActivity implements DirectionsO
         }
         currExhibit.setText(currStrings.get(0));
         directions.setText(currStrings.get(1));
+
+        if (prevStrings.get(0).equals("invisible")) {
+            previousButton.setVisibility(View.INVISIBLE);
+        }
+        else {
+            previousButton.setText(prevStrings.get(1));
+        }
     }
 
     public PlanDirections getPlanDirections() {

@@ -5,5 +5,5 @@ import java.util.ArrayList;
 public interface DirectionsSubject {
     public void registerDO(DirectionsObserver dObs);
 
-    public void notifyDOS(ArrayList<String> currStrings, ArrayList<String> nextStrings);
+    public void notifyDOS(ArrayList<String> currStrings, ArrayList<String> nextStrings, ArrayList<String> prevStrings);
 }

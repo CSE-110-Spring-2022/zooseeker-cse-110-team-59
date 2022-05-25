@@ -26,9 +26,9 @@ public class PlanDirections implements DirectionsSubject {
         Observers.add(dObs);
     }
     @Override
-    public void notifyDOS(ArrayList<String> currStrings, ArrayList<String> nextStrings) {
+    public void notifyDOS(ArrayList<String> currStrings, ArrayList<String> nextStrings, ArrayList<String> prevStrings) {
         for (DirectionsObserver obs : Observers) {
-            obs.update(currStrings, nextStrings);
+            obs.update(currStrings, nextStrings, prevStrings);
         }
     }
     //
@@ -38,12 +38,13 @@ public class PlanDirections implements DirectionsSubject {
         destination = myIDs.get(destinationIndex);
         ArrayList<String> currData = getCurrData();
         ArrayList<String> nextData = getNextData();
+        ArrayList<String> prevData = getPrevData();
         // next text
-        notifyDOS(currData, nextData);
+        notifyDOS(currData, nextData, prevData);
     }
 
     public void previousClicked() {
-        if (destinationIndex <= 0) {
+        if (destinationIndex <= 1) {
             return;
         }
         currentLoc = myIDs.get(destinationIndex);
@@ -51,7 +52,8 @@ public class PlanDirections implements DirectionsSubject {
         destination = myIDs.get(destinationIndex);
         ArrayList<String> currData = getCurrData();
         ArrayList<String> nextData = getNextData();
-        notifyDOS(currData, nextData);
+        ArrayList<String> prevData = getPrevData();
+        notifyDOS(currData, nextData, prevData);
     }
 
     public ArrayList<String> getCurrData() {
@@ -78,6 +80,22 @@ public class PlanDirections implements DirectionsSubject {
         }
         nextData.add(nextExhibit);
         return nextData;
+    }
+
+    public ArrayList<String> getPrevData() {
+        ArrayList<String> prevData = new ArrayList<String>();
+        String visible = "visible";
+        if (destinationIndex == 0) {
+            visible = "invisible";
+        }
+        prevData.add(visible);
+        String prevExhibit = "";
+        if (destinationIndex < (myRoute.size() + 1)) {
+            prevExhibit = "Previous: " + RouteGenerator.getNameFromId(myIDs.get(destinationIndex - 1)) + ", " +
+                    RouteGenerator.getDistanceBetween(currentLoc, destination) + "ft";
+        }
+        prevData.add(prevExhibit);
+        return prevData;
     }
 
     // FOR TESTING
