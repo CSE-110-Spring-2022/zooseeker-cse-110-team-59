@@ -38,6 +38,16 @@ public class FilesToLoad {
     @VisibleForTesting
     public static void injectNewFiles(String[] newFiles) {
         filesToLoad = newFiles;
+        enableTestClearing();
+    }
+
+    @VisibleForTesting
+    public static void enableTestClearing() {
         runningTests = true;
+    }
+
+    @VisibleForTesting
+    public static void disableTestClearing() {
+        runningTests = false;
     }
 }

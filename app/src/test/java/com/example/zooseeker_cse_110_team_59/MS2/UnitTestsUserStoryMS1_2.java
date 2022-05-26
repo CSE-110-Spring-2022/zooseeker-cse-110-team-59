@@ -33,10 +33,10 @@ public class UnitTestsUserStoryMS1_2 {
 
     private ArrayList<String> enteredExhibits = new ArrayList<String>();
 
-    private Intent planIntent = new Intent(context, ListActivity.class).putExtra("Entered Exhibits", enteredExhibits);
+    private Intent listIntent = new Intent(context, ListActivity.class).putExtra("Entered Exhibits", enteredExhibits);
 
     @Rule
-    public ActivityScenarioRule<ListActivity> scenarioRule = new ActivityScenarioRule<>(planIntent);
+    public ActivityScenarioRule<ListActivity> scenarioRule = new ActivityScenarioRule<>(listIntent);
 
     @BeforeClass
     public static void setTestData() {

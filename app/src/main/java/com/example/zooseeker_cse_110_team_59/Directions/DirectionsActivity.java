@@ -18,10 +18,9 @@ import java.util.ArrayList;
 
 public class DirectionsActivity extends ActivityOverflow implements DirectionsObserver {
 
-    private ArrayList<String> startIDs;
-    private PlanDirections myDirections;
-    private TextView directions;
-    private TextView currExhibit;
+    private PlanDirections planDirections;
+    private TextView directionsTV;
+    private TextView currExhibitTV;
     private Button nextButton;
     private Button finishButton;
     private Button previousButton;
@@ -35,20 +34,20 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
         ArrayList<String> startIDs = bundle.getStringArrayList("IDs in Order");
         int startIndex = bundle.getInt("Start Index");
 
-        directions = findViewById(R.id.directions_text);
-        currExhibit = findViewById(R.id.place_name);
+        directionsTV = findViewById(R.id.directions_text);
+        currExhibitTV = findViewById(R.id.place_name);
         nextButton = findViewById(R.id.next_btn);
         previousButton = findViewById(R.id.previous_button);
         finishButton = findViewById(R.id.finish_btn);
 
-        myDirections = new PlanDirections(this, startIDs);
-        myDirections.registerDO(this);
+        planDirections = new PlanDirections(this, startIDs);
+        planDirections.registerDO(this);
 
         if (startIndex == 0) {
-            myDirections.nextClicked();
-            myDirections.previousClicked();
+            planDirections.nextClicked();
+            planDirections.previousClicked();
         } else {
-            for (int i = 0; i < startIndex; i++) myDirections.nextClicked();
+            for (int i = 0; i < startIndex; i++) planDirections.nextClicked();
         }
 
         saveSharedPreferences();
@@ -56,11 +55,11 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
 
     //region Button Listeners
     public void onNextClicked(View view) {
-        myDirections.nextClicked();
+        planDirections.nextClicked();
     }
 
     public void onPreviousClicked(View view) {
-        myDirections.previousClicked();
+        planDirections.previousClicked();
     }
 
     public void onFinishClicked(View view) {
@@ -91,8 +90,8 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
     }
 
     private void updateCurr(ArrayList<String> currStrings) {
-        currExhibit.setText(currStrings.get(0));
-        directions.setText(currStrings.get(1));
+        currExhibitTV.setText(currStrings.get(0));
+        directionsTV.setText(currStrings.get(1));
     }
 
     private void updateNext(ArrayList<String> nextStrings) {
@@ -130,7 +129,12 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
     //region Getters for Tests
     @VisibleForTesting
     public PlanDirections getPlanDirections() {
-        return myDirections;
+        return planDirections;
+    }
+
+    @VisibleForTesting
+    public TextView getDirectionsTV() {
+        return directionsTV;
     }
     //endregion
 }

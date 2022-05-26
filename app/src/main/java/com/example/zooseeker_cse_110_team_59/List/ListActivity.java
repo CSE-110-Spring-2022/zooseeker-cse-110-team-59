@@ -40,7 +40,6 @@ import java.util.Arrays;
 public class ListActivity extends ActivityOverflow implements ExhibitObserver,SharedPreferencesSaver {
 
     private ExhibitList exhibitList;
-    private ArrayList<String> startEnteredExhibits;
     private TextView listCount;
     private TextView enteredExhibitsTextView;
     private AutoCompleteTextView searchBarTextView;
@@ -51,7 +50,7 @@ public class ListActivity extends ActivityOverflow implements ExhibitObserver,Sh
         setContentView(R.layout.activity_list);
 
         Bundle bundle = getIntent().getExtras();
-        startEnteredExhibits = bundle.getStringArrayList("Entered Exhibits");
+        ArrayList<String> startEnteredExhibits = bundle.getStringArrayList("Entered Exhibits");
 
         searchBarTextView = findViewById(R.id.search_bar);
         listCount = findViewById(R.id.list_count_text_view);

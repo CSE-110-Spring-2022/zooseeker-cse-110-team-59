@@ -1,6 +1,5 @@
 package com.example.zooseeker_cse_110_team_59.MS2;
 
-
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -17,13 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-import androidx.test.espresso.PerformException;
-import androidx.test.espresso.UiController;
-import androidx.test.espresso.ViewAction;
+import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.matcher.ViewMatchers;
-import androidx.test.espresso.util.HumanReadables;
-import androidx.test.espresso.util.TreeIterables;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
@@ -41,9 +36,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class EspressoTestsUserStoryMS1_8 {
@@ -57,48 +49,6 @@ public class EspressoTestsUserStoryMS1_8 {
             ZooData.setZooData();
         }
     };
-
-    /** Perform action of waiting for a specific view id. */
-    public static ViewAction waitId(final int viewId, final long millis) {
-        return new ViewAction() {
-            @Override
-            public Matcher<View> getConstraints() {
-                return isRoot();
-            }
-
-            @Override
-            public String getDescription() {
-                return "wait for a specific view with id <" + viewId + "> during " + millis + " millis.";
-            }
-
-            @Override
-            public void perform(final UiController uiController, final View view) {
-                uiController.loopMainThreadUntilIdle();
-                final long startTime = System.currentTimeMillis();
-                final long endTime = startTime + millis;
-                final Matcher<View> viewMatcher = withId(viewId);
-
-                do {
-                    for (View child : TreeIterables.breadthFirstViewTraversal(view)) {
-                        // found view with required ID
-                        if (viewMatcher.matches(child)) {
-                            return;
-                        }
-                    }
-
-                    uiController.loopMainThreadForAtLeast(50);
-                }
-                while (System.currentTimeMillis() < endTime);
-
-                // timeout happens
-                throw new PerformException.Builder()
-                        .withActionDescription(this.getDescription())
-                        .withViewDescription(HumanReadables.describe(view))
-                        .withCause(new TimeoutException())
-                        .build();
-            }
-        };
-    }
     //endregion
 
     @Test
@@ -130,8 +80,11 @@ public class EspressoTestsUserStoryMS1_8 {
                 allOf(withId(R.id.generate_plan_btn), withText("Generate Plan"),
                         isDisplayed()));
         materialButton2.perform(click());
-
-        onView(isRoot()).perform(waitId(R.id.directions_btn, TimeUnit.SECONDS.toMillis(10)));
+        try {
+            materialButton2.perform(click());
+        } catch (Exception e) {
+            // For some reason this works at moving the test along, as it would normally get stuck here
+        }
 
         ViewInteraction textView = onView(
                 allOf(withId(R.id.place_name), withText("Koi Fish"),
@@ -248,8 +201,11 @@ public class EspressoTestsUserStoryMS1_8 {
                 allOf(withId(R.id.generate_plan_btn), withText("Generate Plan"),
                         isDisplayed()));
         materialButton6.perform(click());
-
-        onView(isRoot()).perform(waitId(R.id.directions_btn, TimeUnit.SECONDS.toMillis(10)));
+        try {
+            materialButton6.perform(click());
+        } catch (NoMatchingViewException e) {
+            // For some reason this works at moving the test along, as it would normally get stuck here.
+        }
 
         ViewInteraction textView = onView(
                 allOf(withId(R.id.place_name), withText("Koi Fish"),

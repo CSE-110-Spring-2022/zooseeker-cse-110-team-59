@@ -7,7 +7,6 @@ import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -17,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
+import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -99,6 +99,11 @@ public class EspressoTestsUserStoryMS2_4 {
                 allOf(withId(R.id.generate_plan_btn), withText("Generate Plan"),
                         isDisplayed()));
         materialButton3.perform(click());
+        try {
+            materialButton3.perform(click());
+        } catch (NoMatchingViewException e) {
+            // For some reason this works at moving the test along, as it would normally get stuck here.
+        }
 
         ViewInteraction materialButton4 = onView(
                 allOf(withId(R.id.directions_btn), withText("Directions"),
@@ -177,6 +182,11 @@ public class EspressoTestsUserStoryMS2_4 {
                 allOf(withId(R.id.generate_plan_btn), withText("Generate Plan"),
                         isDisplayed()));
         materialButton2.perform(click());
+        try {
+            materialButton2.perform(click());
+        } catch (NoMatchingViewException e) {
+            // For some reason this works at moving the test along, as it would normally get stuck here.
+        }
 
         ViewInteraction materialButton3 = onView(
                 allOf(withId(R.id.directions_btn), withText("Directions"),

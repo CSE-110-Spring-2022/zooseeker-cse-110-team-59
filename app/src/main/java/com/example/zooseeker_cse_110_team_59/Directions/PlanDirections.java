@@ -15,7 +15,7 @@ import java.util.Arrays;
 
 public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver {
     ArrayList<DirectionsObserver> Observers = new ArrayList<DirectionsObserver>();
-    private ArrayList<String> myIDs;
+    private ArrayList<String> routeIDs;
     private Activity directionsActivity;
     private String currentLoc;
     private String destination;
@@ -24,23 +24,23 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
     public PlanDirections(Activity activity, ArrayList<String> IDs) {
         directionsActivity = activity;
 
-        myIDs = IDs;
+        routeIDs = IDs;
         destinationIndex = 0;
-        destination = myIDs.get(destinationIndex);
+        destination = routeIDs.get(destinationIndex);
     }
 
     //region Button Responders
     public void nextClicked() {
         currentLoc = destination;
         destinationIndex++;
-        destination = myIDs.get(destinationIndex);
+        destination = routeIDs.get(destinationIndex);
         updateData();
     }
 
     public void previousClicked() {
         currentLoc = destination;
         destinationIndex--;
-        destination = myIDs.get(destinationIndex);
+        destination = routeIDs.get(destinationIndex);
         updateData();
     }
     //endregion
@@ -61,8 +61,8 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
         ArrayList<String> prevData = new ArrayList<String>();
         prevData.add("show");
 
-        String nextExhibit = "Previous: " + RouteGenerator.getNameFromId(myIDs.get(destinationIndex - 1)) + ", " +
-                RouteGenerator.getDistanceBetween(currentLoc, myIDs.get(destinationIndex - 1)) + "ft";
+        String nextExhibit = "Previous: " + RouteGenerator.getNameFromId(routeIDs.get(destinationIndex - 1)) + ", " +
+                RouteGenerator.getDistanceBetween(currentLoc, routeIDs.get(destinationIndex - 1)) + "ft";
         prevData.add(nextExhibit);
 
         return prevData;
@@ -84,13 +84,13 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
     }
 
     public ArrayList<String> getNextData() {
-        if (destinationIndex == (myIDs.size() - 1)) return new ArrayList<String>(Arrays.asList("hide"));
+        if (destinationIndex == (routeIDs.size() - 1)) return new ArrayList<String>(Arrays.asList("hide"));
 
         ArrayList<String> nextData = new ArrayList<String>();
         nextData.add("show");
 
-        String nextExhibit = "Next: " + RouteGenerator.getNameFromId(myIDs.get(destinationIndex + 1)) + ", " +
-                    RouteGenerator.getDistanceBetween(currentLoc, myIDs.get(destinationIndex + 1)) + "ft";
+        String nextExhibit = "Next: " + RouteGenerator.getNameFromId(routeIDs.get(destinationIndex + 1)) + ", " +
+                    RouteGenerator.getDistanceBetween(currentLoc, routeIDs.get(destinationIndex + 1)) + "ft";
         nextData.add(nextExhibit);
 
         return nextData;
@@ -122,7 +122,7 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
 
         Gson gson = new Gson();
 
-        String routeIDsJson = gson.toJson(myIDs);
+        String routeIDsJson = gson.toJson(routeIDs);
 
         editor.putString("storedRouteIDs", routeIDsJson);
         editor.putInt("storedStartIndex", destinationIndex);
@@ -134,6 +134,11 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
     @VisibleForTesting
     public int getDestinationIndex() {
         return destinationIndex;
+    }
+
+    @VisibleForTesting
+    public ArrayList<String> getRouteIDs() {
+        return routeIDs;
     }
     //endregion
 }
