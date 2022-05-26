@@ -1,5 +1,4 @@
 package com.example.zooseeker_cse_110_team_59.List;
-import static android.content.Context.MODE_PRIVATE;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,20 +6,15 @@ import android.content.SharedPreferences;
 
 import androidx.annotation.VisibleForTesting;
 
-import com.example.zooseeker_cse_110_team_59.RouteGenerator;
-import com.example.zooseeker_cse_110_team_59.SharedPreferencesSaver;
+import com.example.zooseeker_cse_110_team_59.Retention.SharedPreferencesSaver;
 import com.example.zooseeker_cse_110_team_59.Utilities;
-import com.example.zooseeker_cse_110_team_59.ZooData;
+import com.example.zooseeker_cse_110_team_59.Data.ZooData;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class ExhibitList implements ExhibitSubject, SharedPreferencesSaver {
     ArrayList<ExhibitObserver> observers = new ArrayList<ExhibitObserver>();

@@ -9,14 +9,13 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.example.zooseeker_cse_110_team_59.FilesToLoad;
+import com.example.zooseeker_cse_110_team_59.Data.FilesToLoad;
 import com.example.zooseeker_cse_110_team_59.LoadingActivity;
-import com.example.zooseeker_cse_110_team_59.RouteGenerator;
-import com.example.zooseeker_cse_110_team_59.RoutePoint;
-import com.example.zooseeker_cse_110_team_59.ZooData;
+import com.example.zooseeker_cse_110_team_59.Route.RouteGenerator;
+import com.example.zooseeker_cse_110_team_59.Route.RoutePoint;
+import com.example.zooseeker_cse_110_team_59.Data.ZooData;
 
 import org.jgrapht.GraphPath;
-import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;

@@ -9,7 +9,6 @@ import static org.junit.Assert.*;
 
 import android.content.Context;
 import android.content.Intent;
-import android.widget.TextView;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.test.core.app.ActivityScenario;
@@ -17,15 +16,12 @@ import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.example.zooseeker_cse_110_team_59.FilesToLoad;
-import com.example.zooseeker_cse_110_team_59.List.ExhibitList;
+import com.example.zooseeker_cse_110_team_59.Data.FilesToLoad;
 import com.example.zooseeker_cse_110_team_59.List.ListActivity;
-import com.example.zooseeker_cse_110_team_59.R;
-import com.example.zooseeker_cse_110_team_59.ZooData;
+import com.example.zooseeker_cse_110_team_59.Data.ZooData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Example local unit test, which will execute on the development machine (host).

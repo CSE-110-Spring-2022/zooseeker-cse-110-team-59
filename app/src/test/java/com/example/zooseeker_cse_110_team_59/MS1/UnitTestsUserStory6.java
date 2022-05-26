@@ -14,12 +14,10 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.example.zooseeker_cse_110_team_59.Directions.DirectionsActivity;
-import com.example.zooseeker_cse_110_team_59.FilesToLoad;
+import com.example.zooseeker_cse_110_team_59.Data.FilesToLoad;
 import com.example.zooseeker_cse_110_team_59.R;
-import com.example.zooseeker_cse_110_team_59.RoutePoint;
-import com.example.zooseeker_cse_110_team_59.ZooData;
+import com.example.zooseeker_cse_110_team_59.Data.ZooData;
 
-import org.bouncycastle.crypto.engines.CramerShoupCiphertext;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;

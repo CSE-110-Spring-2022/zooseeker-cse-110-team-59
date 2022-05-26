@@ -3,6 +3,12 @@ package com.example.zooseeker_cse_110_team_59;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.zooseeker_cse_110_team_59.Retention.ActivityOverflow;
+import com.example.zooseeker_cse_110_team_59.Route.RouteGenerator;
+import com.example.zooseeker_cse_110_team_59.Route.RouteSumActivity;
+
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -35,7 +41,7 @@ public class LoadingActivity extends ActivityOverflow {
         Bundle bundle = getIntent().getExtras();
         ArrayList<String> enteredExhibits = bundle.getStringArrayList("enteredExhibits");
 
-        Intent planIntent = new Intent(this, PlanActivity.class);
+        Intent planIntent = new Intent(this, RouteSumActivity.class);
 
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() -> {

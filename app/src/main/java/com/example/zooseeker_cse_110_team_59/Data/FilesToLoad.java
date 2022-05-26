@@ -1,4 +1,4 @@
-package com.example.zooseeker_cse_110_team_59;
+package com.example.zooseeker_cse_110_team_59.Data;
 
 import androidx.annotation.VisibleForTesting;
 /**

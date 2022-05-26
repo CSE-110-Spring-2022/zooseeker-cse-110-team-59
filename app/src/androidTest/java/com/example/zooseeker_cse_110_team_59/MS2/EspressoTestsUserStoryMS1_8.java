@@ -17,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
-import androidx.test.core.app.ApplicationProvider;
 import androidx.test.espresso.PerformException;
 import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
@@ -29,10 +28,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
 
-import com.example.zooseeker_cse_110_team_59.FilesToLoad;
+import com.example.zooseeker_cse_110_team_59.Data.FilesToLoad;
 import com.example.zooseeker_cse_110_team_59.MainActivity;
 import com.example.zooseeker_cse_110_team_59.R;
-import com.example.zooseeker_cse_110_team_59.ZooData;
+import com.example.zooseeker_cse_110_team_59.Data.ZooData;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -40,7 +39,6 @@ import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TestRule;
 import org.junit.runner.RunWith;
 
 import java.util.concurrent.TimeUnit;
@@ -250,6 +248,8 @@ public class EspressoTestsUserStoryMS1_8 {
                 allOf(withId(R.id.generate_plan_btn), withText("Generate Plan"),
                         isDisplayed()));
         materialButton6.perform(click());
+
+        onView(isRoot()).perform(waitId(R.id.directions_btn, TimeUnit.SECONDS.toMillis(10)));
 
         ViewInteraction textView = onView(
                 allOf(withId(R.id.place_name), withText("Koi Fish"),

@@ -6,13 +6,12 @@ import android.content.SharedPreferences;
 
 import androidx.annotation.VisibleForTesting;
 
-import com.example.zooseeker_cse_110_team_59.RouteGenerator;
-import com.example.zooseeker_cse_110_team_59.SharedPreferencesSaver;
+import com.example.zooseeker_cse_110_team_59.Route.RouteGenerator;
+import com.example.zooseeker_cse_110_team_59.Retention.SharedPreferencesSaver;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.concurrent.Executors;
 
 public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver {
     ArrayList<DirectionsObserver> Observers = new ArrayList<DirectionsObserver>();

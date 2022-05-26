@@ -1,4 +1,4 @@
-package com.example.zooseeker_cse_110_team_59;
+package com.example.zooseeker_cse_110_team_59.Route;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.zooseeker_cse_110_team_59.Directions.DirectionsActivity;
+import com.example.zooseeker_cse_110_team_59.MainActivity;
+import com.example.zooseeker_cse_110_team_59.R;
+import com.example.zooseeker_cse_110_team_59.Retention.ActivityOverflow;
 
 /**
  * Class:            PlanActivity
@@ -17,7 +20,7 @@ import com.example.zooseeker_cse_110_team_59.Directions.DirectionsActivity;
  *
  * Public functions: onCreate          - creates the application for the PlanActivity
  */
-public class PlanActivity extends ActivityOverflow {
+public class RouteSumActivity extends ActivityOverflow {
     /**
      * The onCreate method creates the PlanActivity for the application
      * super is used to call the parent class constructor
@@ -34,7 +37,7 @@ public class PlanActivity extends ActivityOverflow {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_plan);
+        setContentView(R.layout.activity_route_sum);
 
         RouteSummaryAdapter adapter = new RouteSummaryAdapter();
 

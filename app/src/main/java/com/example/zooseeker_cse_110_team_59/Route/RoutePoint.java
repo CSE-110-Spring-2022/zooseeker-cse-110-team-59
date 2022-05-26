@@ -1,4 +1,4 @@
-package com.example.zooseeker_cse_110_team_59;
+package com.example.zooseeker_cse_110_team_59.Route;
 
 import android.os.Parcel;
 import android.os.Parcelable;

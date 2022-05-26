@@ -9,14 +9,14 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
-import com.example.zooseeker_cse_110_team_59.ActivityOverflow;
+import com.example.zooseeker_cse_110_team_59.Retention.ActivityOverflow;
 import com.example.zooseeker_cse_110_team_59.LoadingActivity;
 import com.example.zooseeker_cse_110_team_59.MainActivity;
 import com.example.zooseeker_cse_110_team_59.R;
-import com.example.zooseeker_cse_110_team_59.RouteGenerator;
-import com.example.zooseeker_cse_110_team_59.SharedPreferencesSaver;
+import com.example.zooseeker_cse_110_team_59.Route.RouteGenerator;
+import com.example.zooseeker_cse_110_team_59.Retention.SharedPreferencesSaver;
 import com.example.zooseeker_cse_110_team_59.Utilities;
-import com.example.zooseeker_cse_110_team_59.ZooData;
+import com.example.zooseeker_cse_110_team_59.Data.ZooData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
