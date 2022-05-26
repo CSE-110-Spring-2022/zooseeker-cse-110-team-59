@@ -1,4 +1,4 @@
-package com.example.zooseeker_cse_110_team_59;
+package com.example.zooseeker_cse_110_team_59.Data;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -12,11 +12,9 @@ import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.reflect.TypeToken;
 
-import org.jgrapht.Graph;
 import org.jgrapht.alg.util.Pair;
 import org.jgrapht.graph.DefaultUndirectedWeightedGraph;
 import org.jgrapht.graph.DefaultWeightedEdge;
-import org.jgrapht.graph.GraphWalk;
 import org.jgrapht.nio.Attribute;
 import org.jgrapht.nio.json.JSONImporter;
 
@@ -38,13 +36,33 @@ public class ZooData {
             // from the strings in our JSON to this Enum.
             @SerializedName("gate") GATE,
             @SerializedName("exhibit") EXHIBIT, 
-            @SerializedName("intersection") INTERSECTION
+            @SerializedName("intersection") INTERSECTION,
+            @SerializedName("exhibit_group") EXHIBIT_GROUP;
         }
 
         public String id;
+        public String group_id;
         public Kind kind;
         public String name;
         public List<String> tags;
+        public Double lat;
+        public Double lng;
+
+        public boolean isExhibit() {
+            return kind.equals(Kind.EXHIBIT);
+        }
+
+        public boolean isIntersection() {
+            return kind.equals(Kind.INTERSECTION);
+        }
+
+        public boolean isGroup() {
+            return kind.equals(Kind.EXHIBIT_GROUP);
+        }
+
+        public boolean hasGroup() {
+            return group_id != null;
+        }
     }
 
     public static class EdgeInfo {

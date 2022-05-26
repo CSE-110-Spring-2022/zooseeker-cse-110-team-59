@@ -14,12 +14,10 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.example.zooseeker_cse_110_team_59.Directions.DirectionsActivity;
-import com.example.zooseeker_cse_110_team_59.FilesToLoad;
+import com.example.zooseeker_cse_110_team_59.Data.FilesToLoad;
 import com.example.zooseeker_cse_110_team_59.R;
-import com.example.zooseeker_cse_110_team_59.RoutePoint;
-import com.example.zooseeker_cse_110_team_59.ZooData;
+import com.example.zooseeker_cse_110_team_59.Data.ZooData;
 
-import org.bouncycastle.crypto.engines.CramerShoupCiphertext;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -35,7 +33,7 @@ public class UnitTestsUserStory6 {
 
     private ArrayList<String> route = new ArrayList<String>(Arrays.asList("entrance_exit_gate", "gorillas", "lions", "elephant_odyssey", "entrance_exit_gate"));
 
-    private Intent planIntent = new Intent(context, DirectionsActivity.class).putExtra("IDs in Order", route);
+    private Intent planIntent = new Intent(context, DirectionsActivity.class).putExtra("IDs in Order", route).putExtra("Start Index", 1);
 
     @Rule
     public ActivityScenarioRule<DirectionsActivity> scenarioRule = new ActivityScenarioRule<>(planIntent);

@@ -1,14 +1,23 @@
 package com.example.zooseeker_cse_110_team_59;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
 import android.os.Bundle;
 
-public class EndRouteActivity extends AppCompatActivity {
+import com.example.zooseeker_cse_110_team_59.Retention.ActivityOverflow;
+
+public class EndRouteActivity extends ActivityOverflow {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end_route);
     }
+
+    //region ActivityOverflow Abstract Methods
+    @Override
+    protected void startMainActivity() {
+        finish();
+        startActivity(new Intent(this, MainActivity.class));
+    }
+    //endregion
 }

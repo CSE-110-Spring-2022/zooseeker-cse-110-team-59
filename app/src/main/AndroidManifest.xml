@@ -19,7 +19,7 @@
             android:name=".LoadingActivity"
             android:exported="false" />
         <activity
-            android:name=".PlanActivity"
+            android:name=".Route.RouteSumActivity"
             android:exported="false" />
         <activity
             android:name=".List.ListActivity"

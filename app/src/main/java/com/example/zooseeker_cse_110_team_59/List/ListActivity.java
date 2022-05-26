@@ -1,24 +1,25 @@
 package com.example.zooseeker_cse_110_team_59.List;
 
 import androidx.annotation.VisibleForTesting;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
+import com.example.zooseeker_cse_110_team_59.Retention.ActivityOverflow;
 import com.example.zooseeker_cse_110_team_59.LoadingActivity;
+import com.example.zooseeker_cse_110_team_59.MainActivity;
 import com.example.zooseeker_cse_110_team_59.R;
+import com.example.zooseeker_cse_110_team_59.Route.RouteGenerator;
+import com.example.zooseeker_cse_110_team_59.Retention.SharedPreferencesSaver;
 import com.example.zooseeker_cse_110_team_59.Utilities;
-import com.example.zooseeker_cse_110_team_59.ZooData;
+import com.example.zooseeker_cse_110_team_59.Data.ZooData;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * Class:           ListActivity
@@ -36,7 +37,7 @@ import java.util.List;
  * isExhibitValidSize   - checks if the enteredexhibit arraylist has a valid size
  * onGeneratePlanClick  - generates the plan by instantiating a new intent
  */
-public class ListActivity extends AppCompatActivity implements ExhibitObserver {
+public class ListActivity extends ActivityOverflow implements ExhibitObserver,SharedPreferencesSaver {
 
     private ExhibitList exhibitList;
     private TextView listCount;
@@ -48,16 +49,16 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
+        Bundle bundle = getIntent().getExtras();
+        ArrayList<String> startEnteredExhibits = bundle.getStringArrayList("Entered Exhibits");
+
         searchBarTextView = findViewById(R.id.search_bar);
         listCount = findViewById(R.id.list_count_text_view);
         enteredExhibitsTextView = findViewById(R.id.animals_list_text_view);
 
-        exhibitList = new ExhibitList(this);
-        exhibitList.registerEO(this);
-
         ArrayList<ArrayList<String>> exhibitTagList = new ArrayList<ArrayList<String>>();
         ZooData.vertexData.forEach((id, datum) -> {
-            if (datum.kind.equals(ZooData.VertexInfo.Kind.EXHIBIT)) {
+            if (datum.isExhibit()) {
                 ArrayList<String> row = new ArrayList<String>(Arrays.asList(datum.name));
                 row.addAll(datum.tags);
                 exhibitTagList.add(row);
@@ -65,9 +66,16 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
         });
 
         searchBarTextView.setAdapter(new AutoCompleteAdapter(this, android.R.layout.simple_list_item_1, exhibitTagList));
+
+        exhibitList = new ExhibitList(this);
+        exhibitList.registerEO(this);
+
+        startEnteredExhibits.forEach(enteredExhibit -> exhibitList.checkInput(RouteGenerator.getNameFromId(enteredExhibit)));
+
+        saveSharedPreferences();
     }
 
-    //region UI functionality methods:
+    //region Search Bar Handlers/Helpers
     public void onSearchSelectClick(View view) {
         checkSearchBar();
     }
@@ -87,12 +95,16 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
 
         return searchBarInput;
     }
+    //endregion
 
+    //region ExhibitObserver Interface Methods
     public void update(String input, int count) {
         addToList(input);
         increaseListCount(count);
     }
+    //endregion
 
+    //region View Updaters
     public void addToList(String searchBarInput) {
         String enteredExhibitsText = enteredExhibitsTextView.getText().toString();
         enteredExhibitsTextView.setText(enteredExhibitsText + searchBarInput + "\n");
@@ -101,7 +113,9 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
     public void increaseListCount(int count) {
         listCount.setText(count + "");
     }
+    //endregion
 
+    //region Generate Plan Button Handler/Helper
     public boolean isExhibitValidSize()
     {
         if (Integer.parseInt(listCount.getText().toString()) == 0) {
@@ -120,6 +134,27 @@ public class ListActivity extends AppCompatActivity implements ExhibitObserver {
             finish();
             startActivity(loadingIntent);
         }
+    }
+    //endregion
+
+    //region ActivityOverflow Abstract Methods
+    @Override
+    protected void startMainActivity() {
+        finish();
+        startActivity(new Intent(this, MainActivity.class));
+    }
+    //endregion
+
+    //region SharedPreferencesSaver Interface Methods
+    @Override
+    public void saveSharedPreferences() {
+        SharedPreferences preferences = getSharedPreferences("shared_preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        if (preferences.contains("storedActivity")) editor.remove("storedActivity");
+        editor.commit();
+        editor.putString("storedActivity", "ListActivity");
+        editor.commit();
     }
     //endregion
 

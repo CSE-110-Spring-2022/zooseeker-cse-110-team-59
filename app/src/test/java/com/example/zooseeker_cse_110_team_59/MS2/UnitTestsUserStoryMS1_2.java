@@ -4,20 +4,19 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
-import android.widget.Adapter;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
+import android.content.Context;
+import android.content.Intent;
 
 import androidx.lifecycle.Lifecycle;
 import androidx.test.core.app.ActivityScenario;
+import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.example.zooseeker_cse_110_team_59.FilesToLoad;
+import com.example.zooseeker_cse_110_team_59.Data.FilesToLoad;
 import com.example.zooseeker_cse_110_team_59.List.AutoCompleteAdapter;
 import com.example.zooseeker_cse_110_team_59.List.ListActivity;
-import com.example.zooseeker_cse_110_team_59.R;
-import com.example.zooseeker_cse_110_team_59.ZooData;
+import com.example.zooseeker_cse_110_team_59.Data.ZooData;
 
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -29,8 +28,15 @@ import java.util.Arrays;
 
 @RunWith(AndroidJUnit4.class)
 public class UnitTestsUserStoryMS1_2 {
+
+    private Context context = ApplicationProvider.getApplicationContext();
+
+    private ArrayList<String> enteredExhibits = new ArrayList<String>();
+
+    private Intent listIntent = new Intent(context, ListActivity.class).putExtra("Entered Exhibits", enteredExhibits);
+
     @Rule
-    public ActivityScenarioRule<ListActivity> scenarioRule = new ActivityScenarioRule<>(ListActivity.class);
+    public ActivityScenarioRule<ListActivity> scenarioRule = new ActivityScenarioRule<>(listIntent);
 
     @BeforeClass
     public static void setTestData() {

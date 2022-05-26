@@ -1,6 +1,5 @@
-package com.example.zooseeker_cse_110_team_59;
+package com.example.zooseeker_cse_110_team_59.Route;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,6 +10,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.zooseeker_cse_110_team_59.Directions.DirectionsActivity;
+import com.example.zooseeker_cse_110_team_59.MainActivity;
+import com.example.zooseeker_cse_110_team_59.R;
+import com.example.zooseeker_cse_110_team_59.Retention.ActivityOverflow;
 
 /**
  * Class:            PlanActivity
@@ -18,7 +20,7 @@ import com.example.zooseeker_cse_110_team_59.Directions.DirectionsActivity;
  *
  * Public functions: onCreate          - creates the application for the PlanActivity
  */
-public class PlanActivity extends AppCompatActivity {
+public class RouteSumActivity extends ActivityOverflow {
     /**
      * The onCreate method creates the PlanActivity for the application
      * super is used to call the parent class constructor
@@ -35,7 +37,7 @@ public class PlanActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_plan);
+        setContentView(R.layout.activity_route_sum);
 
         RouteSummaryAdapter adapter = new RouteSummaryAdapter();
 
@@ -51,12 +53,19 @@ public class PlanActivity extends AppCompatActivity {
     public void onDirectionsClicked(View view) {
         ArrayList<String> IDs = new ArrayList<String>();
         IDs.add("entrance_exit_gate");
-        for (RoutePoint rp : route) {
-            IDs.add(rp.ID);
-        }
+        IDs.addAll(RouteGenerator.getIdsFromRoute(route));
 
         Intent intent = new Intent(this, DirectionsActivity.class);
         intent.putStringArrayListExtra("IDs in Order", IDs);
+        intent.putExtra("Start Index", 1);
         startActivity(intent);
     }
+
+    //region ActivityOverflow Abstract Methods
+    @Override
+    protected void startMainActivity() {
+        finish();
+        startActivity(new Intent(this, MainActivity.class));
+    }
+    //endregion
 }
