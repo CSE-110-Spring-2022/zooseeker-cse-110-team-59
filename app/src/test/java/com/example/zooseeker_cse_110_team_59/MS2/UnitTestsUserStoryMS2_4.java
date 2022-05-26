@@ -18,6 +18,7 @@ import com.example.zooseeker_cse_110_team_59.Directions.DirectionsActivity;
 import com.example.zooseeker_cse_110_team_59.Data.FilesToLoad;
 import com.example.zooseeker_cse_110_team_59.R;
 import com.example.zooseeker_cse_110_team_59.Data.ZooData;
+import com.example.zooseeker_cse_110_team_59.TestSettings;
 
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -39,11 +40,15 @@ public class UnitTestsUserStoryMS2_4 {
     @Rule
     public ActivityScenarioRule<DirectionsActivity> scenarioRule = new ActivityScenarioRule<>(planIntent);
 
+    //region INCLUDE THIS IN EVERY UNIT TEST. Change file names to desired test files.
     @BeforeClass
     public static void setTestData() {
-        FilesToLoad.injectNewFiles(new String[]{"test_zoo_graph_ms1.json", "test_node_info_ms1.json", "test_edge_info_ms1.json"});
+        FilesToLoad.injectNewFiles(new String[]{"test_zoo_graph_ms2.json", "test_node_info_ms2.json", "test_edge_info_ms2.json"});
+        TestSettings.setTestClearing(true);
+        TestSettings.setTestPositioning(true);
         ZooData.setZooData();
     }
+    //endregion
 
     @Test
     public void testPreviousButtonIsClicked() {

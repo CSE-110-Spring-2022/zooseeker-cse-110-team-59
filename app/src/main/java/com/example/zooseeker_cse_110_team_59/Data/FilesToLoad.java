@@ -1,6 +1,9 @@
 package com.example.zooseeker_cse_110_team_59.Data;
 
 import androidx.annotation.VisibleForTesting;
+
+import com.example.zooseeker_cse_110_team_59.TestSettings;
+
 /**
  * Class:            FilesToLoad
  * Description:      This class calls methods that would read in a graph file, vertex file, and an edge file.
@@ -11,7 +14,6 @@ import androidx.annotation.VisibleForTesting;
  */
 public class FilesToLoad {
     private static String[] filesToLoad = new String[]{"zoo_graph.json", "exhibit_info.json", "trail_info.json"};
-    private static boolean runningTests = false;
 
     public static String getGraphFile() {
         return filesToLoad[0];
@@ -25,10 +27,6 @@ public class FilesToLoad {
         return filesToLoad[2];
     }
 
-    public static boolean isRunningTests() {
-        return runningTests;
-    }
-
     /**
      * The injectNewFiles is used to load up new file stream. Viable for testing.
      * @param newFiles of file from the command line
@@ -38,16 +36,6 @@ public class FilesToLoad {
     @VisibleForTesting
     public static void injectNewFiles(String[] newFiles) {
         filesToLoad = newFiles;
-        enableTestClearing();
     }
 
-    @VisibleForTesting
-    public static void enableTestClearing() {
-        runningTests = true;
-    }
-
-    @VisibleForTesting
-    public static void disableTestClearing() {
-        runningTests = false;
-    }
 }

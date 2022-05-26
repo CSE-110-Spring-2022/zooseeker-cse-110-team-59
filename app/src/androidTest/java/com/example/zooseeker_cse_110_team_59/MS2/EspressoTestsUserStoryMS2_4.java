@@ -27,6 +27,7 @@ import com.example.zooseeker_cse_110_team_59.Data.FilesToLoad;
 import com.example.zooseeker_cse_110_team_59.MainActivity;
 import com.example.zooseeker_cse_110_team_59.R;
 import com.example.zooseeker_cse_110_team_59.Data.ZooData;
+import com.example.zooseeker_cse_110_team_59.TestSettings;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -46,7 +47,8 @@ public class EspressoTestsUserStoryMS2_4 {
         @Override
         protected void beforeActivityLaunched() {
             FilesToLoad.injectNewFiles(new String[]{"test_zoo_graph_ms2.json", "test_node_info_ms2.json", "test_edge_info_ms2.json"});
-            ZooData.setZooData();
+            TestSettings.setTestClearing(true);
+            TestSettings.setTestPositioning(true);
         }
     };
     //endregion

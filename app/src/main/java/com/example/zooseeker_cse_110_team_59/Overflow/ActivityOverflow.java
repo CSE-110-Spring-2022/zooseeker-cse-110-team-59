@@ -1,6 +1,5 @@
-package com.example.zooseeker_cse_110_team_59.Retention;
+package com.example.zooseeker_cse_110_team_59.Overflow;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +22,9 @@ public abstract class ActivityOverflow extends AppCompatActivity {
                 clearSharedPreferences();
                 startMainActivity();
                 return true;
+            case R.id.mock_location:
+                onMockOptionClicked();
+                return true;
             default:
                 return false;
         }
@@ -35,6 +37,8 @@ public abstract class ActivityOverflow extends AppCompatActivity {
         editor.clear();
         editor.apply();
     }
+
+    protected void onMockOptionClicked() {}
 
     protected abstract void startMainActivity();
 }

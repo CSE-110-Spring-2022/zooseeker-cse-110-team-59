@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,6 +20,7 @@ import com.example.zooseeker_cse_110_team_59.Data.ZooData;
 import com.example.zooseeker_cse_110_team_59.Directions.DirectionsActivity;
 import com.example.zooseeker_cse_110_team_59.List.ListActivity;
 import com.example.zooseeker_cse_110_team_59.MainActivity;
+import com.example.zooseeker_cse_110_team_59.TestSettings;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -40,11 +40,15 @@ public class UnitTestsUserStoryMS1_13 {
     @Rule
     public ActivityScenarioRule<MainActivity> scenarioRule = new ActivityScenarioRule<>(MainActivity.class);
 
+    //region INCLUDE THIS IN EVERY UNIT TEST. Change file names to desired test files.
     @BeforeClass
     public static void setTestData() {
         FilesToLoad.injectNewFiles(new String[]{"test_zoo_graph_ms2.json", "test_node_info_ms2.json", "test_edge_info_ms2.json"});
+        TestSettings.setTestClearing(true);
+        TestSettings.setTestPositioning(true);
         ZooData.setZooData();
     }
+    //endregion
 
     @Test
     public void testListScreenRetention() {

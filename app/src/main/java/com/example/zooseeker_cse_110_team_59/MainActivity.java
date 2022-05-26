@@ -4,11 +4,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import com.example.zooseeker_cse_110_team_59.Data.FilesToLoad;
 import com.example.zooseeker_cse_110_team_59.Data.ZooData;
 import com.example.zooseeker_cse_110_team_59.Directions.DirectionsActivity;
 import com.example.zooseeker_cse_110_team_59.List.ListActivity;
-import com.example.zooseeker_cse_110_team_59.Retention.ActivityOverflow;
+import com.example.zooseeker_cse_110_team_59.Overflow.ActivityOverflow;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -39,7 +38,7 @@ public class MainActivity extends ActivityOverflow {
 
         ZooData.setZooData();
 
-        if (FilesToLoad.isRunningTests()) clearSharedPreferences();
+        if (TestSettings.isTestClearing()) clearSharedPreferences();
 
         Intent startIntent = decideStartIntent();
 
