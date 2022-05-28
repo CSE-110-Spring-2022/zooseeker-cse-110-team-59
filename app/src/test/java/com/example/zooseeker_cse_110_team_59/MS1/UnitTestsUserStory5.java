@@ -14,7 +14,7 @@ import com.example.zooseeker_cse_110_team_59.LoadingActivity;
 import com.example.zooseeker_cse_110_team_59.Route.RouteGenerator;
 import com.example.zooseeker_cse_110_team_59.Route.RoutePoint;
 import com.example.zooseeker_cse_110_team_59.Data.ZooData;
-import com.example.zooseeker_cse_110_team_59.TestSettings;
+import com.example.zooseeker_cse_110_team_59.Utilities.TestSettings;
 
 import org.jgrapht.GraphPath;
 import org.junit.BeforeClass;

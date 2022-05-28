@@ -29,23 +29,21 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
         directionsActivity = activity;
 
         routeIDs = IDs;
-        destinationIndex = 0;
+        destinationIndex = startIndex;
         destination = routeIDs.get(destinationIndex);
+        currentLoc = destination;
 
-        lastKnownCoords = Pair.create(ZooData.vertexData.get("entrance_exit_gate").lat,
-                                      ZooData.vertexData.get("entrance_exit_gate").lng);
+        lastKnownCoords = null;
     }
 
     //region Button Responders
     public void nextClicked() {
-        currentLoc = destination;
         destinationIndex++;
         destination = routeIDs.get(destinationIndex);
         updateData();
     }
 
     public void previousClicked() {
-        currentLoc = destination;
         destinationIndex--;
         destination = routeIDs.get(destinationIndex);
         updateData();
@@ -59,16 +57,12 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
     }
 
     private void respondToChangedLocation() {
+        currentLoc = RouteGenerator.findClosestIdToCoords(lastKnownCoords);
+        updateData();
+
         /**
          * HERE GOES THE CODE FOR DOING ANYTHING WITH THE NEW LOCATION. FOR BETTER SRP/OCP,
          * SPLIT THE BELOW INTO MULTIPLE METHODS INSTEAD OF PUTTING IT ALL HERE.
-         *
-         * Readjust: create findClosestToCoords method in RouteGenerator(?)
-         * that returns the id of the closest node to a given set of coordinates.
-         * Then, set currentLoc = this closest node, and call updateData. ALSO ALSO
-         * ALSO ALSO, CHANGE THE SETTING OF currentLoc IN THE NEXT AND PREVIOUS
-         * BUTTON RESPONDERS FROM destination TO findClosestToCoords.
-         *
          *
          *
          * Replan: Instead of calling updateData in the above right away, of the routeIDs

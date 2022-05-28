@@ -22,13 +22,14 @@ import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.filters.LargeTest;
 import androidx.test.rule.ActivityTestRule;
+import androidx.test.rule.GrantPermissionRule;
 import androidx.test.runner.AndroidJUnit4;
 
 import com.example.zooseeker_cse_110_team_59.Data.FilesToLoad;
 import com.example.zooseeker_cse_110_team_59.MainActivity;
 import com.example.zooseeker_cse_110_team_59.R;
 import com.example.zooseeker_cse_110_team_59.Data.ZooData;
-import com.example.zooseeker_cse_110_team_59.TestSettings;
+import com.example.zooseeker_cse_110_team_59.Utilities.TestSettings;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
@@ -53,6 +54,12 @@ public class EspressoTestsUserStory5 {
             ZooData.setZooData();
         }
     };
+
+    @Rule
+    public GrantPermissionRule mGrantPermissionRule =
+            GrantPermissionRule.grant(
+                    "android.permission.ACCESS_FINE_LOCATION",
+                    "android.permission.ACCESS_COARSE_LOCATION");
     //endregion
 
     @Test

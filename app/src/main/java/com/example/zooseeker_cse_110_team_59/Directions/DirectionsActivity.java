@@ -24,7 +24,7 @@ import com.example.zooseeker_cse_110_team_59.Overflow.ActivityOverflow;
 import com.example.zooseeker_cse_110_team_59.EndRouteActivity;
 import com.example.zooseeker_cse_110_team_59.MainActivity;
 import com.example.zooseeker_cse_110_team_59.R;
-import com.example.zooseeker_cse_110_team_59.TestSettings;
+import com.example.zooseeker_cse_110_team_59.Utilities.TestSettings;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;
@@ -57,12 +57,7 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
 
         if (!TestSettings.isTestPositioning()) setupLocationListener(this::updateLastKnownCoords);
 
-        if (startIndex == 0) {
-            planDirections.nextClicked();
-            planDirections.previousClicked();
-        } else {
-            for (int i = 0; i < startIndex; i ++) planDirections.nextClicked();
-        }
+        planDirections.updateData();
 
         saveSharedPreferences();
     }
@@ -91,7 +86,7 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
     }
 
     @VisibleForTesting
-    void mockLocationUpdate(Pair<Double, Double> coords) {
+    public void mockLocationUpdate(Pair<Double, Double> coords) {
         updateLastKnownCoords(coords);
     }
     //endregion
@@ -125,12 +120,12 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
         final EditText latInput = new EditText(this);
         latInput.setInputType(inputType);
         latInput.setHint("Latitude");
-        latInput.setText("32.737986");
+        latInput.setText("32.73459618734685");
 
         final EditText lngInput = new EditText(this);
         lngInput.setInputType(inputType);
         lngInput.setHint("Longitude");
-        lngInput.setText("-117.169499");
+        lngInput.setText("-117.14936");
 
         final LinearLayout layout = new LinearLayout(this);
         layout.setDividerPadding(8);

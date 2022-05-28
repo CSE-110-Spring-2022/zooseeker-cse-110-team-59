@@ -1,11 +1,11 @@
-package com.example.zooseeker_cse_110_team_59;
+package com.example.zooseeker_cse_110_team_59.Utilities;
 
 import androidx.annotation.VisibleForTesting;
 
 public class TestSettings {
 
     //region Test Clearing Setting
-    private static boolean testClearing = false;
+    private static boolean testClearing = true;
 
     public static boolean isTestClearing() {
         return testClearing;
@@ -13,20 +13,20 @@ public class TestSettings {
 
     @VisibleForTesting
     public static void setTestClearing(boolean bool) {
-        testClearing = true;
+        testClearing = bool;
     }
     //endregion
 
     //region Test Positioning Setting
-    private static boolean testPositioning = false;
+    private static boolean testPositioning = true;
 
     public static boolean isTestPositioning() {
         return testPositioning;
     }
 
     @VisibleForTesting
-    public static void setTestPositioning(boolean testPositioning) {
-        TestSettings.testPositioning = testPositioning;
+    public static void setTestPositioning(boolean bool) {
+        testPositioning = bool;
     }
     //endregion
 

@@ -17,7 +17,7 @@ import com.example.zooseeker_cse_110_team_59.Data.FilesToLoad;
 import com.example.zooseeker_cse_110_team_59.List.AutoCompleteAdapter;
 import com.example.zooseeker_cse_110_team_59.List.ListActivity;
 import com.example.zooseeker_cse_110_team_59.Data.ZooData;
-import com.example.zooseeker_cse_110_team_59.TestSettings;
+import com.example.zooseeker_cse_110_team_59.Utilities.TestSettings;
 
 import org.junit.BeforeClass;
 import org.junit.Rule;

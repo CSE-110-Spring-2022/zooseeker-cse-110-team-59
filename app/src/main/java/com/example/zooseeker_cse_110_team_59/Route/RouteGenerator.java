@@ -5,6 +5,7 @@ import android.util.Pair;
 import androidx.annotation.NonNull;
 
 import com.example.zooseeker_cse_110_team_59.Data.ZooData;
+import com.example.zooseeker_cse_110_team_59.Utilities.ToFeetConvert;
 
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
@@ -67,7 +68,9 @@ public class RouteGenerator {
 
     //region "findClosest" Methods
     public static String findClosestIdToId(@NonNull String from) {
-        return findClosestIdToId(from, (ArrayList<String>) ZooData.vertexData.keySet());
+        ArrayList<String> to = new ArrayList<>();
+        to.addAll(ZooData.vertexData.keySet());
+        return findClosestIdToId(from, to);
     }
 
     public static String findClosestIdToId(@NonNull String from, ArrayList<String> to) {
@@ -85,7 +88,9 @@ public class RouteGenerator {
         return closestExhibit;
     }
     public static String findClosestIdToCoords(@NonNull Pair<Double, Double> from) {
-        return findClosestIdToCoords(from, (ArrayList<String>) ZooData.vertexData.keySet());
+        ArrayList<String> to = new ArrayList<>();
+        to.addAll(ZooData.vertexData.keySet());
+        return findClosestIdToCoords(from, to);
     }
 
     public static String findClosestIdToCoords(@NonNull Pair<Double, Double> from, ArrayList<String> to) {
@@ -94,12 +99,8 @@ public class RouteGenerator {
 
         for (String vertex : to) {
             var vertexInfo = ZooData.vertexData.get(getParentIdFromId(vertex));
-            // Multiplied by some larger number because the differences between these doubles
-            // might be quite small, and so squaring them might lead to small values that overflow/
-            // get cut off. We know it shouldn't be hard coded, but this should at least prevent
-            // the above problem in most cases.
-            double currDistance = Math.sqrt(Math.pow(1000*(from.first - vertexInfo.lat), 2)
-                                            + Math.pow(1000*(from.second - vertexInfo.lng), 2));
+            double currDistance = Math.sqrt(Math.pow(ToFeetConvert.FromLat(Math.abs(from.first)) - ToFeetConvert.FromLat(Math.abs(vertexInfo.lat)), 2)
+                                            + Math.pow(ToFeetConvert.FromLng(Math.abs(from.second)) - ToFeetConvert.FromLng(Math.abs(vertexInfo.lng)), 2));
             if (currDistance < shortestDistance) {
                 shortestDistance = currDistance;
                 closestExhibit = vertex;

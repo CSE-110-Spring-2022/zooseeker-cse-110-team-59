@@ -19,7 +19,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.example.zooseeker_cse_110_team_59.Data.FilesToLoad;
 import com.example.zooseeker_cse_110_team_59.List.ListActivity;
 import com.example.zooseeker_cse_110_team_59.Data.ZooData;
-import com.example.zooseeker_cse_110_team_59.TestSettings;
+import com.example.zooseeker_cse_110_team_59.Utilities.TestSettings;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -51,6 +51,9 @@ public class AutoCompleteAdapter extends ArrayAdapter<String> implements Filtera
                     for (int i = 0; i < exhibitTagList.size(); i++) {
                         boolean found = false;
                         for (String validEntry : exhibitTagList.get(i)) {
+                            if (validEntry.toLowerCase().startsWith(constraint.toString().toLowerCase())) {
+                                found = true;
+                            }
                             for (String word : validEntry.split(" ")) {
                                 if (word.toLowerCase().startsWith(constraint.toString().toLowerCase())) {
                                     found = true;

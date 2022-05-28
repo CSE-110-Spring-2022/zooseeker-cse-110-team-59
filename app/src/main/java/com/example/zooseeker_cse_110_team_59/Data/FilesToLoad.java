@@ -2,8 +2,6 @@ package com.example.zooseeker_cse_110_team_59.Data;
 
 import androidx.annotation.VisibleForTesting;
 
-import com.example.zooseeker_cse_110_team_59.TestSettings;
-
 /**
  * Class:            FilesToLoad
  * Description:      This class calls methods that would read in a graph file, vertex file, and an edge file.
