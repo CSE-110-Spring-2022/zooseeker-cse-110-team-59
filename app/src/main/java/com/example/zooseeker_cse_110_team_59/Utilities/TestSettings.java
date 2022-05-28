@@ -5,7 +5,7 @@ import androidx.annotation.VisibleForTesting;
 public class TestSettings {
 
     //region Test Clearing Setting
-    private static boolean testClearing = true;
+    private static boolean testClearing = false;
 
     public static boolean isTestClearing() {
         return testClearing;
@@ -18,7 +18,7 @@ public class TestSettings {
     //endregion
 
     //region Test Positioning Setting
-    private static boolean testPositioning = true;
+    private static boolean testPositioning = false;
 
     public static boolean isTestPositioning() {
         return testPositioning;
