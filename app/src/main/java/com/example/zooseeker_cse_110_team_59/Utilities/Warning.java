@@ -1,4 +1,4 @@
-package com.example.zooseeker_cse_110_team_59;
+package com.example.zooseeker_cse_110_team_59.Utilities;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
  *
  * Public functions: showAlert          - alert the system when a button, a message, or a title is changed.
  */
-public class Utilities {
+public class Warning {
     /**
      * The showAlert calls the AlertDialog class which help sets up title, messages, and buttons.
      * It allows the user to enter in an animal in the dialog.

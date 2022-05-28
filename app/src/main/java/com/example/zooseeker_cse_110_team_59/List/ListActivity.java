@@ -9,13 +9,14 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
-import com.example.zooseeker_cse_110_team_59.Retention.ActivityOverflow;
+import com.example.zooseeker_cse_110_team_59.Overflow.ActivityOverflow;
 import com.example.zooseeker_cse_110_team_59.LoadingActivity;
 import com.example.zooseeker_cse_110_team_59.MainActivity;
 import com.example.zooseeker_cse_110_team_59.R;
 import com.example.zooseeker_cse_110_team_59.Route.RouteGenerator;
-import com.example.zooseeker_cse_110_team_59.Retention.SharedPreferencesSaver;
-import com.example.zooseeker_cse_110_team_59.Utilities;
+import com.example.zooseeker_cse_110_team_59.Data.SharedPreferencesSaver;
+import com.example.zooseeker_cse_110_team_59.Utilities.PermissionChecker;
+import com.example.zooseeker_cse_110_team_59.Utilities.Warning;
 import com.example.zooseeker_cse_110_team_59.Data.ZooData;
 
 import java.util.ArrayList;
@@ -75,6 +76,12 @@ public class ListActivity extends ActivityOverflow implements ExhibitObserver,Sh
         saveSharedPreferences();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        new PermissionChecker(this).ensurePermissions();
+    }
+
     //region Search Bar Handlers/Helpers
     public void onSearchSelectClick(View view) {
         checkSearchBar();
@@ -119,7 +126,7 @@ public class ListActivity extends ActivityOverflow implements ExhibitObserver,Sh
     public boolean isExhibitValidSize()
     {
         if (Integer.parseInt(listCount.getText().toString()) == 0) {
-            Utilities.showAlert(this, "Empty List", "No exhibits have been added to your list.");
+            Warning.showAlert(this, "Empty List", "No exhibits have been added to your list.");
             return false;
         }
 

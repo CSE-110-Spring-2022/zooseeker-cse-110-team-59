@@ -4,10 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Pair;
 import android.widget.AutoCompleteTextView;
 
 import androidx.lifecycle.Lifecycle;
@@ -21,6 +21,7 @@ import com.example.zooseeker_cse_110_team_59.Data.ZooData;
 import com.example.zooseeker_cse_110_team_59.Directions.DirectionsActivity;
 import com.example.zooseeker_cse_110_team_59.List.ListActivity;
 import com.example.zooseeker_cse_110_team_59.MainActivity;
+import com.example.zooseeker_cse_110_team_59.Utilities.TestSettings;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -40,11 +41,15 @@ public class UnitTestsUserStoryMS1_13 {
     @Rule
     public ActivityScenarioRule<MainActivity> scenarioRule = new ActivityScenarioRule<>(MainActivity.class);
 
+    //region INCLUDE THIS IN EVERY UNIT TEST. Change file names to desired test files.
     @BeforeClass
     public static void setTestData() {
         FilesToLoad.injectNewFiles(new String[]{"test_zoo_graph_ms2.json", "test_node_info_ms2.json", "test_edge_info_ms2.json"});
+        TestSettings.setTestClearing(true);
+        TestSettings.setTestPositioning(true);
         ZooData.setZooData();
     }
+    //endregion
 
     @Test
     public void testListScreenRetention() {
@@ -106,6 +111,8 @@ public class UnitTestsUserStoryMS1_13 {
         final String[] routeInformation = {"", ""};
 
         dirActivity.onActivity(activity -> {
+            activity.mockLocationUpdate(Pair.create(32.73459618734685, -117.14936));
+
             SharedPreferences preferences = activity.getSharedPreferences("shared_preferences", Context.MODE_PRIVATE);
 
             assertEquals("DirectionsActivity", preferences.getString("storedActivity", null));
@@ -133,6 +140,8 @@ public class UnitTestsUserStoryMS1_13 {
         ArrayList<String> finalRouteIDs = routeIDs;
         int finalStartIndex = startIndex;
         dirActivity.onActivity(activity -> {
+            activity.mockLocationUpdate(Pair.create(32.72109826903826, -117.15952052282296));
+
             assertEquals(finalRouteIDs, activity.getPlanDirections().getRouteIDs());
             assertEquals(finalStartIndex, activity.getPlanDirections().getDestinationIndex());
             assertEquals("1. Proceed on Terrace Lagoon Loop 2200.0 ft towards Front Street.\n" +

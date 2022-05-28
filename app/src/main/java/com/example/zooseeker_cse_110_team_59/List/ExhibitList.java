@@ -6,8 +6,8 @@ import android.content.SharedPreferences;
 
 import androidx.annotation.VisibleForTesting;
 
-import com.example.zooseeker_cse_110_team_59.Retention.SharedPreferencesSaver;
-import com.example.zooseeker_cse_110_team_59.Utilities;
+import com.example.zooseeker_cse_110_team_59.Data.SharedPreferencesSaver;
+import com.example.zooseeker_cse_110_team_59.Utilities.Warning;
 import com.example.zooseeker_cse_110_team_59.Data.ZooData;
 import com.google.gson.Gson;
 
@@ -49,7 +49,7 @@ public class ExhibitList implements ExhibitSubject, SharedPreferencesSaver {
         if (userEntryToID.containsKey(searchBarInput)) {
             return true;
         } else {
-            Utilities.showAlert(listActivity , "Invalid Entry", searchBarInput + " is not an exhibit at the San Diego Zoo.");
+            Warning.showAlert(listActivity , "Invalid Entry", searchBarInput + " is not an exhibit at the San Diego Zoo.");
             return false;
         }
     }

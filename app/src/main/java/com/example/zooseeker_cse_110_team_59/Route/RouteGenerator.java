@@ -1,8 +1,11 @@
 package com.example.zooseeker_cse_110_team_59.Route;
 
+import android.util.Pair;
+
 import androidx.annotation.NonNull;
 
 import com.example.zooseeker_cse_110_team_59.Data.ZooData;
+import com.example.zooseeker_cse_110_team_59.Utilities.ToFeetConvert;
 
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
@@ -36,7 +39,7 @@ public class RouteGenerator {
         String currentStreetName = "Gate Path";
 
         while (unvisited.size() != 0) {
-            String closestExhibit = findClosest(currentNode, unvisited);
+            String closestExhibit = findClosestIdToId(currentNode, unvisited);
             GraphPath<String, ZooData.Graph.Edge> shortestPath = getPathBetween(currentNode, closestExhibit);
 
             RoutePoint rp;
@@ -63,8 +66,15 @@ public class RouteGenerator {
         return route;
     }
 
-    public static String findClosest (@NonNull String from, ArrayList<String> to) {
-        double shortestPathWeight = Float.MAX_VALUE;
+    //region "findClosest" Methods
+    public static String findClosestIdToId(@NonNull String from) {
+        ArrayList<String> to = new ArrayList<>();
+        to.addAll(ZooData.vertexData.keySet());
+        return findClosestIdToId(from, to);
+    }
+
+    public static String findClosestIdToId(@NonNull String from, ArrayList<String> to) {
+        double shortestPathWeight = Double.MAX_VALUE;
         String closestExhibit = null;
 
         for (String vertex : to) {
@@ -77,8 +87,30 @@ public class RouteGenerator {
 
         return closestExhibit;
     }
+    public static String findClosestIdToCoords(@NonNull Pair<Double, Double> from) {
+        ArrayList<String> to = new ArrayList<>();
+        to.addAll(ZooData.vertexData.keySet());
+        return findClosestIdToCoords(from, to);
+    }
 
-    //region RoutePoint Creators
+    public static String findClosestIdToCoords(@NonNull Pair<Double, Double> from, ArrayList<String> to) {
+        double shortestDistance = Double.MAX_VALUE;
+        String closestExhibit = null;
+
+        for (String vertex : to) {
+            var vertexInfo = ZooData.vertexData.get(getParentIdFromId(vertex));
+            double currDistance = Math.sqrt(Math.pow(ToFeetConvert.FromLat(Math.abs(from.first)) - ToFeetConvert.FromLat(Math.abs(vertexInfo.lat)), 2)
+                                            + Math.pow(ToFeetConvert.FromLng(Math.abs(from.second)) - ToFeetConvert.FromLng(Math.abs(vertexInfo.lng)), 2));
+            if (currDistance < shortestDistance) {
+                shortestDistance = currDistance;
+                closestExhibit = vertex;
+            }
+        }
+
+        return closestExhibit;
+    }
+    //endregion
+
     public static RoutePoint createRoutePointFromPath(GraphPath<String, ZooData.Graph.Edge> pathToUse) {
         return createRoutePointFromPath(pathToUse, getDestIdFromPath(pathToUse));
     }

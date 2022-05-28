@@ -1,23 +1,35 @@
 package com.example.zooseeker_cse_110_team_59.Directions;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.zooseeker_cse_110_team_59.Retention.ActivityOverflow;
+import com.example.zooseeker_cse_110_team_59.Overflow.ActivityOverflow;
 import com.example.zooseeker_cse_110_team_59.EndRouteActivity;
 import com.example.zooseeker_cse_110_team_59.MainActivity;
 import com.example.zooseeker_cse_110_team_59.R;
+import com.example.zooseeker_cse_110_team_59.Utilities.TestSettings;
 
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 public class DirectionsActivity extends ActivityOverflow implements DirectionsObserver {
-
     private PlanDirections planDirections;
     private TextView directionsTV;
     private TextView currExhibitTV;
@@ -40,18 +52,44 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
         previousButton = findViewById(R.id.previous_button);
         finishButton = findViewById(R.id.finish_btn);
 
-        planDirections = new PlanDirections(this, startIDs);
+        planDirections = new PlanDirections(this, startIDs, startIndex);
         planDirections.registerDO(this);
 
-        if (startIndex == 0) {
-            planDirections.nextClicked();
-            planDirections.previousClicked();
-        } else {
-            for (int i = 0; i < startIndex; i++) planDirections.nextClicked();
-        }
+        if (!TestSettings.isTestPositioning()) setupLocationListener(this::updateLastKnownCoords);
+
+        planDirections.updateData();
 
         saveSharedPreferences();
     }
+
+    //region Location Methods
+    @SuppressLint("MissingPermission")
+    private void setupLocationListener(Consumer<Pair<Double, Double>> handleNewCoords) {
+        // Connect location listener to the model.
+        var provider = LocationManager.GPS_PROVIDER;
+        var locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        var locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(@NonNull Location location) {
+                var coords = Pair.create(
+                        location.getLatitude(),
+                        location.getLongitude()
+                );
+                handleNewCoords.accept(coords);
+            }
+        };
+        locationManager.requestLocationUpdates(provider, 0, 0f, locationListener);
+    }
+
+    public void updateLastKnownCoords(Pair<Double, Double> coords) {
+        planDirections.setLastKnownCoords(coords);
+    }
+
+    @VisibleForTesting
+    public void mockLocationUpdate(Pair<Double, Double> coords) {
+        updateLastKnownCoords(coords);
+    }
+    //endregion
 
     //region Button Listeners
     public void onNextClicked(View view) {
@@ -66,6 +104,50 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
         Intent intent = new Intent(this, EndRouteActivity.class);
         finish();
         startActivity(intent);
+    }
+
+    @Override
+    @SuppressLint("SetTextI18n")
+    public void onMockOptionClicked() {
+        // TODO: could define this layout in an XML and inflate it, instead of defining in code...
+        // But you know we won't! Thanks for the code!
+
+        //region Create Layout
+        var inputType = EditorInfo.TYPE_CLASS_NUMBER
+                | EditorInfo.TYPE_NUMBER_FLAG_SIGNED
+                | EditorInfo.TYPE_NUMBER_FLAG_DECIMAL;
+
+        final EditText latInput = new EditText(this);
+        latInput.setInputType(inputType);
+        latInput.setHint("Latitude");
+        latInput.setText("32.73459618734685");
+
+        final EditText lngInput = new EditText(this);
+        lngInput.setInputType(inputType);
+        lngInput.setHint("Longitude");
+        lngInput.setText("-117.14936");
+
+        final LinearLayout layout = new LinearLayout(this);
+        layout.setDividerPadding(8);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.addView(latInput);
+        layout.addView(lngInput);
+        //endregion
+
+        //region Show Mock Dialog
+        var builder = new AlertDialog.Builder(this)
+                .setTitle("Inject a Mock Location")
+                .setView(layout)
+                .setPositiveButton("Submit", (dialog, which) -> {
+                    var lat = Double.parseDouble(latInput.getText().toString());
+                    var lng = Double.parseDouble(lngInput.getText().toString());
+                    updateLastKnownCoords(Pair.create(lat, lng));
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> {
+                    dialog.cancel();
+                });
+        builder.show();
+        //endregion
     }
     //endregion
 

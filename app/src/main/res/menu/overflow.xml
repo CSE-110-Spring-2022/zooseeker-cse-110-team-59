@@ -6,4 +6,8 @@
         android:title="Clear"
         android:orderInCategory="100"
         app:showAsAction="never" />
+    <item android:id="@+id/mock_location"
+        android:title="Mock Loc"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
 </menu>

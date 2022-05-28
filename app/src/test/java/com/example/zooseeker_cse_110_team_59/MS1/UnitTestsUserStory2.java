@@ -19,6 +19,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.example.zooseeker_cse_110_team_59.Data.FilesToLoad;
 import com.example.zooseeker_cse_110_team_59.List.ListActivity;
 import com.example.zooseeker_cse_110_team_59.Data.ZooData;
+import com.example.zooseeker_cse_110_team_59.Utilities.TestSettings;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,11 +41,15 @@ public class UnitTestsUserStory2 {
     @Rule
     public ActivityScenarioRule<ListActivity> scenarioRule = new ActivityScenarioRule<>(planIntent);
 
+    //region INCLUDE THIS IN EVERY UNIT TEST. Change file names to desired test files.
     @BeforeClass
     public static void setTestData() {
         FilesToLoad.injectNewFiles(new String[]{"test_zoo_graph_ms1.json", "test_node_info_ms1.json", "test_edge_info_ms1.json"});
+        TestSettings.setTestClearing(true);
+        TestSettings.setTestPositioning(true);
         ZooData.setZooData();
     }
+    //endregion
 
     @Test
     public void testListStartsEmpty() {

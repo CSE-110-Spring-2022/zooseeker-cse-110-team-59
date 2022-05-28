@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ import com.example.zooseeker_cse_110_team_59.Directions.DirectionsActivity;
 import com.example.zooseeker_cse_110_team_59.Data.FilesToLoad;
 import com.example.zooseeker_cse_110_team_59.R;
 import com.example.zooseeker_cse_110_team_59.Data.ZooData;
+import com.example.zooseeker_cse_110_team_59.Utilities.TestSettings;
 
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -32,18 +34,22 @@ public class UnitTestsUserStoryMS2_4 {
 
     private Context context = ApplicationProvider.getApplicationContext();
 
-    private ArrayList<String> route = new ArrayList<String>(Arrays.asList("entrance_exit_gate", "gorillas", "lions", "elephant_odyssey", "entrance_exit_gate"));
+    private ArrayList<String> route = new ArrayList<String>(Arrays.asList("entrance_exit_gate", "hippo", "gorilla", "entrance_exit_gate"));
 
-    private Intent planIntent = new Intent(context, DirectionsActivity.class).putExtra("IDs in Order", route).putExtra("Start Index", 1);
+    private Intent directionsIntent = new Intent(context, DirectionsActivity.class).putExtra("IDs in Order", route).putExtra("Start Index", 1);
 
     @Rule
-    public ActivityScenarioRule<DirectionsActivity> scenarioRule = new ActivityScenarioRule<>(planIntent);
+    public ActivityScenarioRule<DirectionsActivity> scenarioRule = new ActivityScenarioRule<>(directionsIntent);
 
+    //region INCLUDE THIS IN EVERY UNIT TEST. Change file names to desired test files.
     @BeforeClass
     public static void setTestData() {
-        FilesToLoad.injectNewFiles(new String[]{"test_zoo_graph_ms1.json", "test_node_info_ms1.json", "test_edge_info_ms1.json"});
+        FilesToLoad.injectNewFiles(new String[]{"test_zoo_graph_ms2.json", "test_node_info_ms2.json", "test_edge_info_ms2.json"});
+        TestSettings.setTestClearing(true);
+        TestSettings.setTestPositioning(true);
         ZooData.setZooData();
     }
+    //endregion
 
     @Test
     public void testPreviousButtonIsClicked() {
@@ -74,8 +80,6 @@ public class UnitTestsUserStoryMS2_4 {
 
             nextBtn.performClick();
             nextBtn.performClick();
-            nextBtn.performClick();
-            prevBtn.performClick();
             prevBtn.performClick();
             prevBtn.performClick();
             prevBtn.performClick();
@@ -95,6 +99,8 @@ public class UnitTestsUserStoryMS2_4 {
         scenario.onActivity(activity -> {
             Button prevBtn = activity.findViewById(R.id.previous_button);
 
+            activity.mockLocationUpdate(Pair.create(32.73459618734685, -117.14936));
+
             assertEquals("Previous: Entrance and Exit Gate, 0.0ft", prevBtn.getText());
         });
     }
@@ -110,15 +116,17 @@ public class UnitTestsUserStoryMS2_4 {
             Button nextBtn = activity.findViewById(R.id.next_btn);
             nextBtn.performClick();
             nextBtn.performClick();
-            nextBtn.performClick();
             prevBtn.performClick();
             TextView directions = activity.findViewById(R.id.directions_text);
             TextView currExhTitle = activity.findViewById(R.id.place_name);
-            assertEquals("1. Proceed on Entrance Way 10.0 ft towards Reptile Road.\n" +
-                    "2. Proceed on Reptile Road 100.0 ft towards Sharp Teeth Shortcut.\n" +
-                    "3. Proceed on Sharp Teeth Shortcut 200.0 ft towards Africa Rocks Street.\n" +
-                    "4. Proceed on Africa Rocks Street 200.0 ft towards Elephant Odyssey.\n", directions.getText());
-            assertEquals("Directions to Elephant Odyssey", currExhTitle.getText());
+
+            activity.mockLocationUpdate(Pair.create(32.73459618734685, -117.14936));
+
+            assertEquals("1. Proceed on Gate Path 1100.0 ft towards Treetops Way.\n" +
+                    "2. Proceed on Treetops Way 4400.0 ft towards Hippo Trail.\n" +
+                    "3. Proceed on Hippo Trail 4500.0 ft towards Monkey Trail.\n" +
+                    "4. Proceed on Monkey Trail 2400.0 ft towards Gorillas.\n", directions.getText());
+            assertEquals("Directions to Gorillas", currExhTitle.getText());
         });
 
     }

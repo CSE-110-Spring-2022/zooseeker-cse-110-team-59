@@ -17,6 +17,7 @@ import com.example.zooseeker_cse_110_team_59.Data.FilesToLoad;
 import com.example.zooseeker_cse_110_team_59.List.AutoCompleteAdapter;
 import com.example.zooseeker_cse_110_team_59.List.ListActivity;
 import com.example.zooseeker_cse_110_team_59.Data.ZooData;
+import com.example.zooseeker_cse_110_team_59.Utilities.TestSettings;
 
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -38,11 +39,15 @@ public class UnitTestsUserStoryMS1_2 {
     @Rule
     public ActivityScenarioRule<ListActivity> scenarioRule = new ActivityScenarioRule<>(listIntent);
 
+    //region INCLUDE THIS IN EVERY UNIT TEST. Change file names to desired test files.
     @BeforeClass
     public static void setTestData() {
         FilesToLoad.injectNewFiles(new String[]{"test_zoo_graph_ms1.json", "test_node_info_ms1.json", "test_edge_info_ms1.json"});
+        TestSettings.setTestClearing(true);
+        TestSettings.setTestPositioning(true);
         ZooData.setZooData();
     }
+    //endregion
 
     //Input: "table"
     //Output: empty arraylist
