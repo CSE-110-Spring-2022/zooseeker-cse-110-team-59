@@ -1,5 +1,7 @@
 package com.example.zooseeker_cse_110_team_59.Route;
 
+import android.util.Pair;
+
 import androidx.annotation.NonNull;
 
 import com.example.zooseeker_cse_110_team_59.Data.ZooData;
@@ -36,7 +38,7 @@ public class RouteGenerator {
         String currentStreetName = "Gate Path";
 
         while (unvisited.size() != 0) {
-            String closestExhibit = findClosest(currentNode, unvisited);
+            String closestExhibit = findClosestIdToId(currentNode, unvisited);
             GraphPath<String, ZooData.Graph.Edge> shortestPath = getPathBetween(currentNode, closestExhibit);
 
             RoutePoint rp;
@@ -63,8 +65,13 @@ public class RouteGenerator {
         return route;
     }
 
-    public static String findClosest (@NonNull String from, ArrayList<String> to) {
-        double shortestPathWeight = Float.MAX_VALUE;
+    //region "findClosest" Methods
+    public static String findClosestIdToId(@NonNull String from) {
+        return findClosestIdToId(from, (ArrayList<String>) ZooData.vertexData.keySet());
+    }
+
+    public static String findClosestIdToId(@NonNull String from, ArrayList<String> to) {
+        double shortestPathWeight = Double.MAX_VALUE;
         String closestExhibit = null;
 
         for (String vertex : to) {
@@ -77,8 +84,32 @@ public class RouteGenerator {
 
         return closestExhibit;
     }
+    public static String findClosestIdToCoords(@NonNull Pair<Double, Double> from) {
+        return findClosestIdToCoords(from, (ArrayList<String>) ZooData.vertexData.keySet());
+    }
 
-    //region RoutePoint Creators
+    public static String findClosestIdToCoords(@NonNull Pair<Double, Double> from, ArrayList<String> to) {
+        double shortestDistance = Double.MAX_VALUE;
+        String closestExhibit = null;
+
+        for (String vertex : to) {
+            var vertexInfo = ZooData.vertexData.get(getParentIdFromId(vertex));
+            // Multiplied by some larger number because the differences between these doubles
+            // might be quite small, and so squaring them might lead to small values that overflow/
+            // get cut off. We know it shouldn't be hard coded, but this should at least prevent
+            // the above problem in most cases.
+            double currDistance = Math.sqrt(Math.pow(1000*(from.first - vertexInfo.lat), 2)
+                                            + Math.pow(1000*(from.second - vertexInfo.lng), 2));
+            if (currDistance < shortestDistance) {
+                shortestDistance = currDistance;
+                closestExhibit = vertex;
+            }
+        }
+
+        return closestExhibit;
+    }
+    //endregion
+
     public static RoutePoint createRoutePointFromPath(GraphPath<String, ZooData.Graph.Edge> pathToUse) {
         return createRoutePointFromPath(pathToUse, getDestIdFromPath(pathToUse));
     }
