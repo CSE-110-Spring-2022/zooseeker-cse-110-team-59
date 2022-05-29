@@ -1,20 +1,20 @@
 package com.example.zooseeker_cse_110_team_59.Directions;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.util.Pair;
 
 import androidx.annotation.VisibleForTesting;
 
-import com.example.zooseeker_cse_110_team_59.Data.ZooData;
 import com.example.zooseeker_cse_110_team_59.Route.RouteGenerator;
 import com.example.zooseeker_cse_110_team_59.Data.SharedPreferencesSaver;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver {
     ArrayList<DirectionsObserver> Observers = new ArrayList<DirectionsObserver>();
@@ -60,6 +60,40 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
         currentLoc = RouteGenerator.findClosestIdToCoords(lastKnownCoords);
         updateData();
 
+        AtomicBoolean deniedReplan = new AtomicBoolean(false);
+        ArrayList<String> portion_routeIDs = new ArrayList<String>();
+        String start_Id = currentLoc;
+        String end_Id = "entrance_exit_gate";
+
+
+        String closest_exhibit = RouteGenerator.findClosestIdToId(currentLoc);
+        String dest_parentId = RouteGenerator.getParentIdFromId(destination);
+        String close_parentId = RouteGenerator.getParentIdFromId(closest_exhibit);
+        if(destination != closest_exhibit){
+            if(dest_parentId != close_parentId){
+                if(!deniedReplan.get()){
+                    var builder = new AlertDialog.Builder(this)
+                            .setTitle("Replan Suggestion")
+                            .setView(layout)
+                            .setPositiveButton("YES", (dialog, which) -> {
+                                /*
+                                should probably ask seth what desitinationIndex is
+                                 */
+                                for (int i = 0; i < destinationIndex - 1; i++){
+                                    portion_routeIDs.add(routeIDs.get(i));
+                                }
+
+
+                            })
+                            .setNegativeButton("NO", (dialog, which) -> {
+                                deniedReplan.set(true);
+                                dialog.cancel();
+                            });
+                    builder.show();
+                }
+            }
+
+        }
         /**
          * HERE GOES THE CODE FOR DOING ANYTHING WITH THE NEW LOCATION. FOR BETTER SRP/OCP,
          * SPLIT THE BELOW INTO MULTIPLE METHODS INSTEAD OF PUTTING IT ALL HERE.
@@ -69,7 +103,7 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
          * from destinationIndex to the end (WITHOUT the last one in there, which is always
          * entrance_exit_gate), find the closest one to this new currentLoc. If destination !=
          * this closest unvisited exhibit, they're not at the same place (so different parent_ids)
-         * and deniedReplan == false (more on this later), then suggest a replan (to see a way suggesting
+         * and [POTENTIAL TYPO] deniedReplan == false (more on this later), then suggest a replan (to see a way suggesting
          * a replan might work, look at the AlertDialog.builder usage in DirectionsActivity.onMockButtonClicked,
          * there isn't a need to include fields in this one here, but you will need to run specific code
          * based on their response, like in that usage over there). Otherwise, if not all of the three
