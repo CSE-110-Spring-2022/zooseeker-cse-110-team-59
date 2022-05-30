@@ -119,11 +119,13 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
 
         final EditText latInput = new EditText(this);
         latInput.setInputType(inputType);
+        latInput.setLongClickable(true);
         latInput.setHint("Latitude");
         latInput.setText("32.73459618734685");
 
         final EditText lngInput = new EditText(this);
         lngInput.setInputType(inputType);
+        lngInput.setLongClickable(true);
         lngInput.setHint("Longitude");
         lngInput.setText("-117.14936");
 
