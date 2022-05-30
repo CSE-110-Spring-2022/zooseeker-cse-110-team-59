@@ -190,7 +190,7 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
     }
     //endregion
 
-    //region Getters for Testing
+    //region Getters/Setters for Testing
     @VisibleForTesting
     public int getDestinationIndex() {
         return destinationIndex;
@@ -199,6 +199,11 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
     @VisibleForTesting
     public ArrayList<String> getRouteIDs() {
         return routeIDs;
+    }
+
+    @VisibleForTesting
+    public void setDeniedReplan (boolean bool) {
+        deniedReplan = bool;
     }
     //endregion
 }
