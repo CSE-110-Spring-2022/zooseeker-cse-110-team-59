@@ -105,6 +105,51 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
         finish();
         startActivity(intent);
     }
+    //endregion
+
+    //region DirectionsObserver Interface Methods
+    @Override
+    public void update(ArrayList<String> prevStrings, ArrayList<String> currStrings, ArrayList<String> nextStrings) {
+        updatePrev(prevStrings);
+        updateCurr(currStrings);
+        updateNext(nextStrings);
+    }
+    //endregion
+
+    //region View Updaters
+    private void updatePrev(ArrayList<String> prevStrings) {
+        if (prevStrings.get(0).equals("hide")) {
+            previousButton.setVisibility(View.INVISIBLE);
+        }
+        else {
+            previousButton.setVisibility(View.VISIBLE);
+            previousButton.setText(prevStrings.get(1));
+        }
+    }
+
+    private void updateCurr(ArrayList<String> currStrings) {
+        currExhibitTV.setText(currStrings.get(0));
+        directionsTV.setText(currStrings.get(1));
+    }
+
+    private void updateNext(ArrayList<String> nextStrings) {
+        if (nextStrings.get(0).equals("hide")) {
+            finishButton.setVisibility(View.VISIBLE);
+            nextButton.setVisibility(View.INVISIBLE);
+        } else {
+            finishButton.setVisibility(View.INVISIBLE);
+            nextButton.setVisibility(View.VISIBLE);
+            nextButton.setText(nextStrings.get(1));
+        }
+    }
+    //endregion
+
+    //region ActivityOverflow Abstract Methods
+    @Override
+    protected void startMainActivity() {
+        finish();
+        startActivity(new Intent(this, MainActivity.class));
+    }
 
     @Override
     @SuppressLint("SetTextI18n")
@@ -150,51 +195,6 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
                 });
         builder.show();
         //endregion
-    }
-    //endregion
-
-    //region DirectionsObserver Interface Methods
-    @Override
-    public void update(ArrayList<String> prevStrings, ArrayList<String> currStrings, ArrayList<String> nextStrings) {
-        updatePrev(prevStrings);
-        updateCurr(currStrings);
-        updateNext(nextStrings);
-    }
-    //endregion
-
-    //region View Updaters
-    private void updatePrev(ArrayList<String> prevStrings) {
-        if (prevStrings.get(0).equals("hide")) {
-            previousButton.setVisibility(View.INVISIBLE);
-        }
-        else {
-            previousButton.setVisibility(View.VISIBLE);
-            previousButton.setText(prevStrings.get(1));
-        }
-    }
-
-    private void updateCurr(ArrayList<String> currStrings) {
-        currExhibitTV.setText(currStrings.get(0));
-        directionsTV.setText(currStrings.get(1));
-    }
-
-    private void updateNext(ArrayList<String> nextStrings) {
-        if (nextStrings.get(0).equals("hide")) {
-            finishButton.setVisibility(View.VISIBLE);
-            nextButton.setVisibility(View.INVISIBLE);
-        } else {
-            finishButton.setVisibility(View.INVISIBLE);
-            nextButton.setVisibility(View.VISIBLE);
-            nextButton.setText(nextStrings.get(1));
-        }
-    }
-    //endregion
-
-    //region ActivityOverflow Abstract Methods
-    @Override
-    protected void startMainActivity() {
-        finish();
-        startActivity(new Intent(this, MainActivity.class));
     }
     //endregion
 
