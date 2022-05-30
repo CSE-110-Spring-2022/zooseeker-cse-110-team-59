@@ -36,6 +36,26 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
         lastKnownCoords = null;
     }
 
+    public void skipClicked() {
+        if (skipVisible())
+            routeIDs.remove(destinationIndex);
+        destination = routeIDs.get(destinationIndex);
+        updateData();
+    }
+
+    private boolean skipVisible() {
+        if (routeIDs.size() <= 1) {
+            return false;
+        }
+        if (destinationIndex == 0) {
+            return false;
+        }
+        if (destinationIndex == (routeIDs.size() - 1)) {
+            return false;
+        }
+        return true;
+    }
+
     //region Button Responders
     public void nextClicked() {
         destinationIndex++;
@@ -102,7 +122,7 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
         ArrayList<String> currData = getCurrData();
         ArrayList<String> nextData = getNextData();
 
-        notifyDOS(prevData, currData, nextData);
+        notifyDOS(prevData, currData, nextData, skipVisible());
     }
 
     public ArrayList<String> getPrevData() {
@@ -153,9 +173,9 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
         Observers.add(dObs);
     }
     @Override
-    public void notifyDOS(ArrayList<String> prevStrings, ArrayList<String> currStrings, ArrayList<String> nextStrings) {
+    public void notifyDOS(ArrayList<String> prevStrings, ArrayList<String> currStrings, ArrayList<String> nextStrings, boolean skipVisibility) {
         for (DirectionsObserver obs : Observers) {
-            obs.update(prevStrings, currStrings, nextStrings);
+            obs.update(prevStrings, currStrings, nextStrings, skipVisibility);
         }
     }
     //endregion

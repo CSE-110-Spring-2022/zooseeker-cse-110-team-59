@@ -36,6 +36,7 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
     private Button nextButton;
     private Button finishButton;
     private Button previousButton;
+    private Button skipButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
         nextButton = findViewById(R.id.next_btn);
         previousButton = findViewById(R.id.previous_button);
         finishButton = findViewById(R.id.finish_btn);
+        skipButton = findViewById(R.id.skip_btn);
 
         planDirections = new PlanDirections(this, startIDs, startIndex);
         planDirections.registerDO(this);
@@ -153,10 +155,16 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
 
     //region DirectionsObserver Interface Methods
     @Override
-    public void update(ArrayList<String> prevStrings, ArrayList<String> currStrings, ArrayList<String> nextStrings) {
+    public void update(ArrayList<String> prevStrings, ArrayList<String> currStrings, ArrayList<String> nextStrings, boolean skipVisibility) {
         updatePrev(prevStrings);
         updateCurr(currStrings);
         updateNext(nextStrings);
+        if (skipVisibility) {
+            skipButton.setVisibility(View.VISIBLE);
+        }
+        else {
+            skipButton.setVisibility(View.INVISIBLE);
+        }
     }
     //endregion
 
@@ -217,6 +225,10 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
     @VisibleForTesting
     public TextView getDirectionsTV() {
         return directionsTV;
+    }
+
+    public void onSkipClicked(View view) {
+        planDirections.skipClicked();
     }
     //endregion
 }
