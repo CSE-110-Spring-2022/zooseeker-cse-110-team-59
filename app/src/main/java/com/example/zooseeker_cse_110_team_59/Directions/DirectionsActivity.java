@@ -13,6 +13,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Pair;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -148,6 +150,16 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
 
     //region ActivityOverflow Abstract Methods
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.overflow, menu);
+
+        menu.findItem(R.id.mock_location).setVisible(true);
+        menu.findItem(R.id.directions_detail).setVisible(true);
+        menu.findItem(R.id.skip_exhibit).setVisible(true);
+        return true;
+    }
+
+    @Override
     protected void startMainActivity() {
         finish();
         startActivity(new Intent(this, MainActivity.class));
@@ -200,11 +212,6 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
     }
 
     @Override
-    protected void onSkipClicked() {
-        planDirections.skipClicked();
-    }
-
-    @Override
     protected void onDirectionsDetailClicked() {
         var builder = new AlertDialog.Builder(this)
                 .setTitle("Directions Detail")
@@ -216,6 +223,11 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
                     planDirections.detailLevelDetailedClicked();
                 });
         builder.show();
+    }
+
+    @Override
+    protected void onSkipClicked() {
+        planDirections.skipClicked();
     }
     //endregion
 

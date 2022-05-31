@@ -182,46 +182,6 @@ public class EspressoTestsUserStoryMS2_5 {
                         isDisplayed()));
         materialTextView.perform(click());
 
-        ViewInteraction editText = onView(
-                allOf(withText("32.73459618734685"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.custom),
-                                        0),
-                                0),
-                        isDisplayed()));
-        editText.perform(replaceText("32.734596187346850"));
-
-        ViewInteraction editText2 = onView(
-                allOf(withText("32.734596187346850"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.custom),
-                                        0),
-                                0),
-                        isDisplayed()));
-        editText2.perform(closeSoftKeyboard());
-
-        ViewInteraction editText3 = onView(
-                allOf(withText("-117.14936"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.custom),
-                                        0),
-                                1),
-                        isDisplayed()));
-        editText3.perform(replaceText("-117.149360"));
-
-        ViewInteraction editText4 = onView(
-                allOf(withText("-117.149360"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.custom),
-                                        0),
-                                1),
-                        isDisplayed()));
-        editText4.perform(closeSoftKeyboard());
-
         ViewInteraction materialButton6 = onView(
                 allOf(withId(android.R.id.button1), withText("Submit"),
                         childAtPosition(
@@ -258,10 +218,11 @@ public class EspressoTestsUserStoryMS2_5 {
         textView.check(matches(withText("Directions to Crocodiles")));
 
         ViewInteraction textView2 = onView(
-                allOf(withId(R.id.directions_text), withText("1. Proceed on Gate Path 1100.0 ft towards Treetops Way.\n2. Proceed on Treetops Way 4400.0 ft towards Hippo Trail.\n3. Proceed on Hippo Trail 3000.0 ft towards Crocodiles.\n"),
-                        withParent(withParent(withId(android.R.id.content))),
+                allOf(withId(R.id.directions_text),
                         isDisplayed()));
-        textView2.check(matches(withText("1. Proceed on Gate Path 1100.0 ft towards Treetops Way.\n2. Proceed on Treetops Way 4400.0 ft towards Hippo Trail.\n3. Proceed on Hippo Trail 3000.0 ft towards Crocodiles.\n")));
+        textView2.check(matches(withText("1. Proceed on Gate Path 1100.0 ft towards Treetops Way." +
+                "\n2. Proceed on Treetops Way 4400.0 ft towards Hippo Trail." +
+                "\n3. Proceed on Hippo Trail 3000.0 ft towards Crocodiles.\n")));
 
         ViewInteraction button = onView(
                 allOf(withId(R.id.previous_button), withText("PREVIOUS: ENTRANCE AND EXIT GATE, 0.0FT"),
@@ -384,46 +345,6 @@ public class EspressoTestsUserStoryMS2_5 {
                         isDisplayed()));
         materialTextView.perform(click());
 
-        ViewInteraction editText = onView(
-                allOf(withText("32.73459618734685"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.custom),
-                                        0),
-                                0),
-                        isDisplayed()));
-        editText.perform(replaceText("32.734596187346850"));
-
-        ViewInteraction editText2 = onView(
-                allOf(withText("32.734596187346850"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.custom),
-                                        0),
-                                0),
-                        isDisplayed()));
-        editText2.perform(closeSoftKeyboard());
-
-        ViewInteraction editText3 = onView(
-                allOf(withText("-117.14936"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.custom),
-                                        0),
-                                1),
-                        isDisplayed()));
-        editText3.perform(replaceText("-117.149360"));
-
-        ViewInteraction editText4 = onView(
-                allOf(withText("-117.149360"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.custom),
-                                        0),
-                                1),
-                        isDisplayed()));
-        editText4.perform(closeSoftKeyboard());
-
         ViewInteraction materialButton5 = onView(
                 allOf(withId(android.R.id.button1), withText("Submit"),
                         childAtPosition(
@@ -435,11 +356,6 @@ public class EspressoTestsUserStoryMS2_5 {
 
         ViewInteraction materialButton6 = onView(
                 allOf(withId(R.id.previous_button), withText("Previous: Entrance and Exit Gate, 0.0ft"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                1),
                         isDisplayed()));
         materialButton6.perform(click());
 

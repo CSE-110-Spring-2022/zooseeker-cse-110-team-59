@@ -607,11 +607,6 @@ public class EspressoTestsUserStoryMS2_3 {
 
         ViewInteraction materialButton8 = onView(
                 allOf(withId(R.id.previous_button), withText("Previous: Entrance and Exit Gate, 12400.0ft"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                1),
                         isDisplayed()));
         materialButton8.perform(click());
 
