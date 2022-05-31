@@ -133,7 +133,7 @@ public class EspressoTestsUserStoryMS2_1 {
         overflowMenuButton.perform(click());
 
         ViewInteraction materialTextView = onView(
-                allOf(withId(androidx.appcompat.R.id.title), withText("Mock Loc"),
+                allOf(withId(androidx.appcompat.R.id.title), withText("Mock Location"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(androidx.appcompat.R.id.content),
@@ -262,7 +262,7 @@ public class EspressoTestsUserStoryMS2_1 {
         overflowMenuButton.perform(click());
 
         ViewInteraction materialTextView = onView(
-                allOf(withId(androidx.appcompat.R.id.title), withText("Mock Loc"),
+                allOf(withId(androidx.appcompat.R.id.title), withText("Mock Location"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(androidx.appcompat.R.id.content),
