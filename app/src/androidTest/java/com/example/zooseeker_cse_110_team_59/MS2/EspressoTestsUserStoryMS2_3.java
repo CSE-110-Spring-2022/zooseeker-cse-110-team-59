@@ -180,6 +180,18 @@ public class EspressoTestsUserStoryMS2_3 {
                         isDisplayed()));
         materialTextView4.perform(click());
 
+        ViewInteraction materialButton6 = onView(
+                allOf(withId(android.R.id.button1), withText("Submit"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                3)));
+        materialButton6.perform(scrollTo(), click());
+
+        overflowMenuButton.perform(click());
+        materialTextView4.perform(click());
+
         ViewInteraction editText = onView(
                 allOf(withText("32.73459618734685"),
                         childAtPosition(
@@ -189,16 +201,6 @@ public class EspressoTestsUserStoryMS2_3 {
                                 0),
                         isDisplayed()));
         editText.perform(replaceText("32.74711745"));
-
-        ViewInteraction editText2 = onView(
-                allOf(withText("32.74711745"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.custom),
-                                        0),
-                                0),
-                        isDisplayed()));
-
 
         ViewInteraction editText3 = onView(
                 allOf(withText("-117.14936"),
@@ -210,22 +212,6 @@ public class EspressoTestsUserStoryMS2_3 {
                         isDisplayed()));
         editText3.perform(replaceText("-117.180479"));
 
-        ViewInteraction editText4 = onView(
-                allOf(withText("-117.180479"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.custom),
-                                        0),
-                                1),
-                        isDisplayed()));
-
-        ViewInteraction materialButton6 = onView(
-                allOf(withId(android.R.id.button1), withText("Submit"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.ScrollView")),
-                                        0),
-                                3)));
         materialButton6.perform(scrollTo(), click());
 
         ViewInteraction materialButton7 = onView(
@@ -365,6 +351,18 @@ public class EspressoTestsUserStoryMS2_3 {
                         isDisplayed()));
         materialTextView4.perform(click());
 
+        ViewInteraction materialButton6 = onView(
+                allOf(withId(android.R.id.button1), withText("Submit"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                3)));
+        materialButton6.perform(scrollTo(), click());
+
+        overflowMenuButton.perform(click());
+        materialTextView4.perform(click());
+
         ViewInteraction editText = onView(
                 allOf(withText("32.73459618734685"),
                         childAtPosition(
@@ -374,16 +372,6 @@ public class EspressoTestsUserStoryMS2_3 {
                                 0),
                         isDisplayed()));
         editText.perform(replaceText("32.7471174539"));
-
-        ViewInteraction editText2 = onView(
-                allOf(withText("32.7471174539"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.custom),
-                                        0),
-                                0),
-                        isDisplayed()));
-        editText2.perform(closeSoftKeyboard());
 
         ViewInteraction editText3 = onView(
                 allOf(withText("-117.14936"),
@@ -405,23 +393,6 @@ public class EspressoTestsUserStoryMS2_3 {
                         isDisplayed()));
         editText4.perform(replaceText("-117.1804798235"));
 
-        ViewInteraction editText5 = onView(
-                allOf(withText("-117.1804798235"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.custom),
-                                        0),
-                                1),
-                        isDisplayed()));
-        editText5.perform(closeSoftKeyboard());
-
-        ViewInteraction materialButton6 = onView(
-                allOf(withId(android.R.id.button1), withText("Submit"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.ScrollView")),
-                                        0),
-                                3)));
         materialButton6.perform(scrollTo(), click());
 
         ViewInteraction materialButton7 = onView(
@@ -494,8 +465,6 @@ public class EspressoTestsUserStoryMS2_3 {
                         isDisplayed()));
         materialAutoCompleteTextView3.perform(replaceText("Koi Fish"), closeSoftKeyboard());
 
-
-
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.search_select_btn), withText("Select"),
                         childAtPosition(
@@ -527,8 +496,6 @@ public class EspressoTestsUserStoryMS2_3 {
                                 0),
                         isDisplayed()));
         materialAutoCompleteTextView4.perform(replaceText("Gorillas"), closeSoftKeyboard());
-
-
 
         ViewInteraction materialButton3 = onView(
                 allOf(withId(R.id.search_select_btn), withText("Select"),
@@ -563,7 +530,7 @@ public class EspressoTestsUserStoryMS2_3 {
             materialButton4.perform(click());
         } catch(NoMatchingViewException e) {
 
-        };
+        }
 
         ViewInteraction materialButton5 = onView(
                 allOf(withId(R.id.directions_btn), withText("Directions"),
@@ -595,6 +562,18 @@ public class EspressoTestsUserStoryMS2_3 {
                         isDisplayed()));
         materialTextView4.perform(click());
 
+        ViewInteraction materialButton6 = onView(
+                allOf(withId(android.R.id.button1), withText("Submit"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                3)));
+        materialButton6.perform(scrollTo(), click());
+
+        overflowMenuButton.perform(click());
+        materialTextView4.perform(click());
+
         ViewInteraction editText = onView(
                 allOf(withText("32.73459618734685"),
                         childAtPosition(
@@ -604,16 +583,6 @@ public class EspressoTestsUserStoryMS2_3 {
                                 0),
                         isDisplayed()));
         editText.perform(replaceText("32.74711"));
-
-        ViewInteraction editText2 = onView(
-                allOf(withText("32.74711"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.custom),
-                                        0),
-                                0),
-                        isDisplayed()));
-        editText2.perform(closeSoftKeyboard());
 
         ViewInteraction editText3 = onView(
                 allOf(withText("-117.14936"),
@@ -625,23 +594,6 @@ public class EspressoTestsUserStoryMS2_3 {
                         isDisplayed()));
         editText3.perform(replaceText("-117.180479"));
 
-        ViewInteraction editText4 = onView(
-                allOf(withText("-117.180479"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.custom),
-                                        0),
-                                1),
-                        isDisplayed()));
-        editText4.perform(closeSoftKeyboard());
-
-        ViewInteraction materialButton6 = onView(
-                allOf(withId(android.R.id.button1), withText("Submit"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.ScrollView")),
-                                        0),
-                                3)));
         materialButton6.perform(scrollTo(), click());
 
         ViewInteraction materialButton7 = onView(

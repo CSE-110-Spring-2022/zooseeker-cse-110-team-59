@@ -71,22 +71,6 @@ public class UnitTestsUserStoryMS2_3 {
             assertEquals("Previous: Entrance and Exit Gate, 0.0ft", prevBtn.getText().toString());
             assertEquals("Next: Gorillas, 12400.0ft", nextBtn.getText().toString());
 
-
-            /**
-             * Here's how I think you should do this test instead, to test specifically replanRoute()
-             *
-             * 1. First, do the above mock location line to move yourself to the entrance exit gate
-             * 2. Then, do activity.getPlanDirections().setDeniedReplan(true); so that the app doesn't try to
-             * replan itself automatically. You wanna do it manually.
-             * 3. Then, move yourself to a location that is closer to Gorillas than to Koi Fish
-             * 4. Then, run replanRoute(), and check that routeIDs in PlanDirections is now {entrance_exit_gate,
-             * gorilla, koi, entrance_exit_gate}.
-             *
-             * I don't think yall actually have to do another test, since replanning only ever occurs if a new
-             * place is closer, which means the order would always change when actually replanning. Just this one
-             * is enough probably.
-             */
-
             activity.getPlanDirections().setDeniedReplan(true);
 
             activity.mockLocationUpdate(Pair.create(32.74711745394194, -117.18047982358976));
