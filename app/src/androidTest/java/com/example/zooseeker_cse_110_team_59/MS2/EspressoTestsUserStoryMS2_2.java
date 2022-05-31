@@ -38,6 +38,7 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -208,7 +209,6 @@ public class EspressoTestsUserStoryMS2_2 {
 
         ViewInteraction textView2 = onView(
                 allOf(withId(R.id.directions_text),
-                        withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
         textView2.check(matches(withText("1. Proceed on Gate Path 1100.0 ft towards Treetops Way.\n" +
                 "2. Proceed on Treetops Way 2500.0 ft towards Orangutan Trail.\n" +
@@ -228,11 +228,6 @@ public class EspressoTestsUserStoryMS2_2 {
 
         ViewInteraction materialButton7 = onView(
                 allOf(withId(R.id.next_btn), withText("Next: Emerald Dove, 8700.0ft"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                3),
                         isDisplayed()));
         materialButton7.perform(click());
 
@@ -244,7 +239,6 @@ public class EspressoTestsUserStoryMS2_2 {
 
         ViewInteraction textView4 = onView(
                 allOf(withId(R.id.directions_text),
-                        withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
         textView4.check(matches(withText("1. Proceed on Gate Path 1100.0 ft towards Treetops Way.\n" +
                 "2. Proceed on Treetops Way 2500.0 ft towards Orangutan Trail.\n" +
@@ -265,11 +259,6 @@ public class EspressoTestsUserStoryMS2_2 {
 
         ViewInteraction materialButton8 = onView(
                 allOf(withId(R.id.next_btn), withText("Next: Bali Mynah, 8700.0ft"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                3),
                         isDisplayed()));
         materialButton8.perform(click());
 
@@ -281,7 +270,6 @@ public class EspressoTestsUserStoryMS2_2 {
 
         ViewInteraction textView6 = onView(
                 allOf(withId(R.id.directions_text),
-                        withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
         textView6.check(matches(withText("1. Proceed on Gate Path 1100.0 ft towards Treetops Way.\n" +
                 "2. Proceed on Treetops Way 2500.0 ft towards Orangutan Trail.\n" +
@@ -302,11 +290,6 @@ public class EspressoTestsUserStoryMS2_2 {
 
         ViewInteraction materialButton9 = onView(
                 allOf(withId(R.id.next_btn), withText("Next: Entrance and Exit Gate, 0.0ft"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                3),
                         isDisplayed()));
         materialButton9.perform(click());
 
@@ -318,7 +301,6 @@ public class EspressoTestsUserStoryMS2_2 {
 
         ViewInteraction textView8 = onView(
                 allOf(withId(R.id.directions_text),
-                        withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
         textView8.check(matches(withText("You have arrived at Entrance and Exit Gate.\n")));
 

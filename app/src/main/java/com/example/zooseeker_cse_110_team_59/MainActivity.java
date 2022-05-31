@@ -92,9 +92,11 @@ public class MainActivity extends ActivityOverflow {
     private void setDirectionExtras(Intent dirIntent, SharedPreferences preferences) {
         ArrayList<String> IDs = new ArrayList<String>(Arrays.asList("entrance_exit_gate", "entrance_exit_gate"));
         int startIndex = 1;
+        String detailLevel = "BRIEF";
 
         dirIntent.putStringArrayListExtra("IDs in Order", IDs);
         dirIntent.putExtra("Start Index", startIndex);
+        dirIntent.putExtra("Detail Level", detailLevel);
 
         String routeIDsJson = preferences.getString("storedRouteIDs", null);
         if (routeIDsJson == null) return;
@@ -105,9 +107,11 @@ public class MainActivity extends ActivityOverflow {
 
         IDs = gson.fromJson(routeIDsJson, type);
         startIndex = preferences.getInt("storedStartIndex", 1);
+        detailLevel = preferences.getString("storedDetailLevel", "BRIEF");
 
         dirIntent.putStringArrayListExtra("IDs in Order", IDs);
         dirIntent.putExtra("Start Index", startIndex);
+        dirIntent.putExtra("Detail Level", detailLevel);
     }
     //endregion
 

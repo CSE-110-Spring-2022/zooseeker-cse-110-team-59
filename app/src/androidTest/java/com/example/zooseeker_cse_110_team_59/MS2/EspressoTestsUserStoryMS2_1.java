@@ -45,7 +45,7 @@ import org.junit.runner.RunWith;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class EspressoTestsUserStoryMS2_5 {
+public class EspressoTestsUserStoryMS2_1 {
 
     //region INCLUDE THIS IN EVERY ESPRESSO TEST. Change file names to desired test files.
     @Rule
@@ -66,7 +66,7 @@ public class EspressoTestsUserStoryMS2_5 {
     //endregion
 
     @Test
-    public void testSkipOnExhibit() {
+    public void testChangeToDetailed() {
         ViewInteraction materialAutoCompleteTextView = onView(
                 Matchers.allOf(ViewMatchers.withId(R.id.search_bar),
                         childAtPosition(
@@ -95,49 +95,9 @@ public class EspressoTestsUserStoryMS2_5 {
                                         0),
                                 0),
                         isDisplayed()));
-        materialAutoCompleteTextView2.perform(replaceText("Crocodiles"), closeSoftKeyboard());
+        materialAutoCompleteTextView2.perform(replaceText("Afafaf"), closeSoftKeyboard());
 
         ViewInteraction materialButton2 = onView(
-                allOf(withId(R.id.search_select_btn), withText("Select"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                1),
-                        isDisplayed()));
-        materialButton2.perform(click());
-
-        ViewInteraction materialAutoCompleteTextView3 = onView(
-                allOf(withId(R.id.search_bar),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                0),
-                        isDisplayed()));
-        materialAutoCompleteTextView3.perform(replaceText("Koi Fish"), closeSoftKeyboard());
-
-        ViewInteraction materialButton3 = onView(
-                allOf(withId(R.id.search_select_btn), withText("Select"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                1),
-                        isDisplayed()));
-        materialButton3.perform(click());
-
-        ViewInteraction materialAutoCompleteTextView4 = onView(
-                allOf(withId(R.id.search_bar),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                0),
-                        isDisplayed()));
-        materialAutoCompleteTextView4.perform(replaceText("Gjfjgf"), closeSoftKeyboard());
-
-        ViewInteraction materialButton4 = onView(
                 allOf(withId(R.id.generate_plan_btn), withText("Generate Plan"),
                         childAtPosition(
                                 childAtPosition(
@@ -145,14 +105,14 @@ public class EspressoTestsUserStoryMS2_5 {
                                         0),
                                 7),
                         isDisplayed()));
-        materialButton4.perform(click());
+        materialButton2.perform(click());
         try {
-            materialButton4.perform(click());
+            materialButton2.perform(click());
         } catch (NoMatchingViewException e) {
             // For some reason this works at moving the test along, as it would normally get stuck here.
         }
 
-        ViewInteraction materialButton5 = onView(
+        ViewInteraction materialButton3 = onView(
                 allOf(withId(R.id.directions_btn), withText("Directions"),
                         childAtPosition(
                                 childAtPosition(
@@ -160,7 +120,7 @@ public class EspressoTestsUserStoryMS2_5 {
                                         0),
                                 0),
                         isDisplayed()));
-        materialButton5.perform(click());
+        materialButton3.perform(click());
 
         ViewInteraction overflowMenuButton = onView(
                 allOf(withContentDescription("More options"),
@@ -182,14 +142,14 @@ public class EspressoTestsUserStoryMS2_5 {
                         isDisplayed()));
         materialTextView.perform(click());
 
-        ViewInteraction materialButton6 = onView(
+        ViewInteraction materialButton4 = onView(
                 allOf(withId(android.R.id.button1), withText("Submit"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
                                         0),
                                 3)));
-        materialButton6.perform(scrollTo(), click());
+        materialButton4.perform(scrollTo(), click());
 
         ViewInteraction overflowMenuButton2 = onView(
                 allOf(withContentDescription("More options"),
@@ -202,7 +162,7 @@ public class EspressoTestsUserStoryMS2_5 {
         overflowMenuButton2.perform(click());
 
         ViewInteraction materialTextView2 = onView(
-                allOf(withId(androidx.appcompat.R.id.title), withText("Skip Destination"),
+                allOf(withId(androidx.appcompat.R.id.title), withText("Directions Detail"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(androidx.appcompat.R.id.content),
@@ -211,34 +171,31 @@ public class EspressoTestsUserStoryMS2_5 {
                         isDisplayed()));
         materialTextView2.perform(click());
 
-        ViewInteraction textView = onView(
-                allOf(withId(R.id.place_name), withText("Directions to Crocodiles"),
-                        withParent(withParent(withId(android.R.id.content))),
-                        isDisplayed()));
-        textView.check(matches(withText("Directions to Crocodiles")));
+        ViewInteraction materialButton5 = onView(
+                allOf(withId(android.R.id.button2), withText("Detailed"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                2)));
+        materialButton5.perform(scrollTo(), click());
 
-        ViewInteraction textView2 = onView(
+        ViewInteraction textView = onView(
                 allOf(withId(R.id.directions_text),
                         isDisplayed()));
-        textView2.check(matches(withText("1. Proceed on Gate Path 1100.0 ft towards Treetops Way." +
-                "\n2. Proceed on Treetops Way 4400.0 ft towards Hippo Trail." +
-                "\n3. Proceed on Hippo Trail 3000.0 ft towards Crocodiles.\n")));
-
-        ViewInteraction button = onView(
-                allOf(withId(R.id.previous_button), withText("PREVIOUS: ENTRANCE AND EXIT GATE, 0.0FT"),
-                        withParent(withParent(withId(android.R.id.content))),
-                        isDisplayed()));
-        button.check(matches(isDisplayed()));
-
-        ViewInteraction button2 = onView(
-                allOf(withId(R.id.next_btn), withText("NEXT: GORILLAS, 12400.0FT"),
-                        withParent(withParent(withId(android.R.id.content))),
-                        isDisplayed()));
-        button2.check(matches(isDisplayed()));
+        textView.check(matches(withText("1. Proceed on Gate Path 1100.0 ft towards Front Street / Treetops Way.\n" +
+                "2. Proceed on Treetops Way 1100.0 ft towards Treetops Way / Fern Canyon Trail.\n" +
+                "3. Continue on Treetops Way 1400.0 ft towards Treetops Way / Orangutan Trail.\n" +
+                "4. Continue on Treetops Way 1900.0 ft towards Treetops Way / Hippo Trail.\n" +
+                "5. Proceed on Hippo Trail 1900.0 ft towards Hippos.\n" +
+                "6. Continue on Hippo Trail 1100.0 ft towards Crocodiles.\n" +
+                "7. Continue on Hippo Trail 1500.0 ft towards Monkey Trail / Hippo Trail.\n" +
+                "8. Proceed on Monkey Trail 1200.0 ft towards Scripps Aviary.\n" +
+                "9. Continue on Monkey Trail 1200.0 ft towards Gorillas.\n")));
     }
 
     @Test
-    public void testSkipOnEntranceExitGate() {
+    public void testChangeToBrief() {
         ViewInteraction materialAutoCompleteTextView = onView(
                 allOf(withId(R.id.search_bar),
                         childAtPosition(
@@ -267,39 +224,9 @@ public class EspressoTestsUserStoryMS2_5 {
                                         0),
                                 0),
                         isDisplayed()));
-        materialAutoCompleteTextView2.perform(replaceText("Koi Fish"), closeSoftKeyboard());
+        materialAutoCompleteTextView2.perform(replaceText("Fsdsdsf"), closeSoftKeyboard());
 
         ViewInteraction materialButton2 = onView(
-                allOf(withId(R.id.search_select_btn), withText("Select"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                1),
-                        isDisplayed()));
-        materialButton2.perform(click());
-
-        ViewInteraction materialAutoCompleteTextView3 = onView(
-                allOf(withId(R.id.search_bar),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                0),
-                        isDisplayed()));
-        materialAutoCompleteTextView3.perform(click());
-
-        ViewInteraction materialAutoCompleteTextView4 = onView(
-                allOf(withId(R.id.search_bar),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                0),
-                        isDisplayed()));
-        materialAutoCompleteTextView4.perform(replaceText("Fgjfgj"), closeSoftKeyboard());
-
-        ViewInteraction materialButton3 = onView(
                 allOf(withId(R.id.generate_plan_btn), withText("Generate Plan"),
                         childAtPosition(
                                 childAtPosition(
@@ -307,15 +234,14 @@ public class EspressoTestsUserStoryMS2_5 {
                                         0),
                                 7),
                         isDisplayed()));
-        materialButton3.perform(click());
-
+        materialButton2.perform(click());
         try {
-            materialButton3.perform(click());
+            materialButton2.perform(click());
         } catch (NoMatchingViewException e) {
             // For some reason this works at moving the test along, as it would normally get stuck here.
         }
 
-        ViewInteraction materialButton4 = onView(
+        ViewInteraction materialButton3 = onView(
                 allOf(withId(R.id.directions_btn), withText("Directions"),
                         childAtPosition(
                                 childAtPosition(
@@ -323,7 +249,7 @@ public class EspressoTestsUserStoryMS2_5 {
                                         0),
                                 0),
                         isDisplayed()));
-        materialButton4.perform(click());
+        materialButton3.perform(click());
 
         ViewInteraction overflowMenuButton = onView(
                 allOf(withContentDescription("More options"),
@@ -345,19 +271,14 @@ public class EspressoTestsUserStoryMS2_5 {
                         isDisplayed()));
         materialTextView.perform(click());
 
-        ViewInteraction materialButton5 = onView(
+        ViewInteraction materialButton4 = onView(
                 allOf(withId(android.R.id.button1), withText("Submit"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
                                         0),
                                 3)));
-        materialButton5.perform(scrollTo(), click());
-
-        ViewInteraction materialButton6 = onView(
-                allOf(withId(R.id.previous_button), withText("Previous: Entrance and Exit Gate, 0.0ft"),
-                        isDisplayed()));
-        materialButton6.perform(click());
+        materialButton4.perform(scrollTo(), click());
 
         ViewInteraction overflowMenuButton2 = onView(
                 allOf(withContentDescription("More options"),
@@ -370,7 +291,7 @@ public class EspressoTestsUserStoryMS2_5 {
         overflowMenuButton2.perform(click());
 
         ViewInteraction materialTextView2 = onView(
-                allOf(withId(androidx.appcompat.R.id.title), withText("Skip Destination"),
+                allOf(withId(androidx.appcompat.R.id.title), withText("Directions Detail"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(androidx.appcompat.R.id.content),
@@ -379,18 +300,51 @@ public class EspressoTestsUserStoryMS2_5 {
                         isDisplayed()));
         materialTextView2.perform(click());
 
-        ViewInteraction textView = onView(
-                allOf(IsInstanceOf.<View>instanceOf(android.widget.TextView.class), withText("Cannot Skip Entrance and Exit Gate"),
-                        withParent(allOf(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class),
-                                withParent(IsInstanceOf.<View>instanceOf(android.widget.LinearLayout.class)))),
-                        isDisplayed()));
-        textView.check(matches(withText("Cannot Skip Entrance and Exit Gate")));
+        ViewInteraction materialButton5 = onView(
+                allOf(withId(android.R.id.button2), withText("Detailed"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                2)));
+        materialButton5.perform(scrollTo(), click());
 
-        ViewInteraction textView2 = onView(
-                allOf(withId(android.R.id.message), withText("Sorry, you are not allowed to skip an instance of the Entrance and Exit Gate in your route."),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class))),
+        ViewInteraction overflowMenuButton3 = onView(
+                allOf(withContentDescription("More options"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(androidx.appcompat.R.id.action_bar),
+                                        1),
+                                0),
                         isDisplayed()));
-        textView2.check(matches(withText("Sorry, you are not allowed to skip an instance of the Entrance and Exit Gate in your route.")));
+        overflowMenuButton3.perform(click());
+
+        ViewInteraction materialTextView3 = onView(
+                allOf(withId(androidx.appcompat.R.id.title), withText("Directions Detail"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(androidx.appcompat.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialTextView3.perform(click());
+
+        ViewInteraction materialButton6 = onView(
+                allOf(withId(android.R.id.button1), withText("Brief"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                3)));
+        materialButton6.perform(scrollTo(), click());
+
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.directions_text),
+                        isDisplayed()));
+        textView.check(matches(withText("1. Proceed on Gate Path 1100.0 ft towards Treetops Way." +
+                "\n2. Proceed on Treetops Way 4400.0 ft towards Hippo Trail." +
+                "\n3. Proceed on Hippo Trail 4500.0 ft towards Monkey Trail." +
+                "\n4. Proceed on Monkey Trail 2400.0 ft towards Gorillas.\n")));
     }
 
     private static Matcher<View> childAtPosition(

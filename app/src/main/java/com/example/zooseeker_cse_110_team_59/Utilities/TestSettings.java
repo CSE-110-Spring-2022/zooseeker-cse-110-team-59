@@ -18,7 +18,7 @@ public class TestSettings {
     //endregion
 
     //region Test Positioning Setting
-    private static boolean testPositioning = true;
+    private static boolean testPositioning = false;
 
     public static boolean isTestPositioning() {
         return testPositioning;

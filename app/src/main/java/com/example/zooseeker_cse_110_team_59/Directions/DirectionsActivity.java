@@ -13,6 +13,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Pair;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -46,6 +48,7 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
         Bundle bundle = getIntent().getExtras();
         ArrayList<String> startIDs = bundle.getStringArrayList("IDs in Order");
         int startIndex = bundle.getInt("Start Index");
+        String startDetailLevel = bundle.getString("Detail Level");
 
         directionsTV = findViewById(R.id.directions_text);
         currExhibitTV = findViewById(R.id.place_name);
@@ -53,7 +56,7 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
         previousButton = findViewById(R.id.previous_button);
         finishButton = findViewById(R.id.finish_btn);
 
-        planDirections = new PlanDirections(this, startIDs, startIndex);
+        planDirections = new PlanDirections(this, startIDs, startIndex, startDetailLevel);
         planDirections.registerDO(this);
 
         if (!TestSettings.isTestPositioning()) setupLocationListener(this::updateLastKnownCoords);
@@ -147,6 +150,16 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
 
     //region ActivityOverflow Abstract Methods
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.overflow, menu);
+
+        menu.findItem(R.id.mock_location).setVisible(true);
+        menu.findItem(R.id.directions_detail).setVisible(true);
+        menu.findItem(R.id.skip_exhibit).setVisible(true);
+        return true;
+    }
+
+    @Override
     protected void startMainActivity() {
         finish();
         startActivity(new Intent(this, MainActivity.class));
@@ -196,6 +209,20 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
                 });
         builder.show();
         //endregion
+    }
+
+    @Override
+    protected void onDirectionsDetailClicked() {
+        var builder = new AlertDialog.Builder(this)
+                .setTitle("Directions Detail")
+                .setMessage("Please select the level of detail you would like directions to be displayed in.")
+                .setPositiveButton("Brief", (dialog, which) -> {
+                    planDirections.detailLevelBriefClicked();
+                })
+                .setNegativeButton("Detailed", (dialog, which) -> {
+                    planDirections.detailLevelDetailedClicked();
+                });
+        builder.show();
     }
 
     @Override

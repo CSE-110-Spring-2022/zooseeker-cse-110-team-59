@@ -101,14 +101,16 @@ public class UnitTestsUserStoryMS1_13 {
     public void testDirectionsScreenRetention() {
         ArrayList<String> routeIDs = new ArrayList<String>(Arrays.asList("entrance_exit_gate", "koi", "entrance_exit_gate"));
         int startIndex = 1;
+        String startDetailLevel = "BRIEF";
         Intent directionsIntent = new Intent(context, DirectionsActivity.class)
                 .putExtra("IDs in Order", routeIDs)
-                .putExtra("Start Index", startIndex);
+                .putExtra("Start Index", startIndex)
+                .putExtra("Detail Level", startDetailLevel);
 
         ActivityScenario<DirectionsActivity> dirActivity = ActivityScenario.launch(directionsIntent);
         dirActivity.moveToState(Lifecycle.State.CREATED);
 
-        final String[] routeInformation = {"", ""};
+        final String[] routeInformation = {"", "", ""};
 
         dirActivity.onActivity(activity -> {
             activity.mockLocationUpdate(Pair.create(32.73459618734685, -117.14936));
@@ -121,9 +123,11 @@ public class UnitTestsUserStoryMS1_13 {
 
             routeInformation[0] = preferences.getString("storedRouteIDs", null);
             routeInformation[1] = preferences.getInt("storedStartIndex", 1) + "";
+            routeInformation[2] = preferences.getString("storedDetailLevel", null);
 
             assertNotNull(routeInformation[0]);
             assertNotEquals("1", routeInformation[1]);
+            assertNotEquals("DETAILED", routeInformation[2]);
         });
 
         Gson gson = new Gson();
@@ -134,6 +138,8 @@ public class UnitTestsUserStoryMS1_13 {
         directionsIntent.putStringArrayListExtra("IDs in Order", routeIDs);
         startIndex = Integer.valueOf(routeInformation[1]);
         directionsIntent.putExtra("Start Index", startIndex);
+        startDetailLevel = routeInformation[2];
+        directionsIntent.putExtra("Detail Level", startDetailLevel);
 
         dirActivity.recreate();
 

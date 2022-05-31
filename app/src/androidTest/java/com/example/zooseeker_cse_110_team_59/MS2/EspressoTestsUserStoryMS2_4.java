@@ -158,11 +158,6 @@ public class EspressoTestsUserStoryMS2_4 {
 
         ViewInteraction materialButton5 = onView(
                 allOf(withId(R.id.next_btn), withText("Next: Gorillas, 12400.0ft"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                3),
                         isDisplayed()));
         materialButton5.perform(click());
 
@@ -193,11 +188,6 @@ public class EspressoTestsUserStoryMS2_4 {
 
         ViewInteraction materialButton6 = onView(
                 allOf(withId(R.id.previous_button), withText("Previous: Spoonbill, 0.0ft"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                1),
                         isDisplayed()));
         materialButton6.perform(click());
 
@@ -310,11 +300,6 @@ public class EspressoTestsUserStoryMS2_4 {
 
         ViewInteraction materialButton4 = onView(
                 allOf(withId(R.id.previous_button), withText("Previous: Entrance and Exit Gate, 0.0ft"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(android.R.id.content),
-                                        0),
-                                1),
                         isDisplayed()));
         materialButton4.perform(click());
 

@@ -111,6 +111,7 @@ public class RouteGenerator {
     }
     //endregion
 
+    //region "createRoutePoint" Methods
     public static RoutePoint createRoutePointFromPath(GraphPath<String, ZooData.Graph.Edge> pathToUse) {
         return createRoutePointFromPath(pathToUse, getDestIdFromPath(pathToUse));
     }
@@ -144,7 +145,7 @@ public class RouteGenerator {
         return pathToUse.getWeight();
     }
 
-    public static String getDirectionsFromPath(GraphPath<String, ZooData.Graph.Edge> pathToUse) {
+    public static String getBriefDirectionsFromPath(GraphPath<String, ZooData.Graph.Edge> pathToUse) {
         int i = 1;
         List<ZooData.Graph.Edge> edgesInPath = pathToUse.getEdgeList();
         String currentStreet = ZooData.edgeData.get(edgesInPath.get(0).getId()).street;
@@ -166,6 +167,30 @@ public class RouteGenerator {
                 + currentStreet + " "
                 + currentStreetDist + " ft towards "
                 + ZooData.vertexData.get(pathToUse.getEndVertex()).name + ".\n";
+
+        return directions;
+    }
+
+    public static String getDetailedDirectionsFromPath(GraphPath<String, ZooData.Graph.Edge> pathToUse) {
+        int i = 1;
+        List<ZooData.Graph.Edge> edgesInPath = pathToUse.getEdgeList();
+        List<String> verticesInPath = pathToUse.getVertexList();
+        String currentStreet = ZooData.edgeData.get(edgesInPath.get(0).getId()).street;
+        String directions = "";
+
+        for (ZooData.Graph.Edge e : edgesInPath) {
+            if (currentStreet.equals(ZooData.edgeData.get(e.getId()).street) && i != 1) {
+                directions += i + ". Continue on ";
+            } else {
+                directions += i + ". Proceed on ";
+
+                currentStreet = ZooData.edgeData.get(e.getId()).street;
+            }
+            directions += currentStreet + " "
+                    + ZooData.graphData.getEdgeWeight(e) + " ft towards "
+                    + ZooData.vertexData.get(verticesInPath.get(i)).name + ".\n";
+            i++;
+        }
 
         return directions;
     }
@@ -200,9 +225,9 @@ public class RouteGenerator {
         return getDistanceFromPath(pathToUse);
     }
 
-    public static String getDirectionsBetween(@NonNull String start_id, @NonNull String end_id) {
+    public static String getDirectionsBetween(@NonNull String start_id, @NonNull String end_id, String detailLevel) {
         GraphPath<String, ZooData.Graph.Edge> pathToUse = getPathBetween(start_id, end_id);
-        return getDirectionsFromPath(pathToUse);
+        return detailLevel.equals("DETAILED") ? getDetailedDirectionsFromPath(pathToUse) : getBriefDirectionsFromPath(pathToUse);
     }
     //endregion
 
