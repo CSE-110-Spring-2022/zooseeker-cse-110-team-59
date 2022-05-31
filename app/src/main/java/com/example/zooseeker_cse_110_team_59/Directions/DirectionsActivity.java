@@ -36,6 +36,7 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
     private Button nextButton;
     private Button finishButton;
     private Button previousButton;
+    private Button skipButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,6 +196,11 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
                 });
         builder.show();
         //endregion
+    }
+
+    @Override
+    protected void onSkipClicked() {
+        planDirections.skipClicked();
     }
     //endregion
 

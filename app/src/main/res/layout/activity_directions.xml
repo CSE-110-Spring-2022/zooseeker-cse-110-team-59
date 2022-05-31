@@ -8,8 +8,8 @@
 
     <TextView
         android:id="@+id/directions_text"
-        android:layout_width="340dp"
-        android:layout_height="374dp"
+        android:layout_width="345dp"
+        android:layout_height="380dp"
         android:lineSpacingExtra="5dp"
         android:text="Lets Get Started!"
         android:textSize="16dp"
@@ -29,7 +29,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/directions_guideline"
-        app:layout_constraintVertical_bias="0.4" />
+        app:layout_constraintVertical_bias="0.44" />
 
     <Button
         android:id="@+id/finish_btn"
@@ -40,9 +40,9 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/next_guideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/previous_guideline" />
+        app:layout_constraintTop_toTopOf="@+id/previous_guideline"
+        app:layout_constraintVertical_bias="0.384" />
 
     <Button
         android:id="@+id/next_btn"
@@ -55,7 +55,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/previous_guideline" />
+        app:layout_constraintTop_toTopOf="@+id/directions_guideline"
+        app:layout_constraintVertical_bias="0.838" />
 
     <TextView
         android:id="@+id/place_name"
@@ -69,7 +70,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.666" />
+        app:layout_constraintVertical_bias="0.593" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/title_guideline"
