@@ -207,6 +207,15 @@ public class EspressoTestsUserStoryMS2_4 {
         editTextMockLng.perform(replaceText("-117.18047982358976"));
         materialMockSubmit.perform(scrollTo(), click());
 
+        ViewInteraction materialButton9 = onView(
+                allOf(withId(android.R.id.button2), withText("NO"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                2)));
+        materialButton9.perform(scrollTo(), click());
+
         ViewInteraction textView = onView(
                 allOf(withId(R.id.place_name),
                         withParent(withParent(withId(android.R.id.content))),

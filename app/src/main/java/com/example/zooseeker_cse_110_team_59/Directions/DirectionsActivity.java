@@ -105,50 +105,6 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
         finish();
         startActivity(intent);
     }
-
-    @Override
-    @SuppressLint("SetTextI18n")
-    public void onMockOptionClicked() {
-        // TODO: could define this layout in an XML and inflate it, instead of defining in code...
-        // But you know we won't! Thanks for the code!
-
-        //region Create Layout
-        var inputType = EditorInfo.TYPE_CLASS_NUMBER
-                | EditorInfo.TYPE_NUMBER_FLAG_SIGNED
-                | EditorInfo.TYPE_NUMBER_FLAG_DECIMAL;
-
-        final EditText latInput = new EditText(this);
-        latInput.setInputType(inputType);
-        latInput.setHint("Latitude");
-        latInput.setText("32.73459618734685");
-
-        final EditText lngInput = new EditText(this);
-        lngInput.setInputType(inputType);
-        lngInput.setHint("Longitude");
-        lngInput.setText("-117.14936");
-
-        final LinearLayout layout = new LinearLayout(this);
-        layout.setDividerPadding(8);
-        layout.setOrientation(LinearLayout.VERTICAL);
-        layout.addView(latInput);
-        layout.addView(lngInput);
-        //endregion
-
-        //region Show Mock Dialog
-        var builder = new AlertDialog.Builder(this)
-                .setTitle("Inject a Mock Location")
-                .setView(layout)
-                .setPositiveButton("Submit", (dialog, which) -> {
-                    var lat = Double.parseDouble(latInput.getText().toString());
-                    var lng = Double.parseDouble(lngInput.getText().toString());
-                    updateLastKnownCoords(Pair.create(lat, lng));
-                })
-                .setNegativeButton("Cancel", (dialog, which) -> {
-                    dialog.cancel();
-                });
-        builder.show();
-        //endregion
-    }
     //endregion
 
     //region DirectionsObserver Interface Methods
@@ -193,6 +149,52 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
     protected void startMainActivity() {
         finish();
         startActivity(new Intent(this, MainActivity.class));
+    }
+
+    @Override
+    @SuppressLint("SetTextI18n")
+    public void onMockOptionClicked() {
+        // TODO: could define this layout in an XML and inflate it, instead of defining in code...
+        // But you know we won't! Thanks for the code!
+
+        //region Create Layout
+        var inputType = EditorInfo.TYPE_CLASS_NUMBER
+                | EditorInfo.TYPE_NUMBER_FLAG_SIGNED
+                | EditorInfo.TYPE_NUMBER_FLAG_DECIMAL;
+
+        final EditText latInput = new EditText(this);
+        latInput.setInputType(inputType);
+        latInput.setLongClickable(true);
+        latInput.setHint("Latitude");
+        latInput.setText("32.73459618734685");
+
+        final EditText lngInput = new EditText(this);
+        lngInput.setInputType(inputType);
+        lngInput.setLongClickable(true);
+        lngInput.setHint("Longitude");
+        lngInput.setText("-117.14936");
+
+        final LinearLayout layout = new LinearLayout(this);
+        layout.setDividerPadding(8);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.addView(latInput);
+        layout.addView(lngInput);
+        //endregion
+
+        //region Show Mock Dialog
+        var builder = new AlertDialog.Builder(this)
+                .setTitle("Inject a Mock Location")
+                .setView(layout)
+                .setPositiveButton("Submit", (dialog, which) -> {
+                    var lat = Double.parseDouble(latInput.getText().toString());
+                    var lng = Double.parseDouble(lngInput.getText().toString());
+                    updateLastKnownCoords(Pair.create(lat, lng));
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> {
+                    dialog.cancel();
+                });
+        builder.show();
+        //endregion
     }
     //endregion
 

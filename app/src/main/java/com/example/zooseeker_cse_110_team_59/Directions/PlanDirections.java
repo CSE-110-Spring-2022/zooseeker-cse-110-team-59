@@ -1,20 +1,20 @@
 package com.example.zooseeker_cse_110_team_59.Directions;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.util.Pair;
 
 import androidx.annotation.VisibleForTesting;
 
-import com.example.zooseeker_cse_110_team_59.Data.ZooData;
 import com.example.zooseeker_cse_110_team_59.Route.RouteGenerator;
 import com.example.zooseeker_cse_110_team_59.Data.SharedPreferencesSaver;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver {
     ArrayList<DirectionsObserver> Observers = new ArrayList<DirectionsObserver>();
@@ -23,6 +23,7 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
     private String currentLoc;
     private String destination;
     private int destinationIndex;
+    private boolean deniedReplan;
     private Pair<Double, Double> lastKnownCoords;
 
     public PlanDirections(Activity activity, ArrayList<String> IDs, int startIndex) {
@@ -32,6 +33,7 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
         destinationIndex = startIndex;
         destination = routeIDs.get(destinationIndex);
         currentLoc = destination;
+        deniedReplan = false;
 
         lastKnownCoords = null;
     }
@@ -39,13 +41,11 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
     //region Button Responders
     public void nextClicked() {
         destinationIndex++;
-        destination = routeIDs.get(destinationIndex);
         updateData();
     }
 
     public void previousClicked() {
         destinationIndex--;
-        destination = routeIDs.get(destinationIndex);
         updateData();
     }
     //endregion
@@ -58,46 +58,55 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
 
     private void respondToChangedLocation() {
         currentLoc = RouteGenerator.findClosestIdToCoords(lastKnownCoords);
-        updateData();
 
-        /**
-         * HERE GOES THE CODE FOR DOING ANYTHING WITH THE NEW LOCATION. FOR BETTER SRP/OCP,
-         * SPLIT THE BELOW INTO MULTIPLE METHODS INSTEAD OF PUTTING IT ALL HERE.
-         *
-         *
-         * Replan: Instead of calling updateData in the above right away, of the routeIDs
-         * from destinationIndex to the end (WITHOUT the last one in there, which is always
-         * entrance_exit_gate), find the closest one to this new currentLoc. If destination !=
-         * this closest unvisited exhibit, they're not at the same place (so different parent_ids)
-         * and deniedReplan == false (more on this later), then suggest a replan (to see a way suggesting
-         * a replan might work, look at the AlertDialog.builder usage in DirectionsActivity.onMockButtonClicked,
-         * there isn't a need to include fields in this one here, but you will need to run specific code
-         * based on their response, like in that usage over there). Otherwise, if not all of the three
-         * above statements are true, readjust.
-         *
-         *      IF THEY SAY YES TO THE REPLAN, take the portion of routeIDs from 0 to destinationIndex - 1
-         * and save them into a new ArrayList, in their original order (you can do this with
-         * for (int i = 0; i < destinationIndex - 1; i++) to avoid OutOfBounds). Then, with start_id =
-         * currentLoc, replan_portion = routeIDs from destinationIndex to the end (WITHOUT the last one
-         * in there, which is always entrance_exit_gate), and end_id = entrance_exit_gate, run
-         * RouteGenerator.generateRoute, and get the IDs of the resulting route (this works because
-         * the generated route DOES NOT INCLUDE the start_id, so our current location won't get
-         * added to the routeIDs). Save those IDs (again, in order) to that new ArrayList we made
-         * earlier to save the first half. THEN, set routeIDs = this new ArrayList (which is the route
-         * in replanned order), and call updateData.
-         *
-         *      IF THEY SAY NO TO THE REPLAN, set deniedReplan = true, and readjust. deniedReplan should
-         * only go back to being false when either (a) they skip (we'll get to that eventually) or (b)
-         * they reach their destination (you can see a special clause for this in getCurrData(),
-         * where if the currentLoc and destination have 0.0 distance between them, a different set
-         * of directions are set).
-         */
+        if (destinationIndex == 0 || destinationIndex == routeIDs.size() - 1) {
+            updateData();
+            return;
+        }
+
+        String closestUnvisited = RouteGenerator.findClosestIdToId(currentLoc, new ArrayList<String>(routeIDs.subList(destinationIndex, routeIDs.size() - 1)));
+        if(!destination.equals(closestUnvisited)
+                && !RouteGenerator.getParentIdFromId(destination).equals(RouteGenerator.getParentIdFromId(closestUnvisited))
+                && deniedReplan == false){
+            suggestReplan(closestUnvisited);
+        } else {
+            updateData();
+        }
+    }
+
+    public void suggestReplan(String newClosest) {
+        deniedReplan = true; // We set it to true here so that it wont try to suggest a replan while it's already suggesting one
+        var builder = new AlertDialog.Builder(directionsActivity)
+                .setTitle("Replan Suggestion")
+                .setMessage("You are currently closer to " +
+                        RouteGenerator.getNameFromId(newClosest) + " than to " +
+                        RouteGenerator.getNameFromId(destination) + ". Would you like to replan?")
+                .setPositiveButton("YES", (dialog, which) -> {
+                     deniedReplan = false;
+                     replanRoute();
+                })
+                .setNegativeButton("NO", (dialog, which) -> {
+                    dialog.cancel();
+                    updateData();
+                });
+        builder.show();
+    }
+
+    public void replanRoute() {
+        ArrayList<String> newRouteIDs = new ArrayList<String>(routeIDs.subList(0, destinationIndex));
+        newRouteIDs.addAll(RouteGenerator.getIdsFromRoute(RouteGenerator.generateRoute(currentLoc, new ArrayList<String>(routeIDs.subList(destinationIndex, routeIDs.size() - 1)), "entrance_exit_gate")));
+        // This works correctly because the generated route does NOT include the start id, so this new route will not contain the currentLoc as a new entry
+        routeIDs = newRouteIDs;
+        updateData();
     }
     //endregion
 
     //region Data Getters
     public void updateData() {
+        destination = routeIDs.get(destinationIndex);
+
         saveSharedPreferences();
+
         ArrayList<String> prevData = getPrevData();
         ArrayList<String> currData = getCurrData();
         ArrayList<String> nextData = getNextData();
@@ -126,6 +135,7 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
         String directions;
         if (RouteGenerator.getDistanceBetween(currentLoc, destination) == 0.0) {
             directions = "You have arrived at " + RouteGenerator.getNameFromId(destination) + ".\n";
+            deniedReplan = false;
         } else {
             directions = RouteGenerator.getDirectionsBetween(currentLoc, destination);
         }
@@ -180,7 +190,7 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
     }
     //endregion
 
-    //region Getters for Testing
+    //region Getters/Setters for Testing
     @VisibleForTesting
     public int getDestinationIndex() {
         return destinationIndex;
@@ -189,6 +199,11 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
     @VisibleForTesting
     public ArrayList<String> getRouteIDs() {
         return routeIDs;
+    }
+
+    @VisibleForTesting
+    public void setDeniedReplan (boolean bool) {
+        deniedReplan = bool;
     }
     //endregion
 }
