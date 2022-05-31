@@ -47,29 +47,29 @@ public class UnitTestsUserStory5 {
     //endregion
 
     @Test
-    public void testDirectionsOneEdge() {
+    public void testBriefDirectionsOneEdge() {
         String testDir = "1. Proceed on Africa Rocks Street 200.0 ft towards Gorillas.\n";
 
-        String result = RouteGenerator.getDirectionsBetween("entrance_plaza", "gorillas");
+        String result = RouteGenerator.getDirectionsBetween("entrance_plaza", "gorillas", "BRIEF");
 
         assertEquals(testDir, result);
     }
 
     @Test
-    public void testDirectionsManyEdges() {
+    public void testBriefDirectionsManyEdges() {
         String testDir = "1. Proceed on Entrance Way 10.0 ft towards Africa Rocks Street.\n"
                 + "2. Proceed on Africa Rocks Street 200.0 ft towards Gorillas.\n";
 
-        String result = RouteGenerator.getDirectionsBetween("entrance_exit_gate", "gorillas");
+        String result = RouteGenerator.getDirectionsBetween("entrance_exit_gate", "gorillas", "BRIEF");
 
         assertEquals(testDir, result);
     }
 
     @Test
-    public void testDirectionsCombine() {
+    public void testBriefDirectionsCombine() {
         String testDir = "1. Proceed on Africa Rocks Street 400.0 ft towards Elephant Odyssey.\n";
 
-        String result = RouteGenerator.getDirectionsBetween("gorillas", "elephant_odyssey");
+        String result = RouteGenerator.getDirectionsBetween("gorillas", "elephant_odyssey", "BRIEF");
 
         assertEquals(testDir, result);
     }

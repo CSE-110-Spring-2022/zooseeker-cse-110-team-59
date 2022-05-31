@@ -145,7 +145,6 @@ public class EspressoTestsUserStory6 {
 
         ViewInteraction textView2 = onView(
                 allOf(withId(R.id.directions_text),
-                        withParent(withParent(withId(android.R.id.content))),
                         isDisplayed()));
         textView2.check(matches(withText("1. Proceed on Gate Path 1100.0 ft towards Treetops Way.\n" +
                 "2. Proceed on Treetops Way 4400.0 ft towards Hippo Trail.\n" +

@@ -21,18 +21,20 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
     private Activity directionsActivity;
     private String currentLoc;
     private String destination;
+    private String detailLevel;
     private int destinationIndex;
     private boolean deniedReplan;
     private Pair<Double, Double> lastKnownCoords;
 
-    public PlanDirections(Activity activity, ArrayList<String> IDs, int startIndex) {
+    public PlanDirections(Activity activity, ArrayList<String> startRouteIDs, int startIndex, String startDetailLevel) {
         directionsActivity = activity;
 
-        routeIDs = IDs;
+        routeIDs = startRouteIDs;
         destinationIndex = startIndex;
         destination = routeIDs.get(destinationIndex);
         currentLoc = destination;
         deniedReplan = false;
+        detailLevel = startDetailLevel;
 
         lastKnownCoords = null;
     }
@@ -45,6 +47,16 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
 
     public void previousClicked() {
         destinationIndex--;
+        updateData();
+    }
+
+    public void detailLevelBriefClicked() {
+        detailLevel = "BRIEF";
+        updateData();
+    }
+
+    public void detailLevelDetailedClicked() {
+        detailLevel = "DETAILED";
         updateData();
     }
 
@@ -155,7 +167,7 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
             directions = "You have arrived at " + RouteGenerator.getNameFromId(destination) + ".\n";
             deniedReplan = false;
         } else {
-            directions = RouteGenerator.getDirectionsBetween(currentLoc, destination);
+            directions = RouteGenerator.getDirectionsBetween(currentLoc, destination, detailLevel);
         }
         currData.add(directions);
         return currData;
@@ -196,6 +208,7 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
 
         if (preferences.contains("storedStartIndex")) editor.remove("storedStartIndex");
         if (preferences.contains("storedRouteIDs")) editor.remove("storedRouteIDs");
+        if (preferences.contains("storedDetailLevel")) editor.remove("storedDetailLevel");
         editor.commit();
 
         Gson gson = new Gson();
@@ -204,6 +217,7 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
 
         editor.putString("storedRouteIDs", routeIDsJson);
         editor.putInt("storedStartIndex", destinationIndex);
+        editor.putString("storedDetailLevel", detailLevel);
         editor.commit();
     }
     //endregion
