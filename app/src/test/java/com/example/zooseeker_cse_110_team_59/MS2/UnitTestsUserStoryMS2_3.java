@@ -62,11 +62,30 @@ public class UnitTestsUserStoryMS2_3 {
             Button prevBtn = activity.findViewById(R.id.previous_button);
             Button nextBtn = activity.findViewById(R.id.next_btn);
 
-            assertEquals("1. Proceed on Terrance Lagoon Loop 2200.0 ft towards Front Street.\n" +
-                    "2. Proceed on Front Street 3200.0 ft towards Gate Path.\n" +
-                    "3. Proceed on Gate Path 1100.0 ft towards Entrance and Exit Gate.\n", directions.getText().toString());
-            assertEquals("Directions to Entrance and Exit Gate", currExhTitle.getText());
-            assertEquals("Next: Koi Fish, 0.0ft", nextBtn.getText().toString());
+            activity.mockLocationUpdate(Pair.create(32.73459618734685, -117.14936));
+
+            assertEquals("1. Proceed on Gate Path 1100.0 ft towards Front Street.\n" +
+                    "2. Proceed on Front Street 3200.0 ft towards Terrance Lagoon Loop.\n" +
+                    "3. Proceed on Terrance Lagoon Loop 2200.0 ft towards Koi Fish.\n", directions.getText().toString());
+            assertEquals("Directions to Koi Fish", currExhTitle.getText());
+            assertEquals("Previous: Entrance and Exit Gate, 0.0ft", nextBtn.getText().toString());
+            assertEquals("Next: Gorillas, 12400.0ft", nextBtn.getText().toString());
+
+
+            /**
+             * Here's how I think you should do this test instead, to test specifically replanRoute()
+             *
+             * 1. First, do the above mock location line to move yourself to the entrance exit gate
+             * 2. Then, do activity.getPlanDirections().setDeniedReplan(true); so that the app doesn't try to
+             * replan itself automatically. You wanna do it manually.
+             * 3. Then, move yourself to a location that is closer to Gorillas than to Koi Fish
+             * 4. Then, run replanRoute(), and check that routeIDs in PlanDirections is now {entrance_exit_gate,
+             * gorilla, koi, entrance_exit_gate}.
+             *
+             * I don't think yall actually have to do another test, since replanning only ever occurs if a new
+             * place is closer, which means the order would always change when actually replanning. Just this one
+             * is enough probably.
+             */
 
             activity.getPlanDirections().setDeniedReplan(false);
 

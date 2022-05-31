@@ -1,4 +1,4 @@
-package com.example.zooseeker_cse_110_team_59;
+package com.example.zooseeker_cse_110_team_59.MS2;
 
 
 import static androidx.test.espresso.Espresso.onData;
@@ -26,6 +26,7 @@ import android.view.ViewParent;
 import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.NoMatchingViewException;
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
@@ -33,10 +34,13 @@ import androidx.test.rule.ActivityTestRule;
 import androidx.test.rule.GrantPermissionRule;
 
 import com.example.zooseeker_cse_110_team_59.Data.FilesToLoad;
+import com.example.zooseeker_cse_110_team_59.MainActivity;
+import com.example.zooseeker_cse_110_team_59.R;
 import com.example.zooseeker_cse_110_team_59.Utilities.TestSettings;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Rule;
 import org.junit.Test;
@@ -65,7 +69,7 @@ public class EspressoTestsUserStoryMS2_3 {
     @Test
     public void testAcceptingReplan() {
         ViewInteraction materialAutoCompleteTextView = onView(
-                allOf(withId(R.id.search_bar),
+                Matchers.allOf(ViewMatchers.withId(R.id.search_bar),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
@@ -240,8 +244,7 @@ public class EspressoTestsUserStoryMS2_3 {
         textView.check(matches(withText("Directions to Gorillas")));
 
         ViewInteraction textView2 = onView(
-                allOf(withId(R.id.directions_text), withText("You have arrived at Gorillas.\n"),
-                        withParent(withParent(withId(android.R.id.content))),
+                allOf(withId(R.id.directions_text),
                         isDisplayed()));
         textView2.check(matches(withText("You have arrived at Gorillas.\n")));
     }
@@ -437,10 +440,13 @@ public class EspressoTestsUserStoryMS2_3 {
         textView.check(matches(withText("Directions to Koi Fish")));
 
         ViewInteraction textView3 = onView(
-                allOf(withId(R.id.directions_text), withText("1. Proceed on Monkey Trail 2400.0 ft towards Hippo Trail.\n2. Proceed on Hippo Trail 4500.0 ft towards Treetops Way.\n3. Proceed on Treetops Way 4400.0 ft towards Front Street.\n4. Proceed on Front Street 3200.0 ft towards Terrace Lagoon Loop.\n5. Proceed on Terrace Lagoon Loop 2200.0 ft towards Koi Fish.\n"),
-                        withParent(withParent(withId(android.R.id.content))),
+                allOf(withId(R.id.directions_text),
                         isDisplayed()));
-        textView3.check(matches(withText("1. Proceed on Monkey Trail 2400.0 ft towards Hippo Trail.\n2. Proceed on Hippo Trail 4500.0 ft towards Treetops Way.\n3. Proceed on Treetops Way 4400.0 ft towards Front Street.\n4. Proceed on Front Street 3200.0 ft towards Terrace Lagoon Loop.\n5. Proceed on Terrace Lagoon Loop 2200.0 ft towards Koi Fish.\n")));
+        textView3.check(matches(withText("1. Proceed on Monkey Trail 2400.0 ft towards Hippo Trail." +
+                "\n2. Proceed on Hippo Trail 4500.0 ft towards Treetops Way." +
+                "\n3. Proceed on Treetops Way 4400.0 ft towards Front Street." +
+                "\n4. Proceed on Front Street 3200.0 ft towards Terrace Lagoon Loop." +
+                "\n5. Proceed on Terrace Lagoon Loop 2200.0 ft towards Koi Fish.\n")));
 
         ViewInteraction button = onView(
                 allOf(withId(R.id.previous_button), withText("PREVIOUS: ENTRANCE AND EXIT GATE, 12400.0FT"),
@@ -553,8 +559,12 @@ public class EspressoTestsUserStoryMS2_3 {
                                 7),
                         isDisplayed()));
         materialButton4.perform(click());
-        try {materialButton4.perform(click());}
-        catch(NoMatchingViewException e){};
+        try {
+            materialButton4.perform(click());
+        } catch(NoMatchingViewException e) {
+
+        };
+
         ViewInteraction materialButton5 = onView(
                 allOf(withId(R.id.directions_btn), withText("Directions"),
                         childAtPosition(
@@ -660,10 +670,12 @@ public class EspressoTestsUserStoryMS2_3 {
         textView.check(matches(withText("Directions to Entrance and Exit Gate")));
 
         ViewInteraction textView2 = onView(
-                allOf(withId(R.id.directions_text), withText("1. Proceed on Monkey Trail 2400.0 ft towards Hippo Trail.\n2. Proceed on Hippo Trail 4500.0 ft towards Treetops Way.\n3. Proceed on Treetops Way 4400.0 ft towards Gate Path.\n4. Proceed on Gate Path 1100.0 ft towards Entrance and Exit Gate.\n"),
-                        withParent(withParent(withId(android.R.id.content))),
+                allOf(withId(R.id.directions_text),
                         isDisplayed()));
-        textView2.check(matches(withText("1. Proceed on Monkey Trail 2400.0 ft towards Hippo Trail.\n2. Proceed on Hippo Trail 4500.0 ft towards Treetops Way.\n3. Proceed on Treetops Way 4400.0 ft towards Gate Path.\n4. Proceed on Gate Path 1100.0 ft towards Entrance and Exit Gate.\n")));
+        textView2.check(matches(withText("1. Proceed on Monkey Trail 2400.0 ft towards Hippo Trail." +
+                "\n2. Proceed on Hippo Trail 4500.0 ft towards Treetops Way." +
+                "\n3. Proceed on Treetops Way 4400.0 ft towards Gate Path." +
+                "\n4. Proceed on Gate Path 1100.0 ft towards Entrance and Exit Gate.\n")));
 
         ViewInteraction button = onView(
                 allOf(withId(R.id.next_btn), withText("NEXT: GORILLAS, 0.0FT"),
