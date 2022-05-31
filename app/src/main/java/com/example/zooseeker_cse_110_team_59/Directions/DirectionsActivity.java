@@ -159,6 +159,10 @@ public class DirectionsActivity extends ActivityOverflow implements DirectionsOb
         updatePrev(prevStrings);
         updateCurr(currStrings);
         updateNext(nextStrings);
+        updateSkip(skipVisibility);
+    }
+
+    private void updateSkip(boolean skipVisibility) {
         if (skipVisibility) {
             skipButton.setVisibility(View.VISIBLE);
         }

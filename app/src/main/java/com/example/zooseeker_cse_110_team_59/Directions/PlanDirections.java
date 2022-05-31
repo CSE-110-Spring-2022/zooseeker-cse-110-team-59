@@ -37,20 +37,13 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
     }
 
     public void skipClicked() {
-        if (skipVisible())
-            routeIDs.remove(destinationIndex);
+        routeIDs.remove(destinationIndex);
         destination = routeIDs.get(destinationIndex);
         updateData();
     }
 
     private boolean skipVisible() {
-        if (routeIDs.size() <= 1) {
-            return false;
-        }
-        if (destinationIndex == 0) {
-            return false;
-        }
-        if (destinationIndex == (routeIDs.size() - 1)) {
+        if (destinationIndex == 0 ||(destinationIndex == (routeIDs.size() - 1))) {
             return false;
         }
         return true;
