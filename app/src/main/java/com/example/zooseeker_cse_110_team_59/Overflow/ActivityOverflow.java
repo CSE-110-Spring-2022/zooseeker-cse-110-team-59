@@ -25,6 +25,9 @@ public abstract class ActivityOverflow extends AppCompatActivity {
             case R.id.mock_location:
                 onMockOptionClicked();
                 return true;
+            case R.id.directions_detail:
+                onDirectionsDetailClicked();
+                return true;
             default:
                 return false;
         }
@@ -39,6 +42,8 @@ public abstract class ActivityOverflow extends AppCompatActivity {
     }
 
     protected void onMockOptionClicked() {}
+
+    protected void onDirectionsDetailClicked() {}
 
     protected abstract void startMainActivity();
 }

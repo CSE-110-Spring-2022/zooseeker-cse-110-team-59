@@ -10,4 +10,8 @@
         android:title="Mock Loc"
         android:orderInCategory="100"
         app:showAsAction="never" />
+    <item android:id="@+id/directions_detail"
+        android:title="Directions Detail"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
 </menu>

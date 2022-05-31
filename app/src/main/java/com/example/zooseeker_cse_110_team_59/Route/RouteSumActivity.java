@@ -58,6 +58,7 @@ public class RouteSumActivity extends ActivityOverflow {
         Intent intent = new Intent(this, DirectionsActivity.class);
         intent.putStringArrayListExtra("IDs in Order", IDs);
         intent.putExtra("Start Index", 1);
+        intent.putExtra("Detail Level", "BRIEF");
         startActivity(intent);
     }
 

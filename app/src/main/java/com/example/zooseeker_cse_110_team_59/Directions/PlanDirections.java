@@ -3,12 +3,10 @@ package com.example.zooseeker_cse_110_team_59.Directions;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 import android.util.Pair;
 
 import androidx.annotation.VisibleForTesting;
 
-import com.example.zooseeker_cse_110_team_59.Data.ZooData;
 import com.example.zooseeker_cse_110_team_59.Route.RouteGenerator;
 import com.example.zooseeker_cse_110_team_59.Data.SharedPreferencesSaver;
 import com.google.gson.Gson;
@@ -22,16 +20,18 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
     private Activity directionsActivity;
     private String currentLoc;
     private String destination;
+    private String detailLevel;
     private int destinationIndex;
     private Pair<Double, Double> lastKnownCoords;
 
-    public PlanDirections(Activity activity, ArrayList<String> IDs, int startIndex) {
+    public PlanDirections(Activity activity, ArrayList<String> startRouteIDs, int startIndex, String startDetailLevel) {
         directionsActivity = activity;
 
-        routeIDs = IDs;
+        routeIDs = startRouteIDs;
         destinationIndex = startIndex;
         destination = routeIDs.get(destinationIndex);
         currentLoc = destination;
+        detailLevel = startDetailLevel;
 
         lastKnownCoords = null;
     }
@@ -39,13 +39,21 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
     //region Button Responders
     public void nextClicked() {
         destinationIndex++;
-        destination = routeIDs.get(destinationIndex);
         updateData();
     }
 
     public void previousClicked() {
         destinationIndex--;
-        destination = routeIDs.get(destinationIndex);
+        updateData();
+    }
+
+    public void detailLevelBriefClicked() {
+        detailLevel = "BRIEF";
+        updateData();
+    }
+
+    public void detailLevelDetailedClicked() {
+        detailLevel = "DETAILED";
         updateData();
     }
     //endregion
@@ -97,6 +105,8 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
 
     //region Data Getters
     public void updateData() {
+        destination = routeIDs.get(destinationIndex);
+
         saveSharedPreferences();
         ArrayList<String> prevData = getPrevData();
         ArrayList<String> currData = getCurrData();
@@ -127,7 +137,7 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
         if (RouteGenerator.getDistanceBetween(currentLoc, destination) == 0.0) {
             directions = "You have arrived at " + RouteGenerator.getNameFromId(destination) + ".\n";
         } else {
-            directions = RouteGenerator.getDirectionsBetween(currentLoc, destination);
+            directions = RouteGenerator.getDirectionsBetween(currentLoc, destination, detailLevel);
         }
         currData.add(directions);
         return currData;
@@ -168,6 +178,7 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
 
         if (preferences.contains("storedStartIndex")) editor.remove("storedStartIndex");
         if (preferences.contains("storedRouteIDs")) editor.remove("storedRouteIDs");
+        if (preferences.contains("storedDetailLevel")) editor.remove("storedDetailLevel");
         editor.commit();
 
         Gson gson = new Gson();
@@ -176,6 +187,7 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
 
         editor.putString("storedRouteIDs", routeIDsJson);
         editor.putInt("storedStartIndex", destinationIndex);
+        editor.putString("storedDetailLevel", detailLevel);
         editor.commit();
     }
     //endregion
