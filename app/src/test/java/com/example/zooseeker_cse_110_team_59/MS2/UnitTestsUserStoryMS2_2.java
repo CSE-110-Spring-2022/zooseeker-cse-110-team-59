@@ -78,6 +78,8 @@ public class UnitTestsUserStoryMS2_2 {
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
+            activity.getPlanDirections().setDeniedReplan(true);
+
             Button prevBtn = activity.findViewById(R.id.previous_button);
             Button nextBtn = activity.findViewById(R.id.next_btn);
             TextView directions = activity.findViewById(R.id.directions_text);
@@ -110,6 +112,8 @@ public class UnitTestsUserStoryMS2_2 {
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
+            activity.getPlanDirections().setDeniedReplan(true);
+
             Button prevBtn = activity.findViewById(R.id.previous_button);
             Button nextBtn = activity.findViewById(R.id.next_btn);
             TextView directions = activity.findViewById(R.id.directions_text);
@@ -155,6 +159,8 @@ public class UnitTestsUserStoryMS2_2 {
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
+            activity.getPlanDirections().setDeniedReplan(true);
+
             Button prevBtn = activity.findViewById(R.id.previous_button);
             Button nextBtn = activity.findViewById(R.id.next_btn);
             TextView directions = activity.findViewById(R.id.directions_text);

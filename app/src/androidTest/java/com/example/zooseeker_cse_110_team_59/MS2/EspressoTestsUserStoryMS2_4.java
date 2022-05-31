@@ -138,7 +138,7 @@ public class EspressoTestsUserStoryMS2_4 {
         overflowMenuButton.perform(click());
 
         ViewInteraction materialMockOption = onView(
-                allOf(withId(androidx.appcompat.R.id.title), withText("Mock Loc"),
+                allOf(withId(androidx.appcompat.R.id.title), withText("Mock Location"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(androidx.appcompat.R.id.content),
@@ -196,6 +196,15 @@ public class EspressoTestsUserStoryMS2_4 {
         editTextMockLat.perform(replaceText("32.74711745394194"));
         editTextMockLng.perform(replaceText("-117.18047982358976"));
         materialMockSubmit.perform(scrollTo(), click());
+
+        ViewInteraction materialButton9 = onView(
+                allOf(withId(android.R.id.button2), withText("NO"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                2)));
+        materialButton9.perform(scrollTo(), click());
 
         ViewInteraction textView = onView(
                 allOf(withId(R.id.place_name),
@@ -271,7 +280,7 @@ public class EspressoTestsUserStoryMS2_4 {
         overflowMenuButton.perform(click());
 
         ViewInteraction materialMockOption = onView(
-                allOf(withId(androidx.appcompat.R.id.title), withText("Mock Loc"),
+                allOf(withId(androidx.appcompat.R.id.title), withText("Mock Location"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(androidx.appcompat.R.id.content),

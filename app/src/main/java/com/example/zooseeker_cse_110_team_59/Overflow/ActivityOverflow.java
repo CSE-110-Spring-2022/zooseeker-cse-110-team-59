@@ -28,10 +28,14 @@ public abstract class ActivityOverflow extends AppCompatActivity {
             case R.id.directions_detail:
                 onDirectionsDetailClicked();
                 return true;
+            case R.id.skip_exhibit:
+                onSkipClicked();
+                return true;
             default:
                 return false;
         }
     }
+
 
     protected void clearSharedPreferences() {
         SharedPreferences preferences = getSharedPreferences("shared_preferences", MODE_PRIVATE);
@@ -44,6 +48,8 @@ public abstract class ActivityOverflow extends AppCompatActivity {
     protected void onMockOptionClicked() {}
 
     protected void onDirectionsDetailClicked() {}
+
+    protected void onSkipClicked() {}
 
     protected abstract void startMainActivity();
 }

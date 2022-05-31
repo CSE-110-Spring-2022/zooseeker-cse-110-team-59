@@ -230,4 +230,5 @@ public class RouteGenerator {
         return detailLevel.equals("DETAILED") ? getDetailedDirectionsFromPath(pathToUse) : getBriefDirectionsFromPath(pathToUse);
     }
     //endregion
+
 }
