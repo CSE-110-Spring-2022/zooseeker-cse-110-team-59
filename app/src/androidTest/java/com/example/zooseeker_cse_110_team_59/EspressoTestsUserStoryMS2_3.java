@@ -63,7 +63,7 @@ public class EspressoTestsUserStoryMS2_3 {
                     "android.permission.ACCESS_COARSE_LOCATION");
 
     @Test
-    public void espressoTestsUserStoryMS2_3() {
+    public void testAcceptingReplan() {
         ViewInteraction materialAutoCompleteTextView = onView(
                 allOf(withId(R.id.search_bar),
                         childAtPosition(
@@ -245,8 +245,219 @@ public class EspressoTestsUserStoryMS2_3 {
                         isDisplayed()));
         textView2.check(matches(withText("You have arrived at Gorillas.\n")));
     }
+
     @Test
-    public void previous_test() {
+    public void testRejectingReplan() {
+        ViewInteraction materialAutoCompleteTextView = onView(
+                allOf(withId(R.id.search_bar),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialAutoCompleteTextView.perform(replaceText("Koi Fish"), closeSoftKeyboard());
+
+        ViewInteraction materialButton = onView(
+                allOf(withId(R.id.search_select_btn), withText("Select"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                1),
+                        isDisplayed()));
+        materialButton.perform(click());
+
+        ViewInteraction materialAutoCompleteTextView2 = onView(
+                allOf(withId(R.id.search_bar),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialAutoCompleteTextView2.perform(replaceText("Crocodiles"), closeSoftKeyboard());
+
+        ViewInteraction materialButton2 = onView(
+                allOf(withId(R.id.search_select_btn), withText("Select"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                1),
+                        isDisplayed()));
+        materialButton2.perform(click());
+
+        ViewInteraction materialAutoCompleteTextView3 = onView(
+                allOf(withId(R.id.search_bar),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialAutoCompleteTextView3.perform(replaceText("Gorillas"), closeSoftKeyboard());
+
+        ViewInteraction materialButton3 = onView(
+                allOf(withId(R.id.search_select_btn), withText("Select"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                1),
+                        isDisplayed()));
+        materialButton3.perform(click());
+
+        ViewInteraction materialAutoCompleteTextView4 = onView(
+                allOf(withId(R.id.search_bar),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialAutoCompleteTextView4.perform(replaceText("Fgjtshgfcb"), closeSoftKeyboard());
+
+        ViewInteraction materialButton4 = onView(
+                allOf(withId(R.id.generate_plan_btn), withText("Generate Plan"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                7),
+                        isDisplayed()));
+        materialButton4.perform(click());
+        try{
+            materialButton4.perform(click());
+        }
+        catch(NoMatchingViewException e){};
+
+        ViewInteraction materialButton5 = onView(
+                allOf(withId(R.id.directions_btn), withText("Directions"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialButton5.perform(click());
+
+        ViewInteraction overflowMenuButton = onView(
+                allOf(withContentDescription("More options"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(androidx.appcompat.R.id.action_bar),
+                                        1),
+                                0),
+                        isDisplayed()));
+        overflowMenuButton.perform(click());
+
+        ViewInteraction materialTextView4 = onView(
+                allOf(withId(androidx.appcompat.R.id.title), withText("Mock Loc"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(androidx.appcompat.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialTextView4.perform(click());
+
+        ViewInteraction editText = onView(
+                allOf(withText("32.73459618734685"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.custom),
+                                        0),
+                                0),
+                        isDisplayed()));
+        editText.perform(replaceText("32.7471174539"));
+
+        ViewInteraction editText2 = onView(
+                allOf(withText("32.7471174539"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.custom),
+                                        0),
+                                0),
+                        isDisplayed()));
+        editText2.perform(closeSoftKeyboard());
+
+        ViewInteraction editText3 = onView(
+                allOf(withText("-117.14936"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.custom),
+                                        0),
+                                1),
+                        isDisplayed()));
+        editText3.perform(click());
+
+        ViewInteraction editText4 = onView(
+                allOf(withText("-117.14936"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.custom),
+                                        0),
+                                1),
+                        isDisplayed()));
+        editText4.perform(replaceText("-117.1804798235"));
+
+        ViewInteraction editText5 = onView(
+                allOf(withText("-117.1804798235"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(android.R.id.custom),
+                                        0),
+                                1),
+                        isDisplayed()));
+        editText5.perform(closeSoftKeyboard());
+
+        ViewInteraction materialButton6 = onView(
+                allOf(withId(android.R.id.button1), withText("Submit"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                3)));
+        materialButton6.perform(scrollTo(), click());
+
+        ViewInteraction materialButton7 = onView(
+                allOf(withId(android.R.id.button2), withText("NO"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                2)));
+        materialButton7.perform(scrollTo(), click());
+
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.place_name), withText("Directions to Koi Fish"),
+                        withParent(withParent(withId(android.R.id.content))),
+                        isDisplayed()));
+        textView.check(matches(withText("Directions to Koi Fish")));
+
+        ViewInteraction textView3 = onView(
+                allOf(withId(R.id.directions_text), withText("1. Proceed on Monkey Trail 2400.0 ft towards Hippo Trail.\n2. Proceed on Hippo Trail 4500.0 ft towards Treetops Way.\n3. Proceed on Treetops Way 4400.0 ft towards Front Street.\n4. Proceed on Front Street 3200.0 ft towards Terrace Lagoon Loop.\n5. Proceed on Terrace Lagoon Loop 2200.0 ft towards Koi Fish.\n"),
+                        withParent(withParent(withId(android.R.id.content))),
+                        isDisplayed()));
+        textView3.check(matches(withText("1. Proceed on Monkey Trail 2400.0 ft towards Hippo Trail.\n2. Proceed on Hippo Trail 4500.0 ft towards Treetops Way.\n3. Proceed on Treetops Way 4400.0 ft towards Front Street.\n4. Proceed on Front Street 3200.0 ft towards Terrace Lagoon Loop.\n5. Proceed on Terrace Lagoon Loop 2200.0 ft towards Koi Fish.\n")));
+
+        ViewInteraction button = onView(
+                allOf(withId(R.id.previous_button), withText("PREVIOUS: ENTRANCE AND EXIT GATE, 12400.0FT"),
+                        withParent(withParent(withId(android.R.id.content))),
+                        isDisplayed()));
+        button.check(matches(isDisplayed()));
+
+        ViewInteraction button2 = onView(
+                allOf(withId(R.id.next_btn), withText("NEXT: CROCODILES, 3900.0FT"),
+                        withParent(withParent(withId(android.R.id.content))),
+                        isDisplayed()));
+        button2.check(matches(isDisplayed()));
+    }
+
+
+    @Test
+    public void testPreviousButtonAfterReplan() {
         ViewInteraction materialAutoCompleteTextView = onView(
                 allOf(withId(R.id.search_bar),
                         childAtPosition(
