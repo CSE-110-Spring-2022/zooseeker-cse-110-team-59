@@ -65,10 +65,10 @@ public class UnitTestsUserStoryMS2_3 {
             activity.mockLocationUpdate(Pair.create(32.73459618734685, -117.14936));
 
             assertEquals("1. Proceed on Gate Path 1100.0 ft towards Front Street.\n" +
-                    "2. Proceed on Front Street 3200.0 ft towards Terrance Lagoon Loop.\n" +
-                    "3. Proceed on Terrance Lagoon Loop 2200.0 ft towards Koi Fish.\n", directions.getText().toString());
+                    "2. Proceed on Front Street 3200.0 ft towards Terrace Lagoon Loop.\n" +
+                    "3. Proceed on Terrace Lagoon Loop 2200.0 ft towards Koi Fish.\n", directions.getText().toString());
             assertEquals("Directions to Koi Fish", currExhTitle.getText());
-            assertEquals("Previous: Entrance and Exit Gate, 0.0ft", nextBtn.getText().toString());
+            assertEquals("Previous: Entrance and Exit Gate, 0.0ft", prevBtn.getText().toString());
             assertEquals("Next: Gorillas, 12400.0ft", nextBtn.getText().toString());
 
 
@@ -87,15 +87,16 @@ public class UnitTestsUserStoryMS2_3 {
              * is enough probably.
              */
 
-            activity.getPlanDirections().setDeniedReplan(false);
+            activity.getPlanDirections().setDeniedReplan(true);
 
             activity.mockLocationUpdate(Pair.create(32.74711745394194, -117.18047982358976));
 
+            activity.getPlanDirections().replanRoute();
             assertEquals("1. Proceed on Monkey Trail 2400.0 ft towards Hippo Trail.\n" +
                     "2. Proceed on Hippo Trail 4500.0 ft towards Treetops Way.\n" +
                     "3. Proceed on Treetops Way 4400.0 ft towards Gate path.\n",
-                    "4. Proceed on Gate Path 1100.0 ft towards Entrance and Exit Gate.\n", directions.getText().toString());
-            assertEquals("Directions to Entrance and Exit Gate", currExhTitle.getText());
+                    "You have arrived at Gorillas.\n", directions.getText().toString());
+            assertEquals("Directions to Gorillas", currExhTitle.getText());
             assertEquals("Next: Koi Fish, 16700.0ft", nextBtn.getText().toString());
 
 
