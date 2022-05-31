@@ -58,13 +58,12 @@ public class UnitTestsUserStoryMS2_5 {
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
-            Button skipBtn = activity.findViewById(R.id.skip_btn);
             Button prevBtn = activity.findViewById(R.id.previous_button);
 
             prevBtn.performClick();
 
             assertEquals(0, activity.getPlanDirections().getDestinationIndex());
-            assertEquals(View.INVISIBLE, skipBtn.getVisibility());
+            assertEquals(false, activity.getPlanDirections().skipAllowed());
         });
     }
 
@@ -75,13 +74,12 @@ public class UnitTestsUserStoryMS2_5 {
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
-            Button skipBtn = activity.findViewById(R.id.skip_btn);
             Button nextBtn = activity.findViewById(R.id.next_btn);
 
             nextBtn.performClick();
             nextBtn.performClick();
 
-            assertEquals(View.INVISIBLE, skipBtn.getVisibility());
+            assertEquals(false, activity.getPlanDirections().skipAllowed());
         });
     }
 
@@ -92,13 +90,12 @@ public class UnitTestsUserStoryMS2_5 {
         scenario.moveToState(Lifecycle.State.CREATED);
 
         scenario.onActivity(activity -> {
-            Button skipBtn = activity.findViewById(R.id.skip_btn);
             TextView directions = activity.findViewById(R.id.directions_text);
             TextView currExhTitle = activity.findViewById(R.id.place_name);
 
             activity.mockLocationUpdate(Pair.create(32.73459618734685, -117.14936));
 
-            skipBtn.performClick();
+            activity.getPlanDirections().skipClicked();
 
             assertEquals("1. Proceed on Gate Path 1100.0 ft towards Treetops Way.\n" +
                     "2. Proceed on Treetops Way 4400.0 ft towards Hippo Trail.\n" +

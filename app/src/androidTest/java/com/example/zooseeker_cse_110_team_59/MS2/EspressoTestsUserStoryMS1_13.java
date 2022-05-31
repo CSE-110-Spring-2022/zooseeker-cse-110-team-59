@@ -126,7 +126,7 @@ public class EspressoTestsUserStoryMS1_13 {
         overflowMenuButton.perform(click());
 
         ViewInteraction materialTextView = onView(
-                allOf(withId(androidx.appcompat.R.id.title), withText("Clear"),
+                allOf(withId(androidx.appcompat.R.id.title), withText("Clear Information"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(androidx.appcompat.R.id.content),
@@ -224,7 +224,7 @@ public class EspressoTestsUserStoryMS1_13 {
         overflowMenuButton.perform(click());
 
         ViewInteraction materialTextView = onView(
-                allOf(withId(androidx.appcompat.R.id.title), withText("Clear"),
+                allOf(withId(androidx.appcompat.R.id.title), withText("Clear Information"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(androidx.appcompat.R.id.content),
@@ -332,7 +332,7 @@ public class EspressoTestsUserStoryMS1_13 {
         overflowMenuButton.perform(click());
 
         ViewInteraction materialTextView = onView(
-                allOf(withId(androidx.appcompat.R.id.title), withText("Clear"),
+                allOf(withId(androidx.appcompat.R.id.title), withText("Clear Information"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(androidx.appcompat.R.id.content),

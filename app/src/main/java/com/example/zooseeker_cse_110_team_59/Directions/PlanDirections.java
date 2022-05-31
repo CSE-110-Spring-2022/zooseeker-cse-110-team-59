@@ -14,7 +14,6 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver {
     ArrayList<DirectionsObserver> Observers = new ArrayList<DirectionsObserver>();
@@ -38,19 +37,6 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
         lastKnownCoords = null;
     }
 
-    public void skipClicked() {
-        routeIDs.remove(destinationIndex);
-        destination = routeIDs.get(destinationIndex);
-        updateData();
-    }
-
-    private boolean skipVisible() {
-        if (destinationIndex == 0 ||(destinationIndex == (routeIDs.size() - 1))) {
-            return false;
-        }
-        return true;
-    }
-
     //region Button Responders
     public void nextClicked() {
         destinationIndex++;
@@ -60,6 +46,21 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
     public void previousClicked() {
         destinationIndex--;
         updateData();
+    }
+
+    public void skipClicked() {
+        if (skipAllowed()) {
+            routeIDs.remove(destinationIndex);
+            replanRoute();
+        } else {
+            var builder = new AlertDialog.Builder(directionsActivity)
+                    .setTitle("Cannot Skip Entrance and Exit Gate")
+                    .setMessage("Sorry, you are not allowed to skip an instance of the Entrance and Exit Gate in your route.")
+                    .setNeutralButton("Ok", (dialog, which) -> {
+                        dialog.cancel();
+                    });
+            builder.show();
+        }
     }
     //endregion
 
@@ -95,7 +96,6 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
                         RouteGenerator.getNameFromId(newClosest) + " than to " +
                         RouteGenerator.getNameFromId(destination) + ". Would you like to replan?")
                 .setPositiveButton("YES", (dialog, which) -> {
-                     deniedReplan = false;
                      replanRoute();
                 })
                 .setNegativeButton("NO", (dialog, which) -> {
@@ -106,6 +106,7 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
     }
 
     public void replanRoute() {
+        deniedReplan = false;
         ArrayList<String> newRouteIDs = new ArrayList<String>(routeIDs.subList(0, destinationIndex));
         newRouteIDs.addAll(RouteGenerator.getIdsFromRoute(RouteGenerator.generateRoute(currentLoc, new ArrayList<String>(routeIDs.subList(destinationIndex, routeIDs.size() - 1)), "entrance_exit_gate")));
         // This works correctly because the generated route does NOT include the start id, so this new route will not contain the currentLoc as a new entry
@@ -124,7 +125,11 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
         ArrayList<String> currData = getCurrData();
         ArrayList<String> nextData = getNextData();
 
-        notifyDOS(prevData, currData, nextData, skipVisible());
+        notifyDOS(prevData, currData, nextData);
+    }
+
+    public boolean skipAllowed() {
+        return !(destinationIndex == 0 ||(destinationIndex == (routeIDs.size() - 1)));
     }
 
     public ArrayList<String> getPrevData() {
@@ -176,9 +181,9 @@ public class PlanDirections implements DirectionsSubject, SharedPreferencesSaver
         Observers.add(dObs);
     }
     @Override
-    public void notifyDOS(ArrayList<String> prevStrings, ArrayList<String> currStrings, ArrayList<String> nextStrings, boolean skipVisibility) {
+    public void notifyDOS(ArrayList<String> prevStrings, ArrayList<String> currStrings, ArrayList<String> nextStrings) {
         for (DirectionsObserver obs : Observers) {
-            obs.update(prevStrings, currStrings, nextStrings, skipVisibility);
+            obs.update(prevStrings, currStrings, nextStrings);
         }
     }
     //endregion
